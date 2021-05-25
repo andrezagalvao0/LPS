@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "482252794610",
+    "project_id": "lps-setor-terciario",
+    "storage_bucket": "lps-setor-terciario.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482252794610:android:9f300b1179e86f304c3e6b",
+        "android_client_info": {
+          "package_name": "com.example.lps_ufs_tcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482252794610-d87t6kfgi96ngberq9k1jgv1i1bcotbv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiyDJ1vdrCH5vYki1SVMXvrZb23_5XQow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482252794610-d87t6kfgi96ngberq9k1jgv1i1bcotbv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
