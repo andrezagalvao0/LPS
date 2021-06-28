@@ -1,8 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lps_ufs_tcc/main.dart';
+import 'package:lps_ufs_tcc/models/produto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main(){
+  // inicializa cores
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
     theme: ThemeData(
@@ -14,19 +19,21 @@ void main(){
 )); // Executa a Tela de Cadastro de Cliente
 }
 
-//metodo utilizado para inicializar os widgets da linha de produto
-// verifica no firebase os ids das features e disponibiliza ao cliente do app as features que estao disponiveis
-@override
- void initState() {
-  
-   print('Parabens Você inicializou o App');
- }
-
 
 class LPS_Login extends StatelessWidget {
-  
+
+   @required var ct_email = TextEditingController();
+   @required var ct_senha = TextEditingController();
+
+   final auth = FirebaseAuth.instance;
+   Produto novoProduto;
+
+
   @override
  Widget build(BuildContext context){
+
+   
+  
    return Scaffold(
      body: SingleChildScrollView( // responsavel por oocultar o overflowed
        child:Column(
@@ -36,13 +43,13 @@ class LPS_Login extends StatelessWidget {
              height: MediaQuery.of(context).size.height/2.5,
              decoration: BoxDecoration(
                image:DecorationImage( image: AssetImage('images/header_estetica.png')),
-          //     image:DecorationImage( image: AssetImage('images/header_fisioterapia.png')),
+          //     image:DecorationImage( image: novoProduto.getapplogotipo),
                gradient: LinearGradient(
                  begin: Alignment.topCenter,
                  end: Alignment.bottomCenter,
                  colors: [
-                   Colors.amber,
-                   Colors.amberAccent,
+                   Colors.amber[100],
+                   Colors.amber[400],
                  ]
                ),
                borderRadius: BorderRadius.only(
@@ -54,7 +61,6 @@ class LPS_Login extends StatelessWidget {
 
              // Campos de Login e Senha para acessar o aplicativo
          SizedBox(height: 30),
-        // SizedBox(height: 5),
           Container(
             padding: EdgeInsets.only(top:10),
             child: Column(
@@ -62,13 +68,14 @@ class LPS_Login extends StatelessWidget {
                   Container(
                    width: 230,
                    child: TextField(
-                     cursorColor: Colors.amberAccent,
+                     cursorColor: Colors.amber,
                      keyboardType: TextInputType.emailAddress,
                    decoration: InputDecoration(
                    hintStyle: TextStyle(color: Colors.black),
                    icon: Icon(Icons.email_outlined,  color: Colors.black),
                    hintText: 'Email',
                    ),
+                   controller: ct_email,
                   ),
                 ),
               ],
@@ -88,6 +95,7 @@ class LPS_Login extends StatelessWidget {
                    icon: Icon(Icons.vpn_key_outlined,  color: Colors.black),
                    hintText: 'Senha',
                    ),
+                   controller: ct_senha,
                   ), 
                 ),
               ],
@@ -96,18 +104,22 @@ class LPS_Login extends StatelessWidget {
                 SizedBox(height: 10),
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
                 child: Text('Entrar'),
-                color: Colors.amberAccent,
+                color: Colors.amberAccent[100],
                 onPressed: (){
-                Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
-               ));
+
+                  auth.signInWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
+
               },
              ),
 
                 SizedBox(height: 50),
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
                 child: Text('Agendar sem Cadastro'),
-                color: Colors.amberAccent,
-                onPressed: (){}
+                color: Colors.amberAccent[100],
+                onPressed: (){
+                //  loginCliente(ct_email.text, ct_senha.text);
+                }
               //  Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
              //  ));
              // },
@@ -115,11 +127,10 @@ class LPS_Login extends StatelessWidget {
 
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
                 child: Text('Inscrever-se'),
-                color: Colors.greenAccent,
-              ///  onPressed: (){
-              //  Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
-             //  ));
-             // },
+                color: Colors.amberAccent,
+                onPressed: (){
+                signUpCliente(context);
+              },
              ),
 
              
@@ -131,4 +142,75 @@ class LPS_Login extends StatelessWidget {
    );
 
   }
+
+void signUpCliente(BuildContext context){
+    //
+    //capturar valores dos editexts
+    @required var ct_nome = TextEditingController();
+    @required var ct_email = TextEditingController();
+    @required var ct_senha = TextEditingController();
+    
+    showDialog(
+      context: context, 
+      builder: (BuildContext context){
+         return AlertDialog(
+               title: Text('Inscrição'),
+
+               content: Form(
+                 child: SingleChildScrollView(
+                   child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: <Widget>[
+
+                    SizedBox(height: 5),
+                     Text('Email'),
+                     TextFormField(
+                       decoration: InputDecoration(
+                         hintText: ('Ex. seuemail@gmail.com'),
+                           border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(10),
+                         ),
+                       ),
+                       controller: ct_email,
+                     ),
+
+                    
+                     Text('Senha'),
+                     TextFormField(
+                       decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                         ),
+                       ),
+                       controller: ct_senha,
+                     ),
+          
+                     
+                   ],
+                 ),
+                ),
+               ),
+               actions: <Widget>[
+
+                          FlatButton(
+                            onPressed: ()=> Navigator.of(context).pop(),
+                           // color: Colors.amberAccent,
+                            child: Text('Cancelar', style: TextStyle(color: Colors.redAccent)),
+                          ),
+
+                          FlatButton(
+                            //Utilização do Firebase
+                            onPressed: () async {
+                           await  auth.createUserWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
+                              Navigator.of(context).pop();
+                            },
+
+                            color: Colors.amberAccent,
+                            child: Text('Inscrever', style: TextStyle(color: Colors.black)),
+            ),
+          ],
+        );
+        });
+      }
+
 }

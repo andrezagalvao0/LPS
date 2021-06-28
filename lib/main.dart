@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'agendamento.dart';
 import 'cadastro.dart';
 import 'login.dart';
+import 'models/produto.dart';
+
 
 
 void main(){
-
-
   
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -17,51 +18,60 @@ void main(){
     accentColor: Colors.amberAccent),
 
     // criar o metodo interruptor da Linha de Produto
-
-
     title: 'Login',
     home: LPS_Login(),
 )); // Executa a Tela Principal do Aplicativo
 }
 
 class Homescreen extends StatelessWidget{
- 
+  
+
  @override
  Widget build(BuildContext context){
-   
+
    return Scaffold(
 
      appBar: AppBar(
        iconTheme: IconThemeData(
        color: Colors.black),
-
-       title: Text('Menu Principal', style: TextStyle(color: Colors.black)),
+       title: Text('Historico', style: TextStyle(color: Colors.black)),
        backgroundColor: Colors.amberAccent,
- 
      ),
       
      drawer: Drawer(
+
+       child: Container(
+
+         decoration: BoxDecoration(
+           gradient: LinearGradient(colors: <Color>[
+               //Colors.green[100],
+               //Colors.green[400],
+                 Colors.amber[100],
+                 Colors.amber[400],
+             ])
+         ),
 
        child: ListView(
          children: <Widget>[ 
            DrawerHeader(
               decoration: BoxDecoration(
-               image: DecorationImage( image: AssetImage('images/header_estetica.png')),
-               gradient: LinearGradient(colors: <Color>[
-               Colors.amber,
-               Colors.amberAccent,
+                 image: DecorationImage( image: AssetImage('images/header_estetica.png')),
+                 gradient: LinearGradient(colors: <Color>[
+                 Colors.amber[100],
+                 Colors.amber[400],
+                 // Colors.green[100],
+                //  Colors.green[400],
              ])
             ),
            ),
+           
+           
            // lista de features principais da linha de produto de software
-
-           
-           
 
              ListTile(
              key: ValueKey('chave_cadastro'),
              title: Text('Cadastro', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.person,  color: Colors.black),
+             leading: Icon(Icons.add_box,  color: Colors.black),
              trailing: Icon(Icons.arrow_right,  color: Colors.black),
              
              onTap: (){
@@ -72,7 +82,7 @@ class Homescreen extends StatelessWidget{
            ),
           
 
-          ListTile(
+             ListTile(
              key: ValueKey('chave_agendamento'),
              title: Text('Agendamento', style: TextStyle(color: Colors.black)),
              leading: Icon(Icons.calendar_today,  color: Colors.black),
@@ -130,6 +140,7 @@ class Homescreen extends StatelessWidget{
            ),
         ],
        )
+     ),
      ),
      
      // implementação dos serviços da linha de produto utilizando cards
@@ -203,14 +214,15 @@ body: new ListView.builder(
         },
       ),
      
-     floatingActionButton: FloatingActionButton(
-       child: Icon(Icons.calendar_today),
-       backgroundColor: Colors.amberAccent,
-       onPressed: (){},
-     ),
+ //    floatingActionButton: FloatingActionButton(
+ //      child: Icon(Icons.calendar_today),
+ //      backgroundColor: Colors.amberAccent,
+ //      onPressed: (){},
+ //    ),
     );
   }
 }
+
 
 
 

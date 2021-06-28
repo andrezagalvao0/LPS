@@ -10,7 +10,7 @@ void main(){
 }
 
 class LPS_Cadastro_Cliente extends StatelessWidget { 
-
+  
  @override
  Widget build(BuildContext context){
  
@@ -71,7 +71,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
                    subtitle: Text(item['email'], style: TextStyle(color: Colors.black)),
                    trailing: Icon(Icons.info_outline_rounded, color: Colors.black,  size: 32),
                      
-                     isThreeLine: true,
+                    
                      onLongPress: () => model_options_cliente(context,Text(item['nome']), item),
                    
 
@@ -116,10 +116,11 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
 
                           FlatButton(
                             //Utilização do Firebase
-                             onPressed: ()=>{}, //model_excluir_cliente(context),
+                             onPressed: ()=> model_excluir_cliente(context, item),
                              // Navigator.of(context).pop();
                             // color: Colors.amberAccent,
                             child: Text('Excluir Cliente', style: TextStyle(color: Colors.red)),
+                            
             ),
           ],
          );
@@ -127,12 +128,15 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
       }
 
   // model excluir cliente
- 
-  void model_excluir_cliente(BuildContext context){
+  // ignore: non_constant_identifier_names
+  void model_excluir_cliente(BuildContext context, String idDoc){
          
              Firestore.instance.collection('cliente').getDocuments().then((snapshot) {
              for (DocumentSnapshot doc in snapshot.documents) {
-              doc.reference.delete();
+                    
+                    if (doc.documentID == idDoc){
+                       doc.reference.delete();
+                    }
              }
           });
         }    
