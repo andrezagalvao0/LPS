@@ -214,7 +214,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
                           FlatButton(
                             //Utilização do Firebase
                             onPressed: () async {
-                           await   Firestore.instance.collection('cliente').add({
+                           await   Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente').add({
                                   'nome': ct_nome.text,
                                   'email': ct_email.text,
                                   'telefone': ct_telefone.text,

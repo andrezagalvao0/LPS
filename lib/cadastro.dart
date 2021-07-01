@@ -46,7 +46,7 @@ class LPS_Cadastro extends StatelessWidget{
      ),
 
      body: StreamBuilder(
-       stream: Firestore.instance.collection('PFeature').snapshots(),
+       stream: Firestore.instance.collection('Produto_Feature/Estetica/Cadastro').snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,

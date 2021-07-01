@@ -174,7 +174,6 @@ void signUpCliente(BuildContext context){
                        controller: ct_email,
                      ),
 
-                    
                      Text('Senha'),
                      TextFormField(
                        decoration: InputDecoration(
@@ -184,8 +183,7 @@ void signUpCliente(BuildContext context){
                        ),
                        controller: ct_senha,
                      ),
-          
-                     
+
                    ],
                  ),
                 ),
@@ -199,7 +197,7 @@ void signUpCliente(BuildContext context){
                           ),
 
                           FlatButton(
-                            //Utilização do Firebase
+                           //Utilização do Firebase
                             onPressed: () async {
                            await  auth.createUserWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
                               Navigator.of(context).pop();
