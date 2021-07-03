@@ -25,16 +25,18 @@ class LPS_Login extends StatelessWidget {
    @required var ct_email = TextEditingController();
    @required var ct_senha = TextEditingController();
 
+   GlobalKey<FormState> flogin = GlobalKey<FormState>();
+
+
    final auth = FirebaseAuth.instance;
    Produto novoProduto;
-
 
   @override
  Widget build(BuildContext context){
 
    
-  
    return Scaffold(
+     key: flogin,
      body: SingleChildScrollView( // responsavel por oocultar o overflowed
        child:Column(
          children: <Widget>[
@@ -66,8 +68,9 @@ class LPS_Login extends StatelessWidget {
             child: Column(
               children: <Widget>[
                   Container(
+                  
                    width: 230,
-                   child: TextField(
+                   child: TextFormField(
                      cursorColor: Colors.amber,
                      keyboardType: TextInputType.emailAddress,
                    decoration: InputDecoration(
@@ -88,7 +91,7 @@ class LPS_Login extends StatelessWidget {
               children: <Widget>[
                   Container(
                    width: 230,
-                   child: TextField(
+                   child: TextFormField(
                    cursorColor: Colors.amberAccent,
                    obscureText: true,
                    decoration: InputDecoration(
@@ -107,27 +110,20 @@ class LPS_Login extends StatelessWidget {
                 color: Colors.amberAccent[100],
                 onPressed: (){
 
+                  if(ct_email.text != null){
+                  
                   auth.signInWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
                   Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
+                  }
+
+                  
 
               },
              ),
 
-                SizedBox(height: 50),
-                RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
-                child: Text('Agendar sem Cadastro'),
-                color: Colors.amberAccent[100],
-                onPressed: (){
-                //  loginCliente(ct_email.text, ct_senha.text);
-                }
-              //  Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
-             //  ));
-             // },
-             ),
-
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
                 child: Text('Inscrever-se'),
-                color: Colors.amberAccent,
+                color: Colors.amberAccent[100],
                 onPressed: (){
                 signUpCliente(context);
               },

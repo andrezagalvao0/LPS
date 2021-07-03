@@ -10,6 +10,8 @@ void main(){
 }
 
 class LPS_Agendamento_Cliente extends StatelessWidget {
+
+  @required var ct_profis = TextEditingController();
   
   @override
  Widget build(BuildContext context){
@@ -22,15 +24,31 @@ class LPS_Agendamento_Cliente extends StatelessWidget {
        title: Text('Agendamento'),
        backgroundColor: Colors.amberAccent,
      ),
-     body: Center(
-       child:Text('Agendamentos da Nossa LPS'),
+     body: Container(
+               //    color: Colors.white,
+               //    alignment: Alignment.topCenter,
+                   width: 230,
+               //    height: 48,
+                   child: TextField(
+                   cursorColor: Colors.amberAccent,
+                   decoration: InputDecoration(
+                   icon: Icon(Icons.search,  color: Colors.black),
+                   hintText: 'Profissional',
+                   ),
+                   controller: ct_profis,
+                  ), 
+          // child: Text('Escolher Profissionais -> Dias Disponiveis -> Procedimento -> Agendar'),
      ),
+           
+           
+           
+     
 
-     floatingActionButton: FloatingActionButton(
-       child: Icon(Icons.person_add),
-       backgroundColor: Colors.amberAccent,
-       onPressed: (){},
-     ),
+  //   floatingActionButton: FloatingActionButton(
+  //     child: Icon(Icons.person_add),
+  //     backgroundColor: Colors.amberAccent,
+  //     onPressed: (){},
+  //   ),
 
      backgroundColor: Colors.amber[100],
    );

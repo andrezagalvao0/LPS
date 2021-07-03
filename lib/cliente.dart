@@ -14,7 +14,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
  @override
  Widget build(BuildContext context){
  
-   Firestore.instance.collection('cliente').getDocuments().then((value){
+   Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente').getDocuments().then((value){
      value.documents.forEach((element) {
       print(element.data);
       });
@@ -30,7 +30,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
      ),
      
      body: StreamBuilder(
-       stream: Firestore.instance.collection('cliente').snapshots(),
+       stream: Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente/id').snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -67,12 +67,12 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
                    leading: IconButton(
                      icon: Icon(Icons.person, color: Colors.black, size: 32)
                     ),
-                   title: Text(item['nome'], style: TextStyle(color: Colors.black)),
-                   subtitle: Text(item['email'], style: TextStyle(color: Colors.black)),
+                   title: Text(item['Nome'], style: TextStyle(color: Colors.black)),
+                   subtitle: Text(item['Email'], style: TextStyle(color: Colors.black)),
                    trailing: Icon(Icons.info_outline_rounded, color: Colors.black,  size: 32),
                      
                     
-                     onLongPress: () => model_options_cliente(context,Text(item['nome']), item),
+                     onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
                    
 
                   ),
@@ -131,7 +131,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
   // ignore: non_constant_identifier_names
   void model_excluir_cliente(BuildContext context, String idDoc){
          
-             Firestore.instance.collection('cliente').getDocuments().then((snapshot) {
+             Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente/id').getDocuments().then((snapshot) {
              for (DocumentSnapshot doc in snapshot.documents) {
                     
                     if (doc.documentID == idDoc){
@@ -214,10 +214,10 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
                           FlatButton(
                             //Utilização do Firebase
                             onPressed: () async {
-                           await   Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente').add({
-                                  'nome': ct_nome.text,
-                                  'email': ct_email.text,
-                                  'telefone': ct_telefone.text,
+                           await   Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente/id').add({
+                                  'Nome': ct_nome.text,
+                                  'Email': ct_email.text,
+                                  'Telefone': ct_telefone.text,
                                }
                               );
                               Navigator.of(context).pop();
