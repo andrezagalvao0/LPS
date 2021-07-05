@@ -25,15 +25,16 @@ class LPS_Agendamento_Cliente extends StatelessWidget {
        backgroundColor: Colors.amberAccent,
      ),
      body: Container(
-               //    color: Colors.white,
-               //    alignment: Alignment.topCenter,
-                   width: 230,
-               //    height: 48,
-                   child: TextField(
+                     
+                   child: TextField(  
                    cursorColor: Colors.amberAccent,
                    decoration: InputDecoration(
-                   icon: Icon(Icons.search,  color: Colors.black),
+                   prefixIcon: Icon(Icons.search,  color: Colors.black),
                    hintText: 'Profissional',
+                   contentPadding: EdgeInsets.all(5),
+                   border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black),
+                   borderRadius: BorderRadius.circular(8.0)),
+                   
                    ),
                    controller: ct_profis,
                   ), 

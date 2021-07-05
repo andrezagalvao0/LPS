@@ -48,13 +48,13 @@ class Feature extends Container{
                 child: Column(
                 children: <Widget>[
 
-             SizedBox(height: 20, width: 20),
-             Visibility(
+                SizedBox(height: 20, width: 20),
+                Visibility(
              // ignore: unrelated_type_equality_checks
-             visible: this.status,
-             child:RaisedButton(   // // executa uma rota para a tela de cadastro de clientes ao clicar no botão
+                visible: this.status,
+                child:RaisedButton(   // // executa uma rota para a tela de cadastro de clientes ao clicar no botão
               
-              child: Column(
+                child: Column(
                     children: <Widget>[
                       Icon(this.icn, size: 100, color: Colors.black,),
                       Text(this.name, style: TextStyle(fontSize: 20, color: Colors.black), ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'agendamento.dart';
 import 'cadastro.dart';
 import 'login.dart';
+import 'models/notificacoes.dart';
 import 'models/produto.dart';
 
 
@@ -100,9 +101,9 @@ class Homescreen extends StatelessWidget{
              leading: Icon(Icons.notifications,  color: Colors.black),
              trailing: Icon(Icons.arrow_right,  color: Colors.black),
              onTap: (){
-        //       Navigator.pop(context);
-        //       Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
-        //       ));
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
+               ));
              },
            ),
 
