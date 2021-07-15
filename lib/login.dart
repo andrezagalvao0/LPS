@@ -25,7 +25,8 @@ class LPS_Login extends StatelessWidget {
    @required var ct_email = TextEditingController();
    @required var ct_senha = TextEditingController();
 
-   GlobalKey<FormState> flogin = GlobalKey<FormState>();
+   final flogin = GlobalKey<FormState>();
+
 
 
    final auth = FirebaseAuth.instance;
@@ -36,8 +37,9 @@ class LPS_Login extends StatelessWidget {
 
    
    return Scaffold(
-     key: flogin,
      body: SingleChildScrollView( // responsavel por oocultar o overflowed
+      child: Form(
+       key: flogin,
        child:Column(
          children: <Widget>[
            Container(
@@ -78,6 +80,15 @@ class LPS_Login extends StatelessWidget {
                    icon: Icon(Icons.email_outlined,  color: Colors.black),
                    hintText: 'Email',
                    ),
+                  
+                   validator: (value){
+                     if(value.length < 5){
+                       return "Email muito curto";
+                     }else if(value.contains("@")){
+                       return "Tem certeza que é um email?";
+                     }
+                     return null;
+                   },
                    controller: ct_email,
                   ),
                 ),
@@ -88,6 +99,7 @@ class LPS_Login extends StatelessWidget {
             Container(
             padding: EdgeInsets.only(top:10),
             child: Column(
+
               children: <Widget>[
                   Container(
                    width: 230,
@@ -98,6 +110,14 @@ class LPS_Login extends StatelessWidget {
                    icon: Icon(Icons.vpn_key_outlined,  color: Colors.black),
                    hintText: 'Senha',
                    ),
+                   
+                   validator: (value){
+                     
+                     if(value.length < 8){
+                       return "Senha muito curta";
+                     }
+                     return null;
+                   },
                    controller: ct_senha,
                   ), 
                 ),
@@ -108,12 +128,13 @@ class LPS_Login extends StatelessWidget {
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
                 child: Text('Entrar'),
                 color: Colors.amberAccent[100],
-                onPressed: (){
+                onPressed: () async{
 
-                  if(ct_email.text != null){
-                  
+                  if(flogin.currentState.validate()){
+                
                   auth.signInWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
                   Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
+                
                   }
 
                   
@@ -133,7 +154,7 @@ class LPS_Login extends StatelessWidget {
          ],
        ),
      ),
-
+    ),
      backgroundColor: Colors.white,
    );
 
@@ -206,5 +227,6 @@ void signUpCliente(BuildContext context){
         );
         });
       }
+
 
 }
