@@ -18,6 +18,10 @@ class Feature extends Container{
     this.name = name;
     this.status = enabled;
 
+    if(this.name == "Agendamento"){
+      this.icn = Icons.calendar_today;
+    }
+
     if(this.name == "Cliente"){
       this.icn = Icons.person;
     }
@@ -28,6 +32,10 @@ class Feature extends Container{
 
     if(this.name == "Funcionario"){
       this.icn = Icons.support;
+    }
+
+    if(this.name == "Notificacoes"){
+      this.icn = Icons.calendar_today;
     }
 
   }

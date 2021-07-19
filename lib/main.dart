@@ -35,7 +35,7 @@ class Homescreen extends StatelessWidget{
      appBar: AppBar(
        iconTheme: IconThemeData(
        color: Colors.black),
-       title: Text('Historico', style: TextStyle(color: Colors.black)),
+       title: Text('Meus Agendamentos', style: TextStyle(color: Colors.black)),
        backgroundColor: Colors.amberAccent,
      ),
       
@@ -90,7 +90,7 @@ class Homescreen extends StatelessWidget{
              trailing: Icon(Icons.arrow_right,  color: Colors.black),
              onTap: (){
                Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento(),
                ));
              },
            ),

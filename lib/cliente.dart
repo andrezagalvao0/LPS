@@ -30,7 +30,7 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
      ),
      
      body: StreamBuilder(
-       stream: Firestore.instance.collection('Produto_Feature/Estetica/Cadastro/Cliente/id').snapshots(),
+       stream: Firestore.instance.collection('Produto_Feature').snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -198,7 +198,6 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
                        controller: ct_email,
                      ),
 
-                     
                    ],
                  ),
                 ),

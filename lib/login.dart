@@ -84,7 +84,7 @@ class LPS_Login extends StatelessWidget {
                    validator: (value){
                      if(value.length < 5){
                        return "Email muito curto";
-                     }else if(value.contains("@")){
+                     }else if(!value.contains("@")){
                        return "Tem certeza que é um email?";
                      }
                      return null;

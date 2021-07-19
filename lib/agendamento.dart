@@ -1,58 +1,207 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main(){
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false, // Remover o Banner de Debug
-    title: 'Agendamento',
-    home: LPS_Agendamento_Cliente(),
-)); // Executa a Tela de Cadastro de Cliente
+
+
+class LPS_Agendamento extends StatefulWidget {
+  @override
+  _LPS_Agendamento createState() => _LPS_Agendamento();
 }
 
-class LPS_Agendamento_Cliente extends StatelessWidget {
+class _LPS_Agendamento extends State<LPS_Agendamento> {
+  var selectedCurrency, selectedType;
+  final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
-  @required var ct_profis = TextEditingController();
-  
+
   @override
- Widget build(BuildContext context){
-   return Scaffold(
-     appBar: AppBar(
-         leading: IconButton(
-                icon: Icon(Icons.home, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-         ), 
-       title: Text('Agendamento'),
-       backgroundColor: Colors.amberAccent,
-     ),
-     body: Container(
-                     
-                   child: TextField(  
-                   cursorColor: Colors.amberAccent,
-                   decoration: InputDecoration(
-                   prefixIcon: Icon(Icons.search,  color: Colors.black),
-                   hintText: 'Profissional',
-                   contentPadding: EdgeInsets.all(5),
-                   border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black),
-                   borderRadius: BorderRadius.circular(8.0)),
-                   
-                   ),
-                   controller: ct_profis,
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+                    leading: IconButton(
+                    icon: Icon(Icons.home, color: Colors.black),
+                    onPressed: () => Navigator.of(context).pop(),
                   ), 
-          // child: Text('Escolher Profissionais -> Dias Disponiveis -> Procedimento -> Agendar'),
-     ),
-           
-           
-           
-     
+             title: Text('Agendamento', style: TextStyle(color: Colors.black)),
+             backgroundColor: Colors.amberAccent,
+            ),
 
-  //   floatingActionButton: FloatingActionButton(
-  //     child: Icon(Icons.person_add),
-  //     backgroundColor: Colors.amberAccent,
-  //     onPressed: (){},
-  //   ),
+        backgroundColor: Colors.amber[100],
+        body:Container(
+          
+          child:Form(
+          key: _formKeyValue,
+          autovalidate: true,
+          child: new ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            children: <Widget>[
+              SizedBox(height: 10.0),
+              new TextFormField(
+                decoration: const InputDecoration(
+                  icon: const Icon(
+                    Icons.call,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Informe seu Telefone',
+                  labelText: 'Telefone',
+                ),
+                keyboardType: TextInputType.number
+              ),
+              new TextFormField(
+                decoration: const InputDecoration(
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Informe seu Nome',
+                  labelText: 'Nome',
+                ),
+              ),
+              
+              new TextFormField(
+                decoration: const InputDecoration(
+                  icon: const Icon(
+                    Icons.mail,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Informe seu Email',
+                  labelText: 'Email',
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              
+              SizedBox(height: 10.0),
+              StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection("Profissionais").snapshots(),
+                  builder: (context, snapshot){
+                    if (!snapshot.hasData)
+                      const Text("Aguarde");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.documentID,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.calendar_today,
+                              size: 25.0, color: Colors.black),
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                                final snackBar = SnackBar(
+                                content: Text(
+                                  'O Item Selecionado Foi $currencyValue',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                              });
+                            },
+                            value: selectedCurrency,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Selecione o Profissional",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    //
+                  }),
 
-     backgroundColor: Colors.amber[100],
-   );
-
+                    SizedBox(height: 10.0),
+              StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection("Servicos").snapshots(),
+                  builder: (context, snapshot){
+                    if (!snapshot.hasData)
+                      const Text("Aguarde");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.documentID,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.calendar_today,
+                              size: 25.0, color: Colors.black),
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                                   final snackBar = SnackBar(
+                                    content: Text(
+                                  'O Item Selecionado Foi $currencyValue',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                              });
+                            },
+                            value: selectedCurrency,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Selecione o Serviço",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+        //
+                  }),    
+              SizedBox(
+                height: 220.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  RaisedButton(
+                      color: Colors.amberAccent,
+                      textColor: Colors.black,
+                      child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Concluir Agendamento", style: TextStyle(fontSize: 18.0)),
+                            ],
+                          )),
+                      onPressed: () {},
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0))),
+                ],
+              ),
+            ],
+            
+          ),
+        )
+      ),
+    );  
   }
+  
 }
