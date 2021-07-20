@@ -73,8 +73,7 @@ class Homescreen extends StatelessWidget{
              ])
             ),
            ),
-           
-           
+            
            // lista de features principais da linha de produto de software
 
              ListTile(

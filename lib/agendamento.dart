@@ -11,11 +11,25 @@ class LPS_Agendamento extends StatefulWidget {
 
 class _LPS_Agendamento extends State<LPS_Agendamento> {
   var selectedCurrency, selectedType;
+  String horario_selecionado = "8:00 AM";
+
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
 
   @override
   Widget build(BuildContext context) {
+   
+    Future<void> abrir_opcao_horario(BuildContext context) async{
+      final TimeOfDay t  = await showTimePicker(context: context, 
+                                               initialTime: TimeOfDay.now());
+      if(t != null){
+        setState(() {
+             horario_selecionado = t.format(context);     
+         });
+        }
+      }
+
+
     return Scaffold(
         appBar: AppBar(
                     leading: IconButton(
@@ -158,7 +172,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     children: <Widget>[
 
                       SizedBox(height: 30),
-                    new Text("Selecione a data do Agendamento", style: TextStyle(fontSize: 18)),
+                    new Text("Selecione a data do agendamento", style: TextStyle(fontSize: 18)),
                     
                     new IconButton(
                     icon: Icon(Icons.date_range, size: 40.0),
@@ -174,6 +188,20 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                      
                     }),
 
+                    SizedBox(height: 30),
+                    new Text("Selecione o horario do agendamento", style: TextStyle(fontSize: 18)),
+                    
+                    new IconButton(
+                    icon: Icon(Icons.alarm, size: 40.0),
+                    onPressed: (){
+
+                      abrir_opcao_horario(context);
+                     
+                    }),
+
+                    // o widget de horario ficara aqui
+
+
                     
                    ],
                    
@@ -181,7 +209,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                 ),  
 
               SizedBox(
-                height: 280.0,
+                height: 180.0,
               ),
 
             
