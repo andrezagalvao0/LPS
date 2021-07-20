@@ -5,7 +5,7 @@ import 'cadastro.dart';
 import 'login.dart';
 import 'models/notificacoes.dart';
 import 'models/produto.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 void main(){
@@ -17,6 +17,14 @@ void main(){
     // Define the default brightness and colors.
     primaryColor: Colors.amberAccent,
     accentColor: Colors.amberAccent),
+
+       localizationsDelegates: GlobalMaterialLocalizations.delegates,
+         supportedLocales: [
+           const Locale('en', 'US'), // American English
+           const Locale('ru', 'RU'), // Russian
+           const Locale("pt") // Portuguese
+      ],
+
 
     // criar o metodo interruptor da Linha de Produto
     title: 'Login',
@@ -113,8 +121,8 @@ class Homescreen extends StatelessWidget{
              leading: Icon(Icons.settings,  color: Colors.black),
              trailing: Icon(Icons.arrow_right,  color: Colors.black),
              onTap: (){
-              // Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
-             //  ));
+          //     Navigator.push(context,MaterialPageRoute(builder: (context) => MyApp(),
+          //     ));
              },
            ),
           

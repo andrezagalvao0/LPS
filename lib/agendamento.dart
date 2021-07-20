@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 
@@ -28,47 +29,15 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
         backgroundColor: Colors.amber[100],
         body:Container(
           
+
+          
           child:Form(
           key: _formKeyValue,
           autovalidate: true,
           child: new ListView(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             children: <Widget>[
-              SizedBox(height: 10.0),
-              new TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(
-                    Icons.call,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Informe seu Telefone',
-                  labelText: 'Telefone',
-                ),
-                keyboardType: TextInputType.number
-              ),
-              new TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Informe seu Nome',
-                  labelText: 'Nome',
-                ),
-              ),
-              
-              new TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(
-                    Icons.mail,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Informe seu Email',
-                  labelText: 'Email',
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              
+              SizedBox(height: 10.0),            
               SizedBox(height: 10.0),
               StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection("Profissionais").snapshots(),
@@ -92,8 +61,8 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.calendar_today,
-                              size: 25.0, color: Colors.black),
+                          Icon(Icons.person,
+                              size: 40.0, color: Colors.black),
                           SizedBox(width: 50.0),
                           DropdownButton(
                             items: currencyItems,
@@ -119,10 +88,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         ],
                       );
                     }
-                    //
+                    
                   }),
 
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 20.0),
               StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection("Servicos").snapshots(),
                   builder: (context, snapshot){
@@ -145,8 +114,8 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.calendar_today,
-                              size: 25.0, color: Colors.black),
+                          Icon(Icons.room_service,
+                              size: 40.0, color: Colors.black),
                           SizedBox(width: 50.0),
                           DropdownButton(
                             items: currencyItems,
@@ -173,13 +142,56 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                       );
                     }
         //
-                  }),    
+                  }),
+                  const Divider(
+                         color: Colors.black,
+                         height: 30,
+                         thickness: 5,
+                         indent: 20,
+                         endIndent: 20,
+                       ), 
+
+                 
+                new Container(
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+
+                      SizedBox(height: 30),
+                    new Text("Selecione a data do Agendamento", style: TextStyle(fontSize: 18)),
+                    
+                    new IconButton(
+                    icon: Icon(Icons.date_range, size: 40.0),
+                    onPressed: () async {
+
+                      final data = await showDatePicker(
+                        context: context, 
+                        initialDate: DateTime.now(), 
+                        firstDate: DateTime(2021), 
+                        lastDate: DateTime(2022),
+                        locale: Locale("pt","BR"),
+                      );
+                     
+                    }),
+
+                    
+                   ],
+                   
+                  ),
+                ),  
+
               SizedBox(
-                height: 220.0,
+                height: 280.0,
               ),
+
+            
+                    
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+
+                
+
                   RaisedButton(
                       color: Colors.amberAccent,
                       textColor: Colors.black,
@@ -197,10 +209,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                 ],
               ),
             ],
-            
           ),
         )
       ),
+      
     );  
   }
   
