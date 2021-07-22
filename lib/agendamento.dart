@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 
+
 class LPS_Agendamento extends StatefulWidget {
   @override
   _LPS_Agendamento createState() => _LPS_Agendamento();
@@ -11,7 +12,11 @@ class LPS_Agendamento extends StatefulWidget {
 
 class _LPS_Agendamento extends State<LPS_Agendamento> {
   var selectedCurrency, selectedType;
-  String horario_selecionado = "8:00 AM";
+  
+  String horario_selecionado;
+  String profissional_selecionado;
+  String servico_selecionado;
+  DateTime data_selecionada;
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
@@ -19,7 +24,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
   @override
   Widget build(BuildContext context) {
    
-    Future<void> abrir_opcao_horario(BuildContext context) async{
+    Future<String> abrir_opcao_horario(BuildContext context) async{
       final TimeOfDay t  = await showTimePicker(context: context, 
                                                initialTime: TimeOfDay.now());
       if(t != null){
@@ -43,11 +48,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
         backgroundColor: Colors.amber[100],
         body:Container(
           
-
           
           child:Form(
           key: _formKeyValue,
-          autovalidate: true,
+
           child: new ListView(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             children: <Widget>[
@@ -81,18 +85,13 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                           DropdownButton(
                             items: currencyItems,
                             onChanged: (currencyValue) {
-                                final snackBar = SnackBar(
-                                content: Text(
-                                  'O Item Selecionado Foi $currencyValue',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              );
-                              Scaffold.of(context).showSnackBar(snackBar);
                               setState(() {
                                 selectedCurrency = currencyValue;
+                                profissional_selecionado = selectedCurrency;
                               });
                             },
-                            value: selectedCurrency,
+                            value: profissional_selecionado,
+                            // provavelmente teremos um text form field
                             isExpanded: false,
                             hint: new Text(
                               "Selecione o Profissional",
@@ -134,18 +133,13 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                           DropdownButton(
                             items: currencyItems,
                             onChanged: (currencyValue) {
-                                   final snackBar = SnackBar(
-                                    content: Text(
-                                  'O Item Selecionado Foi $currencyValue',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              );
-                              Scaffold.of(context).showSnackBar(snackBar);
                               setState(() {
                                 selectedCurrency = currencyValue;
+                                servico_selecionado = selectedCurrency;
                               });
                             },
-                            value: selectedCurrency,
+                            value: servico_selecionado,
+
                             isExpanded: false,
                             hint: new Text(
                               "Selecione o Serviço",
@@ -171,7 +165,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
 
-                      SizedBox(height: 30),
+                    SizedBox(height: 30),
                     new Text("Selecione a data do agendamento", style: TextStyle(fontSize: 18)),
                     
                     new IconButton(
@@ -185,6 +179,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         lastDate: DateTime(2022),
                         locale: Locale("pt","BR"),
                       );
+
+                      data_selecionada = data;
+                      
+                      
                      
                     }),
 
@@ -195,7 +193,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     icon: Icon(Icons.alarm, size: 40.0),
                     onPressed: (){
 
-                      abrir_opcao_horario(context);
+                     horario_selecionado =  abrir_opcao_horario(context) as String;
                      
                     }),
 
@@ -211,14 +209,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
               SizedBox(
                 height: 180.0,
               ),
-
-            
                     
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-
-                
 
                   RaisedButton(
                       color: Colors.amberAccent,
@@ -231,7 +225,18 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                               Text("Concluir Agendamento", style: TextStyle(fontSize: 18.0)),
                             ],
                           )),
-                      onPressed: () {},
+                      onPressed: (){
+
+                       adicionar_agendamento(context,
+                                            profissional_selecionado,
+                                            servico_selecionado,
+                                            data_selecionada,
+                                            horario_selecionado);
+
+                        alerta_agendamento(context);
+
+
+                      },
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0))),
                 ],
@@ -243,5 +248,42 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
       
     );  
   }
+
+ // metodo utilizado para adicionar um agendamento do cliente ao firebase
+  void adicionar_agendamento(BuildContext context, 
+                             String profissional, 
+                             String servico, 
+                             DateTime data, 
+                             String horario) async{
+    
+    await   Firestore.instance.collection("Agendamento").add({
+      
+                                  'Profissional': profissional.toString(),
+                                  'Servico': servico.toString(),
+                                  'Data': data.toString(),
+                                  'Horario': horario.toString(),
+                               });
+  }
+
+  void alerta_agendamento(BuildContext contex){
+
+      showDialog(context: context, 
+                 builder: (BuildContext context){
+                   return AlertDialog(
+                     backgroundColor: Colors.amber[100],
+                     
+                     title: Text("Agendamento Concluido", style: TextStyle(fontSize: 18)),
+                     actions: <Widget>[
+
+                          FlatButton(
+                            onPressed: ()=> Navigator.of(context).pop(),
+                           
+                            child: Text('Concluido', style: TextStyle(color: Colors.green)),
+                          ),
+                            
+          ],
+         );
+        });
+      }
   
 }
