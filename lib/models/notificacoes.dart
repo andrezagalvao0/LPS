@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:lps_ufs_tcc/models/produto.dart';
 
 class HomeNotify extends StatefulWidget {
   HomeNotify({Key key}) : super(key: key);
@@ -9,6 +10,9 @@ class HomeNotify extends StatefulWidget {
 }
 
 class _HomeNotifyState extends State<HomeNotify> {
+  Produto produto = new Produto("Estetica");
+ 
+
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String _message = '';
 
@@ -43,15 +47,17 @@ class _HomeNotifyState extends State<HomeNotify> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-                icon: Icon(Icons.home, color: Colors.black),
+                icon: Icon(Icons.home, color: produto.getIconCor),
               onPressed: () => Navigator.of(context).pop(),
          ), 
-        title: Text('Notificações'),
+        title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
+        backgroundColor: produto.getSecondaryCor,
       ),
       body: Container(
           child: Center(
-        child: Text("Message: $_message"),
+        child: Text("As notificações ficarão aqui!$_message", style: TextStyle(color: produto.getTextCor)),
       )),
+      backgroundColor: produto.getFundoCor,
     );
   }
 }

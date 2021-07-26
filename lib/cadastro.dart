@@ -22,11 +22,13 @@ void main() async {
 // ignore: camel_case_types
 class LPS_Cadastro extends StatelessWidget{
   
+  Produto produto = new Produto("Estetica");
+
  
  @override
  Widget build(BuildContext context){  
 
-     Firestore.instance.collection('Produto_Feature').getDocuments().then((value){
+     Firestore.instance.collection('Produto_Feature/Estetica').getDocuments().then((value){
        value.documents.forEach((element) {
        print(element.data);
     //  habilitar_cliente = element.data['start'];
@@ -38,11 +40,11 @@ class LPS_Cadastro extends StatelessWidget{
 
      appBar: AppBar(
        leading: IconButton(
-                icon: Icon(Icons.home, color: Colors.black),
+                icon: Icon(Icons.home, color: produto.getIconCor),
               onPressed: () => Navigator.of(context).pop(),
          ), 
-       title: Text('Menu de Cadastro', style: TextStyle(color: Colors.black)),
-       backgroundColor: Colors.amberAccent,  
+       title: Text('Menu de Cadastro', style: TextStyle(color: produto.getTextCor)),
+       backgroundColor: produto.getSecondaryCor,  
      ),
 
      body: StreamBuilder(
@@ -83,7 +85,7 @@ class LPS_Cadastro extends StatelessWidget{
              },
            ),
 
-    backgroundColor: Colors.amber[100],
+    backgroundColor: produto.getFundoCor,
    );
   }
   

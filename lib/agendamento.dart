@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+
+import 'models/produto.dart';
+
 
 
 
@@ -19,33 +23,26 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
   DateTime data_selecionada;
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
+  //Produto produto = new Produto("Estetica");
+  Produto produto = new Produto("Estetica");
+ 
 
-
+ 
   @override
   Widget build(BuildContext context) {
    
-    Future<String> abrir_opcao_horario(BuildContext context) async{
-      final TimeOfDay t  = await showTimePicker(context: context, 
-                                               initialTime: TimeOfDay.now());
-      if(t != null){
-        setState(() {
-             horario_selecionado = t.format(context);     
-         });
-        }
-      }
-
 
     return Scaffold(
         appBar: AppBar(
                     leading: IconButton(
-                    icon: Icon(Icons.home, color: Colors.black),
+                    icon: Icon(Icons.home, color: produto.getIconCor),
                     onPressed: () => Navigator.of(context).pop(),
                   ), 
-             title: Text('Agendamento', style: TextStyle(color: Colors.black)),
-             backgroundColor: Colors.amberAccent,
+             title: Text('Agendamento', style: TextStyle(color: produto.getTextCor)),
+             backgroundColor: produto.getSecondaryCor,
             ),
 
-        backgroundColor: Colors.amber[100],
+        backgroundColor: produto.getFundoCor,
         body:Container(
           
           
@@ -70,7 +67,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                           DropdownMenuItem(
                             child: Text(
                               snap.documentID,
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: produto.getTextCor),
                             ),
                             value: "${snap.documentID}",
                           ),
@@ -80,7 +77,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Icon(Icons.person,
-                              size: 40.0, color: Colors.black),
+                              size: 40.0, color: produto.getIconCor),
                           SizedBox(width: 50.0),
                           DropdownButton(
                             items: currencyItems,
@@ -95,7 +92,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                             isExpanded: false,
                             hint: new Text(
                               "Selecione o Profissional",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: produto.getTextCor),
                             ),
                           ),
                         ],
@@ -105,7 +102,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                   }),
 
                     SizedBox(height: 20.0),
-              StreamBuilder<QuerySnapshot>(
+                    StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection("Servicos").snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -118,7 +115,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                           DropdownMenuItem(
                             child: Text(
                               snap.documentID,
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: produto.getTextCor),
                             ),
                             value: "${snap.documentID}",
                           ),
@@ -127,8 +124,8 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.room_service,
-                              size: 40.0, color: Colors.black),
+                          Icon(Icons.home_repair_service,
+                              size: 40.0, color: produto.getIconCor),
                           SizedBox(width: 50.0),
                           DropdownButton(
                             items: currencyItems,
@@ -143,22 +140,15 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                             isExpanded: false,
                             hint: new Text(
                               "Selecione o Serviço",
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: produto.getTextCor ),
                             ),
                           ),
                         ],
                       );
                     }
-        //
-                  }),
-                  const Divider(
-                         color: Colors.black,
-                         height: 30,
-                         thickness: 5,
-                         indent: 20,
-                         endIndent: 20,
-                       ), 
+                return null;
 
+                  }),
                  
                 new Container(
                   child:Column(
@@ -166,41 +156,36 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     children: <Widget>[
 
                     SizedBox(height: 30),
-                    new Text("Selecione a data do agendamento", style: TextStyle(fontSize: 18)),
+                    new Text("Selecione a Data", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
                     
                     new IconButton(
-                    icon: Icon(Icons.date_range, size: 40.0),
+                    icon: Icon(Icons.date_range, size: 40.0, color: produto.getIconCor),
                     onPressed: () async {
 
-                      final data = await showDatePicker(
-                        context: context, 
-                        initialDate: DateTime.now(), 
-                        firstDate: DateTime(2021), 
-                        lastDate: DateTime(2022),
-                        locale: Locale("pt","BR"),
-                      );
+                      DateTime data = await showRoundedDatePicker(
+                       context: context,
+                       initialDate: DateTime.now(),
+                       firstDate: DateTime(2021),
+                       lastDate: DateTime(2022),
+                       borderRadius: 10,
+                       theme: ThemeData(primarySwatch:Colors.amber),
+                       );
 
-                      data_selecionada = data;
-                      
-                      
+                       data_selecionada = data;                   
                      
                     }),
 
                     SizedBox(height: 30),
-                    new Text("Selecione o horario do agendamento", style: TextStyle(fontSize: 18)),
                     
+                    
+                    new Text("Selecione o Horario", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
                     new IconButton(
-                    icon: Icon(Icons.alarm, size: 40.0),
+                    icon: Icon(Icons.alarm, size: 40.0, color: produto.getIconCor),
                     onPressed: (){
 
                      horario_selecionado =  abrir_opcao_horario(context) as String;
                      
                     }),
-
-                    // o widget de horario ficara aqui
-
-
-                    
                    ],
                    
                   ),
@@ -215,14 +200,14 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                 children: <Widget>[
 
                   RaisedButton(
-                      color: Colors.amberAccent,
-                      textColor: Colors.black,
+                      color: produto.getComponentCor,
+                      textColor: produto.getTextCor,
                       child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text("Concluir Agendamento", style: TextStyle(fontSize: 18.0)),
+                              Text("Concluir Agendamento", style: TextStyle(fontSize: 18.0, color: produto.getTextCor)),
                             ],
                           )),
                       onPressed: (){
@@ -238,7 +223,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
                       },
                       shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(10.0))),
+                          borderRadius: new BorderRadius.circular(50.0))),
                 ],
               ),
             ],
@@ -270,20 +255,32 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
       showDialog(context: context, 
                  builder: (BuildContext context){
                    return AlertDialog(
-                     backgroundColor: Colors.amber[100],
+                     backgroundColor: produto.getPrimaryCor,
                      
-                     title: Text("Agendamento Concluido", style: TextStyle(fontSize: 18)),
+                     title: Text("Agendamento Concluido", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
                      actions: <Widget>[
 
                           FlatButton(
                             onPressed: ()=> Navigator.of(context).pop(),
                            
-                            child: Text('Concluido', style: TextStyle(color: Colors.green)),
+                            child: Text('Concluido', style: TextStyle(color: produto.getTextCor)),
                           ),
                             
           ],
          );
         });
+      }
+
+    Future<String> abrir_opcao_horario(BuildContext context) async{
+      final TimeOfDay t  = await showRoundedTimePicker(context: context, 
+                                                       initialTime: TimeOfDay.now(),
+                                                       theme: ThemeData(primarySwatch:Colors.amber),
+                                               );
+      if(t != null){
+        setState(() {
+             horario_selecionado = t.format(context);     
+         });
+        }
       }
   
 }

@@ -10,13 +10,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main(){
   
+ Produto produto = new Produto("Estetica");
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
     theme: ThemeData(
     
     // Define the default brightness and colors.
-    primaryColor: Colors.amberAccent,
-    accentColor: Colors.amberAccent),
+    primaryColor: produto.getPrimaryCor,
+    accentColor: produto.getSecondaryCor),
 
        localizationsDelegates: GlobalMaterialLocalizations.delegates,
          supportedLocales: [
@@ -34,6 +36,8 @@ void main(){
 
 class Homescreen extends StatelessWidget{
   
+  Produto produto = new Produto("Estetica");
+
 
  @override
  Widget build(BuildContext context){
@@ -42,9 +46,9 @@ class Homescreen extends StatelessWidget{
 
      appBar: AppBar(
        iconTheme: IconThemeData(
-       color: Colors.black),
-       title: Text('Meus Agendamentos', style: TextStyle(color: Colors.black)),
-       backgroundColor: Colors.amberAccent,
+       color: produto.getIconCor),
+       title: Text('Meus Agendamentos', style: TextStyle(color: produto.getTextCor)),
+       backgroundColor: produto.getSecondaryCor,
      ),
       
      drawer: Drawer(
@@ -53,10 +57,9 @@ class Homescreen extends StatelessWidget{
 
          decoration: BoxDecoration(
            gradient: LinearGradient(colors: <Color>[
-               //Colors.green[100],
-               //Colors.green[400],
-                 Colors.amber[100],
-                 Colors.amber[400],
+                 produto.getPrimaryCor,
+                 produto.getSecondaryCor,
+                 
              ])
          ),
 
@@ -64,12 +67,10 @@ class Homescreen extends StatelessWidget{
          children: <Widget>[ 
            DrawerHeader(
               decoration: BoxDecoration(
-                 image: DecorationImage( image: AssetImage('images/header_estetica.png')),
+                 image: DecorationImage( image: produto.getAppImage),
                  gradient: LinearGradient(colors: <Color>[
-                 Colors.amber[100],
-                 Colors.amber[400],
-                 // Colors.green[100],
-                //  Colors.green[400],
+                 produto.getPrimaryCor,
+                 produto.getSecondaryCor,
              ])
             ),
            ),
@@ -78,14 +79,27 @@ class Homescreen extends StatelessWidget{
             
 
              ListTile(
-             key: ValueKey('chave_cadastro'),
-             title: Text('Cadastro', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.add_box,  color: Colors.black),
-             trailing: Icon(Icons.arrow_right,  color: Colors.black),
+             key: ValueKey('chave_inicio'),
+             title: Text('Inicio', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.home,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              
              onTap: (){
                Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
+               ));
+             },
+           ),
+
+             ListTile(
+             key: ValueKey('chave_cadastro'),
+             title: Text('Cadastro', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.add,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+             
+             onTap: (){
+               Navigator.pop(context);
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
                ));
              },
            ),
@@ -93,9 +107,9 @@ class Homescreen extends StatelessWidget{
 
              ListTile(
              key: ValueKey('chave_agendamento'),
-             title: Text('Agendamento', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.calendar_today,  color: Colors.black),
-             trailing: Icon(Icons.arrow_right,  color: Colors.black),
+             title: Text('Agendamento', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.calendar_today,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){
                Navigator.pop(context);
                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento(),
@@ -105,9 +119,9 @@ class Homescreen extends StatelessWidget{
 
           ListTile(
              key: ValueKey('chave_notificacoes'),
-             title: Text('Notificações', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.notifications,  color: Colors.black),
-             trailing: Icon(Icons.arrow_right,  color: Colors.black),
+             title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.notifications,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){
                Navigator.pop(context);
                Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
@@ -117,9 +131,9 @@ class Homescreen extends StatelessWidget{
 
           ListTile(
              key: ValueKey('chave_configuracoes'),
-             title: Text('Configurações', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.settings,  color: Colors.black),
-             trailing: Icon(Icons.arrow_right,  color: Colors.black),
+             title: Text('Configurações', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.settings,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){
           //     Navigator.push(context,MaterialPageRoute(builder: (context) => MyApp(),
           //     ));
@@ -128,9 +142,9 @@ class Homescreen extends StatelessWidget{
           
           ListTile(
              key: ValueKey('chave_sobre'),
-             title: Text('Sobre', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.info,  color: Colors.black),
-             trailing: Icon(Icons.arrow_right,  color: Colors.black),
+             title: Text('Sobre', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.info,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){
               // Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
              //  ));
@@ -139,9 +153,9 @@ class Homescreen extends StatelessWidget{
           
           ListTile(
              key: ValueKey('chave_sair'),
-             title: Text('Sair', style: TextStyle(color: Colors.black)),
-             leading: Icon(Icons.exit_to_app, color: Colors.black),
-             trailing: Icon(Icons.arrow_right, color: Colors.black),
+             title: Text('Sair', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.exit_to_app, color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right, color: produto.getIconCor),
              onTap: (){
              //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
              //  ));
@@ -153,82 +167,93 @@ class Homescreen extends StatelessWidget{
      ),
      
      // implementação dos serviços da linha de produto utilizando cards
-body: new ListView.builder(
-        padding: const EdgeInsets.all(5),
-        itemBuilder: (context, i) {
-          return Container(
-            height: 130,
-            child: Card(
-                color: Colors.amberAccent.shade100,
-              elevation: 5,
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: GestureDetector(
-                      onTap: () {
+body:  StreamBuilder(
+       stream: Firestore.instance.collection("Agendamento").snapshots(),
+       builder: (
+         BuildContext context,
+         AsyncSnapshot<QuerySnapshot> snapshot,
+       ) {
 
-                      },
-                      child: Container(
-                        width: 100.0,
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                          //  color: Colors.red,
-                            image: DecorationImage(
-                                image: AssetImage('images/endermoterapia.png'),
-                                fit: BoxFit.cover),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(100.0)),
-                           ),
+         if(snapshot.hasError){
+             return Center(child: Text('Error: ${snapshot.error}'));
+         }
+
+         if(snapshot.connectionState == ConnectionState.waiting){
+             return Center(child: CircularProgressIndicator());
+         }
+
+         if(snapshot.data.documents.length == 0){
+             return Center(child: Text('Nenhum Agendamento Existente'));
+         }
+         
+         return ListView.builder(
+           itemCount: snapshot.data.documents.length,
+           itemBuilder: (BuildContext context, int i) {
+
+           var item = snapshot.data.documents[i].data;
+
+           return Container(
+
+  
+
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+                  margin: const EdgeInsets.all(5),
+
+                   child: Container(
+                     height: 150,
+                     child: Column(  
+                     
+                      children: [
+                        Row(
+                           children: [
+                           Icon(Icons.person, color: produto.getIconCor),
+                           Text(item["Profissional"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      return showDialog<void>(
-                        context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext conext) {
-                          return AlertDialog(
-                            title: Text('Not in stock'),
-                            content:
-                                const Text('This item is no longer available'),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Ok'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    
-                    child: Container(
-                        padding: EdgeInsets.all(30.0),
-                        alignment: Alignment.topRight,
-                        child: Chip(
-                          label: Text('Detalhes'),
-                          backgroundColor: Colors.amberAccent,
-                          elevation: 5,
-                          autofocus: true,
-                        )),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-     
- //    floatingActionButton: FloatingActionButton(
- //      child: Icon(Icons.calendar_today),
- //      backgroundColor: Colors.amberAccent,
- //      onPressed: (){},
- //    ),
+                        Row(
+                           children: [
+                           Icon(Icons.calendar_today, color: produto.getIconCor),
+                           Text(item["Data"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
+                      ),
+                        Row(
+                           children: [
+                           Icon(Icons.alarm, color: produto.getIconCor),
+                           Text(item["Horario"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
+                      ),
+                        Row(
+                           children: [
+                           Icon(Icons.home_repair_service, color: produto.getIconCor),
+                           Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
+                      ),
+                         Expanded(
+                          flex: 3,
+                          child: Image(
+                            image: produto.getAppImageService,
+                          ),
+                       ),
+                      ],
+                     ),
+                   ),
+                   //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
+                 );
+                },
+
+              );
+             },
+           ),
+        backgroundColor: produto.getFundoCor,
     );
+    
   }
 }
 

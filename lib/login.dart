@@ -8,11 +8,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 void main(){
   // inicializa cores
+
+   Produto produto = new Produto("Estetica");
+  
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
     theme: ThemeData(
-      accentColor: Colors.amberAccent,
-      primaryColor: Colors.amber,
+      accentColor: produto.getAppCor,
+      primaryColor: produto.getAppCor,
       ),
     title: 'Login',
     home: LPS_Login(),
@@ -30,7 +34,8 @@ class LPS_Login extends StatelessWidget {
 
 
    final auth = FirebaseAuth.instance;
-   Produto novoProduto;
+     Produto produto = new Produto("Estetica");
+ 
 
   @override
  Widget build(BuildContext context){
@@ -46,14 +51,13 @@ class LPS_Login extends StatelessWidget {
              width: MediaQuery.of(context).size.width,
              height: MediaQuery.of(context).size.height/2.5,
              decoration: BoxDecoration(
-               image:DecorationImage( image: AssetImage('images/header_estetica.png')),
-          //     image:DecorationImage( image: novoProduto.getapplogotipo),
+               image:DecorationImage( image: produto.getAppImage),
                gradient: LinearGradient(
                  begin: Alignment.topCenter,
                  end: Alignment.bottomCenter,
                  colors: [
-                   Colors.amber[100],
-                   Colors.amber[400],
+                   produto.getPrimaryCor,
+                   produto.getSecondaryCor
                  ]
                ),
                borderRadius: BorderRadius.only(
@@ -73,11 +77,11 @@ class LPS_Login extends StatelessWidget {
                   
                    width: 230,
                    child: TextFormField(
-                     cursorColor: Colors.amber,
+                     cursorColor: produto.getPrimaryCor,
                      keyboardType: TextInputType.emailAddress,
                    decoration: InputDecoration(
-                   hintStyle: TextStyle(color: Colors.black),
-                   icon: Icon(Icons.email_outlined,  color: Colors.black),
+                 //  hintStyle: TextStyle(color: produto.textCor),
+                   icon: Icon(Icons.email_outlined,  color: produto.getIconCor),
                    hintText: 'Email',
                    ),
                   
@@ -104,10 +108,11 @@ class LPS_Login extends StatelessWidget {
                   Container(
                    width: 230,
                    child: TextFormField(
-                   cursorColor: Colors.amberAccent,
+                   cursorColor: produto.getPrimaryCor,
                    obscureText: true,
                    decoration: InputDecoration(
-                   icon: Icon(Icons.vpn_key_outlined,  color: Colors.black),
+                  // hintStyle: TextStyle(color: produto.textCor),
+                   icon: Icon(Icons.vpn_key_outlined,  color: produto.getIconCor),
                    hintText: 'Senha',
                    ),
                    
@@ -124,10 +129,24 @@ class LPS_Login extends StatelessWidget {
               ],
             ),
           ),
-                SizedBox(height: 10),
+
+              new Container(
+                width: 150,
+
+                child:Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                SizedBox(height: 30),
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
-                child: Text('Entrar'),
-                color: Colors.amberAccent[100],
+                 child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Entrar", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
+                            ],
+                          )),
+                color: produto.getComponentCor,
                 onPressed: () async{
 
                   if(flogin.currentState.validate()){
@@ -136,21 +155,37 @@ class LPS_Login extends StatelessWidget {
                   Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
                 
                   }
-
-                  
-
               },
-             ),
+              shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(50.0))),
+                ],
+            ),
+          ),
 
+            new Container(
+                width: 150,
+
+                child:Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
                 RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
-                child: Text('Inscrever-se'),
-                color: Colors.amberAccent[100],
-                onPressed: (){
-                signUpCliente(context);
+                 child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Inscrever-se", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
+                            ],
+                          )),
+                color: produto.getComponentCor,
+                onPressed: () async{
+                   signUpCliente(context);
               },
-             ),
-
-             
+              shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(50.0))),
+                ],
+            ),
+          ),             
          ],
        ),
      ),
@@ -220,8 +255,8 @@ void signUpCliente(BuildContext context){
                               Navigator.of(context).pop();
                             },
 
-                            color: Colors.amberAccent,
-                            child: Text('Inscrever', style: TextStyle(color: Colors.black)),
+                            color: produto.getTextCor,
+                            child: Text('Inscrever', style: TextStyle(color: produto.getTextCor)),
             ),
           ],
         );
