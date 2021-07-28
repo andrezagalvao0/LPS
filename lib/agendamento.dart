@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:intl/intl.dart';
 
 import 'models/produto.dart';
 
@@ -21,10 +22,11 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
   String profissional_selecionado;
   String servico_selecionado;
   DateTime data_selecionada;
+  String data_formatada;
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
-  //Produto produto = new Produto("Estetica");
-  Produto produto = new Produto("Estetica");
+  
+  Produto produto = new Produto(1); // produto 2 da LPS
  
 
  
@@ -55,7 +57,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
               SizedBox(height: 10.0),            
               SizedBox(height: 10.0),
               StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection("Profissionais").snapshots(),
+                  stream: Firestore.instance.collection(produto.getUrlFuncionarios).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
                       const Text("Aguarde");
@@ -103,7 +105,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
                     SizedBox(height: 20.0),
                     StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection("Servicos").snapshots(),
+                  stream: Firestore.instance.collection(produto.getUrlServicos).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
                       const Text("Aguarde");
@@ -171,7 +173,11 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                        theme: ThemeData(primarySwatch:Colors.amber),
                        );
 
-                       data_selecionada = data;                   
+                       data_selecionada = data;  
+                       data_formatada = DateFormat("dd/MM/yyyy").format(data_selecionada).toString();  
+                       
+
+
                      
                     }),
 
@@ -215,7 +221,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                        adicionar_agendamento(context,
                                             profissional_selecionado,
                                             servico_selecionado,
-                                            data_selecionada,
+                                            data_formatada,
                                             horario_selecionado);
 
                         alerta_agendamento(context);
@@ -238,10 +244,10 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
   void adicionar_agendamento(BuildContext context, 
                              String profissional, 
                              String servico, 
-                             DateTime data, 
+                             String data, 
                              String horario) async{
     
-    await   Firestore.instance.collection("Agendamento").add({
+    await   Firestore.instance.collection(produto.getUrlAgendamento).add({
       
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),

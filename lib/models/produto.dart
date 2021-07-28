@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class Produto{
 
+int id_produto;
 Color appBarCor;
 Color appCor;
 Color iconCor;
@@ -17,14 +18,25 @@ Color decorationSecondaryColor;
 Color decorationDateColor;
 AssetImage appImage;
 AssetImage appImageService;
+// configurações dos caminhos do firebase
+String url_produto;
+String url_agendamento;
+String url_servicos;
+String url_funcionarios;
+
 
 //
 
 // recebe uma identificação sobre qual esquema de aparencia sera exibida de acordo com o resultado enviado pelo firebase
-// Estetica, Fisioterapia, Advocacia
-Produto(String refProduto){
 
-    if(refProduto == 'Advocacia'){
+// 1 - Advocacia
+// 2 - Estetica
+// 3 - Fisioterapia
+
+Produto(int refProduto){
+
+    if(refProduto == 1){
+     this.id_produto = 1;
      this.componentCor =  Colors.blue[50];
      this.iconCor = Colors.blue[800]; 
      this.textCor = Colors.blue[800];
@@ -36,11 +48,14 @@ Produto(String refProduto){
      this.decorationDateColor = Colors.blue;
      this.appImage = AssetImage("assets/images/header_advocacia.png");
      this.appImageService = AssetImage("assets/images/header_advocacia.png");
+     //
+     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Agendamento";
+     this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
+     this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
   }
 
-
-  
-  if(refProduto == 'Estetica'){
+  if(refProduto == 2){
+     this.id_produto = 2;
      this.componentCor =  Colors.amberAccent;
      this.iconCor = Colors.black; 
      this.textCor = Colors.black;
@@ -52,23 +67,39 @@ Produto(String refProduto){
      this.decorationDateColor = Colors.amber;
      this.appImage = AssetImage('assets/images/header_estetica.png');
      this.appImageService = AssetImage('assets/images/service_header.png');
+     
+     this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Agendamento";
+     this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
+     this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Servicos";
+
   }
 
-    if(refProduto == 'Fisioterapia'){
+    if(refProduto == 3){
+     this.id_produto = 3;
      this.componentCor =  Colors.white;
      this.iconCor = Colors.green[800]; 
      this.textCor = Colors.green[800];
      this.appBarCor  = Colors.green[800];
      this.appCor   = Colors.green;
      this.fundoCor = Colors.green[50];
-     this.decorationPrimaryColor   = Colors.green[50];
+     this.decorationPrimaryColor   = Colors.white;
      this.decorationSecondaryColor = Colors.green[100];
      this.decorationDateColor = Colors.green;
      this.appImage = AssetImage('assets/images/header_fisioterapia.png');
      this.appImageService = AssetImage('assets/images/header_fisioterapia.png');
+     //
+     this.url_agendamento = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Agendamento";
+     this.url_funcionarios = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Funcionarios";
+     this.url_servicos = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Servicos";
+
+
+     
   }
 
 }
+  int get getIdProduto{
+    return this.id_produto;
+  }
   Color get getPrimaryCor{
     return this.decorationPrimaryColor;
   }
@@ -111,6 +142,18 @@ Produto(String refProduto){
 
   AssetImage get getAppImageService{
     return this.appImageService;
+  }
+
+  String get getUrlAgendamento{
+    return this.url_agendamento;
+  }
+
+  String get getUrlServicos{
+    return this.url_servicos;
+  }
+
+  String get getUrlFuncionarios{
+    return this.url_funcionarios;
   }
   
 }

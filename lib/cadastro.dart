@@ -22,13 +22,13 @@ void main() async {
 // ignore: camel_case_types
 class LPS_Cadastro extends StatelessWidget{
   
-  Produto produto = new Produto("Estetica");
+  Produto produto = new Produto(1); // produto 2 da LPS
 
  
  @override
  Widget build(BuildContext context){  
 
-     Firestore.instance.collection('Produto_Feature/Estetica').getDocuments().then((value){
+     Firestore.instance.collection('/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC').getDocuments().then((value){
        value.documents.forEach((element) {
        print(element.data);
     //  habilitar_cliente = element.data['start'];
@@ -48,7 +48,7 @@ class LPS_Cadastro extends StatelessWidget{
      ),
 
      body: StreamBuilder(
-       stream: Firestore.instance.collection('Produto_Feature/Estetica/Cadastro').snapshots(),
+       stream: Firestore.instance.collection('/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC').snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,

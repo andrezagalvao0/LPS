@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lps_ufs_tcc/models/select_product.dart';
 import 'agendamento.dart';
 import 'cadastro.dart';
 import 'login.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main(){
   
- Produto produto = new Produto("Estetica");
+Produto produto = new Produto(1); // produto 2 da LPS
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -30,13 +31,13 @@ void main(){
 
     // criar o metodo interruptor da Linha de Produto
     title: 'Login',
-    home: LPS_Login(),
+    home: LPS_Select_App(),
 )); // Executa a Tela Principal do Aplicativo
 }
 
 class Homescreen extends StatelessWidget{
   
-  Produto produto = new Produto("Estetica");
+  Produto produto = new Produto(1); // produto 2 da LPS
 
 
  @override
@@ -168,7 +169,7 @@ class Homescreen extends StatelessWidget{
      
      // implementação dos serviços da linha de produto utilizando cards
 body:  StreamBuilder(
-       stream: Firestore.instance.collection("Agendamento").snapshots(),
+       stream: Firestore.instance.collection(produto.getUrlAgendamento).snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -193,9 +194,7 @@ body:  StreamBuilder(
            var item = snapshot.data.documents[i].data;
 
            return Container(
-
-  
-
+             
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: <Color>[
                      produto.getPrimaryCor,
