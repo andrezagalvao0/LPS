@@ -67,7 +67,7 @@ Produto(int refProduto){
      this.decorationDateColor = Colors.amber;
      this.appImage = AssetImage('assets/images/header_estetica.png');
      this.appImageService = AssetImage('assets/images/service_header.png');
-     
+     //
      this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Agendamento";
      this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
      this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Servicos";
@@ -91,9 +91,6 @@ Produto(int refProduto){
      this.url_agendamento = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Agendamento";
      this.url_funcionarios = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Funcionarios";
      this.url_servicos = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Servicos";
-
-
-     
   }
 
 }

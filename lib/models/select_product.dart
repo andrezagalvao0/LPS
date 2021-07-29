@@ -61,7 +61,7 @@ class LPS_Select_App extends StatelessWidget{
                         icon: Image.asset("assets/images/header_advocacia.png"),
                         iconSize: 150,
                         onPressed: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
+                //          Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
                         },
                       ), 
                      ),
@@ -87,7 +87,7 @@ class LPS_Select_App extends StatelessWidget{
                         icon: Image.asset("assets/images/header_fisioterapia.png"),
                         iconSize: 150,
                         onPressed: () {
-                           Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
+                //           Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
                         },
                       ),
                      ),

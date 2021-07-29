@@ -28,7 +28,6 @@ Produto produto = new Produto(1); // produto 2 da LPS
            const Locale("pt") // Portuguese
       ],
 
-
     // criar o metodo interruptor da Linha de Produto
     title: 'Login',
     home: LPS_Select_App(),
@@ -118,7 +117,7 @@ class Homescreen extends StatelessWidget{
              },
            ),
 
-          ListTile(
+             ListTile(
              key: ValueKey('chave_notificacoes'),
              title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.notifications,  color: produto.getIconCor),
@@ -130,7 +129,7 @@ class Homescreen extends StatelessWidget{
              },
            ),
 
-          ListTile(
+             ListTile(
              key: ValueKey('chave_configuracoes'),
              title: Text('Configurações', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.settings,  color: produto.getIconCor),
@@ -141,7 +140,7 @@ class Homescreen extends StatelessWidget{
              },
            ),
           
-          ListTile(
+             ListTile(
              key: ValueKey('chave_sobre'),
              title: Text('Sobre', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.info,  color: produto.getIconCor),
@@ -152,7 +151,7 @@ class Homescreen extends StatelessWidget{
              },
            ),
           
-          ListTile(
+             ListTile(
              key: ValueKey('chave_sair'),
              title: Text('Sair', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.exit_to_app, color: produto.getIconCor),

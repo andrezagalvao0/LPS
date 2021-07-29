@@ -26,7 +26,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
-  Produto produto = new Produto(1); // produto 2 da LPS
+  Produto produto = new Produto(2); // produto 2 da LPS
  
 
  

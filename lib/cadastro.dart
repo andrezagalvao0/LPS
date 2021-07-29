@@ -22,7 +22,7 @@ void main() async {
 // ignore: camel_case_types
 class LPS_Cadastro extends StatelessWidget{
   
-  Produto produto = new Produto(1); // produto 2 da LPS
+  Produto produto = new Produto(2); // produto 2 da LPS
 
  
  @override
