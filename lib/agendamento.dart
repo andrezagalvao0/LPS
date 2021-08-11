@@ -26,7 +26,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
-  Produto produto = new Produto(2); // produto 2 da LPS
+  Produto produto = new Produto(); // produto 2 da LPS
  
 
  
@@ -148,53 +148,114 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         ],
                       );
                     }
-                return null;
+                  return null;
 
                   }),
+                  
+                  // Data Disponivel de Agendamento
+                  SizedBox(height: 20.0),
+                  StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection(produto.getUrlServicos).snapshots(),
+                  builder: (context, snapshot){
+                    if (!snapshot.hasData)
+                      const Text("Aguarde");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.documentID,
+                              style: TextStyle(color: produto.getTextCor),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.date_range,
+                              size: 40.0, color: produto.getIconCor),
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                                servico_selecionado = selectedCurrency;
+                              });
+                            },
+                            value: servico_selecionado,
+
+                            isExpanded: false,
+                            hint: new Text(
+                              "Selecione a Data",
+                              style: TextStyle(color: produto.getTextCor ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  return null;
+
+                  }),
+
+                   // Horario disponivel de Agendamento
+                  SizedBox(height: 20.0),
+                  StreamBuilder<QuerySnapshot>(
+                  stream: Firestore.instance.collection(produto.getUrlServicos).snapshots(),
+                  builder: (context, snapshot){
+                    if (!snapshot.hasData)
+                      const Text("Aguarde");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.documentID,
+                              style: TextStyle(color: produto.getTextCor),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.alarm,
+                              size: 40.0, color: produto.getIconCor),
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                                servico_selecionado = selectedCurrency;
+                              });
+                            },
+                            value: servico_selecionado,
+
+                            isExpanded: false,
+                            hint: new Text(
+                              "Selecione o Horario",
+                              style: TextStyle(color: produto.getTextCor ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  return null;
+
+                  }),
+
+
                  
                 new Container(
-                  child:Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-
-                    SizedBox(height: 30),
-                    new Text("Selecione a Data", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
-                    
-                    new IconButton(
-                    icon: Icon(Icons.date_range, size: 40.0, color: produto.getIconCor),
-                    onPressed: () async {
-
-                      DateTime data = await showRoundedDatePicker(
-                       context: context,
-                       initialDate: DateTime.now(),
-                       firstDate: DateTime(2021),
-                       lastDate: DateTime(2022),
-                       borderRadius: 10,
-                       theme: ThemeData(primarySwatch:Colors.amber),
-                       );
-
-                       data_selecionada = data;  
-                       data_formatada = DateFormat("dd/MM/yyyy").format(data_selecionada).toString();  
-                       
-
-
-                     
-                    }),
-
-                    SizedBox(height: 30),
-                    
-                    
-                    new Text("Selecione o Horario", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
-                    new IconButton(
-                    icon: Icon(Icons.alarm, size: 40.0, color: produto.getIconCor),
-                    onPressed: (){
-
-                     horario_selecionado =  abrir_opcao_horario(context) as String;
-                     
-                    }),
-                   ],
-                   
-                  ),
+                   /// colocar a logica do agendamento aqui do rascunho
                 ),  
 
               SizedBox(

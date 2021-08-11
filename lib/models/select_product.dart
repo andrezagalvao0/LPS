@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/empresa.dart';
 import 'package:lps_ufs_tcc/login.dart';
 import 'package:lps_ufs_tcc/models/feature.dart';
+import 'package:lps_ufs_tcc/models/produto.dart';
 
 
 
@@ -19,7 +20,7 @@ void main() async {
 
 
 class LPS_Select_App extends StatelessWidget{
-  
+
 
  // classe responsavel por apresentar os produtos da linha de produto de software 
  // para o dominio do Setor Terciario 
@@ -61,7 +62,8 @@ class LPS_Select_App extends StatelessWidget{
                         icon: Image.asset("assets/images/header_advocacia.png"),
                         iconSize: 150,
                         onPressed: () {
-                //          Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
+                          
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
                         },
                       ), 
                      ),
@@ -87,7 +89,7 @@ class LPS_Select_App extends StatelessWidget{
                         icon: Image.asset("assets/images/header_fisioterapia.png"),
                         iconSize: 150,
                         onPressed: () {
-                //           Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
+                           Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
                         },
                       ),
                      ),

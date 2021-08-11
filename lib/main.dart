@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/select_product.dart';
 import 'agendamento.dart';
 import 'cadastro.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main(){
   
-Produto produto = new Produto(1); // produto 2 da LPS
+Produto produto = new Produto(); // produto 2 da LPS
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -30,14 +31,13 @@ Produto produto = new Produto(1); // produto 2 da LPS
 
     // criar o metodo interruptor da Linha de Produto
     title: 'Login',
-    home: LPS_Select_App(),
+    home: LPS_Login(),
 )); // Executa a Tela Principal do Aplicativo
 }
 
 class Homescreen extends StatelessWidget{
   
-  Produto produto = new Produto(1); // produto 2 da LPS
-
+  Produto produto = new Produto(); // produto 2 da LPS
 
  @override
  Widget build(BuildContext context){
@@ -99,7 +99,7 @@ class Homescreen extends StatelessWidget{
              
              onTap: (){
                Navigator.pop(context);
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(),
                ));
              },
            ),
@@ -130,8 +130,8 @@ class Homescreen extends StatelessWidget{
            ),
 
              ListTile(
-             key: ValueKey('chave_configuracoes'),
-             title: Text('Configurações', style: TextStyle(color: produto.getTextCor)),
+             key: ValueKey('chave_empreendedor'),
+             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.settings,  color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){

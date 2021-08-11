@@ -11,7 +11,7 @@ class HomeNotify extends StatefulWidget {
 
 class _HomeNotifyState extends State<HomeNotify> {
 
-  Produto produto = new Produto(2); // produto 3 da LPS
+  Produto produto = new Produto(); // produto 3 da LPS
  
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();

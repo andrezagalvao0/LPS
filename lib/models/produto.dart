@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class Produto{
 
-int id_produto;
+int idProduto = 2;
 Color appBarCor;
 Color appCor;
 Color iconCor;
@@ -23,6 +23,8 @@ String url_produto;
 String url_agendamento;
 String url_servicos;
 String url_funcionarios;
+String url_clientes;
+static Color popup_color;
 
 
 //
@@ -33,10 +35,11 @@ String url_funcionarios;
 // 2 - Estetica
 // 3 - Fisioterapia
 
-Produto(int refProduto){
+Produto(){
 
-    if(refProduto == 1){
-     this.id_produto = 1;
+    if(idProduto == 1){
+     
+     popup_color = Colors.blue;
      this.componentCor =  Colors.blue[50];
      this.iconCor = Colors.blue[800]; 
      this.textCor = Colors.blue[800];
@@ -52,16 +55,17 @@ Produto(int refProduto){
      this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Agendamento";
      this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
      this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
+     this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
   }
 
-  if(refProduto == 2){
-     this.id_produto = 2;
+  if(idProduto == 2){
+     popup_color = Colors.amber;
      this.componentCor =  Colors.amberAccent;
      this.iconCor = Colors.black; 
      this.textCor = Colors.black;
      this.appBarCor  = Colors.amberAccent;
      this.appCor   = Colors.amberAccent;
-     this.fundoCor = Colors.amber.shade50;
+     this.fundoCor = Colors.white;
      this.decorationPrimaryColor   = Colors.amber[100];
      this.decorationSecondaryColor = Colors.amber[400];
      this.decorationDateColor = Colors.amber;
@@ -74,14 +78,14 @@ Produto(int refProduto){
 
   }
 
-    if(refProduto == 3){
-     this.id_produto = 3;
+    if(idProduto == 3){
+     popup_color = Colors.green;
      this.componentCor =  Colors.white;
      this.iconCor = Colors.green[800]; 
      this.textCor = Colors.green[800];
      this.appBarCor  = Colors.green[800];
      this.appCor   = Colors.green;
-     this.fundoCor = Colors.green[50];
+     this.fundoCor = Colors.white;
      this.decorationPrimaryColor   = Colors.white;
      this.decorationSecondaryColor = Colors.green[100];
      this.decorationDateColor = Colors.green;
@@ -93,12 +97,20 @@ Produto(int refProduto){
      this.url_servicos = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Servicos";
   }
 
+
 }
-  int get getIdProduto{
-    return this.id_produto;
+  // recebe o id do produto 
+  Future<void> setProduto(int id ) async {
+    this.idProduto = id;
   }
+
+ 
   Color get getPrimaryCor{
     return this.decorationPrimaryColor;
+  }
+
+  Color get getPopUpCor{
+    return popup_color;
   }
 
   Color get getSecondaryCor{
@@ -151,6 +163,10 @@ Produto(int refProduto){
 
   String get getUrlFuncionarios{
     return this.url_funcionarios;
+  }
+  
+  String get getUrlClientes{
+    return this.url_clientes;
   }
   
 }

@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 void main(){
   // inicializa cores
 
-   Produto produto = new Produto(2); // produto 2 da LPS
+   Produto produto = new Produto(); // produto 2 da LPS
   
 
   runApp(MaterialApp(
@@ -36,7 +36,7 @@ class LPS_Login extends StatelessWidget {
 
    final auth = FirebaseAuth.instance;
     
-     Produto produto = new Produto(2); // produto 2 da LPS
+     Produto produto = new Produto(); // produto 2 da LPS
  
 
   @override
