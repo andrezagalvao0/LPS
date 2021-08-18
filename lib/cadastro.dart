@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/empresa.dart';
 import 'package:lps_ufs_tcc/login.dart';
 import 'package:lps_ufs_tcc/models/feature.dart';
-import 'Cliente.dart';
+import 'cliente.dart';
 import 'funcionario.dart';
 import 'models/produto.dart';
 
