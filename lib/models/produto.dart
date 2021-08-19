@@ -24,6 +24,8 @@ String url_agendamento;
 String url_servicos;
 String url_funcionarios;
 String url_clientes;
+String url_empresas;
+String url_notificacoes;
 static Color popup_color;
 
 
@@ -56,6 +58,8 @@ Produto(){
      this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
      this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
      this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
+     this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
+     this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
   }
 
   if(idProduto == 2){
@@ -75,6 +79,10 @@ Produto(){
      this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Agendamento";
      this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
      this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Servicos";
+     this.url_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
+     this.url_empresas = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empresas";
+     this.url_notificacoes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Notificacoes";
+
 
   }
 
@@ -95,6 +103,9 @@ Produto(){
      this.url_agendamento = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Agendamento";
      this.url_funcionarios = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Funcionarios";
      this.url_servicos = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Servicos";
+     this.url_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
+     this.url_empresas = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empresas"; 
+     this.url_notificacoes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Notificacoes";
   }
 
 
@@ -167,6 +178,10 @@ Produto(){
   
   String get getUrlClientes{
     return this.url_clientes;
+  }
+
+  String get getUrlEmpresas{
+    return this.url_empresas;
   }
   
 }

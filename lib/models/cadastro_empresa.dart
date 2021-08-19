@@ -4,27 +4,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
-class LPS_Cadastro_Cliente2 extends StatefulWidget {
+class LPS_Cadastro_Empresa2 extends StatefulWidget {
   @override
-  LPS_Cadastro_C createState() => LPS_Cadastro_C();
+  LPS_Cadastro_E createState() => LPS_Cadastro_E();
 }
 
-class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
+class LPS_Cadastro_E extends State<LPS_Cadastro_Empresa2> {
   var selectedCurrency, selectedType;
 
-  String cliente_informado;
-  String email_informado;
-  String telefone_informado;
-  String senha_informado;
+  String empresa_informada;
+  String cnpj_informado;
 
   @required
-  var ct_nome_cliente = TextEditingController();
+  var ct_nome_empresa = TextEditingController();
   @required
-  var ct_email_cliente = TextEditingController();
-  @required
-  var ct_telefone_cliente = TextEditingController();
-  @required
-  var ct_senha = TextEditingController();
+  var ct_cnpj_empresa = TextEditingController();
+  
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
@@ -38,7 +33,7 @@ class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
           icon: Icon(Icons.home, color: produto.getIconCor),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Cadastro de Cliente',
+        title: Text('Cadastro de Empresa',
             style: TextStyle(color: produto.getTextCor)),
         backgroundColor: produto.getSecondaryCor,
       ),
@@ -51,54 +46,28 @@ class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
           children: <Widget>[
             SizedBox(height: 10.0),
 
-            // cadastro de clientes dos produtos da LPS
+            // cadastro de empresas dos produtos da LPS
             new TextFormField(
               decoration: InputDecoration(
                 icon: Icon(
-                  Icons.person,
+                  Icons.business,
                   color: produto.getIconCor,
                 ),
-                hintText: 'Informe o nome',
-                labelText: 'Nome',
+                hintText: 'Informe o nome da empresa',
+                labelText: 'Nome Empresa',
               ),
-              controller: ct_nome_cliente,
+              controller: ct_nome_empresa,
             ),
 
             new TextFormField(
               decoration: InputDecoration(
-                icon: Icon(
-                  Icons.email,
-                  color: produto.getIconCor,
-                ),
-                hintText: 'Informe o Email',
-                labelText: 'E-mail',
+                
+                hintText: 'Informe o cnpj',
+                labelText: 'CNPJ',
               ),
-              controller: ct_email_cliente,
+              controller: ct_cnpj_empresa,
             ),
 
-            new TextFormField(
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.phone,
-                  color: produto.getIconCor,
-                ),
-                hintText: 'Informe o telefone',
-                labelText: 'Telefone',
-              ),
-              controller: ct_telefone_cliente,
-            ),
-
-            new TextFormField(
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.security,
-                  color: produto.getIconCor,
-                ),
-                hintText: 'Informe uma senha',
-                labelText: 'Senha',
-              ),
-              controller: ct_senha,
-            ),
 
             SizedBox(
               height: 100.0,
@@ -121,12 +90,10 @@ class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
                           ],
                         )),
                     onPressed: () {
-                      adicionar_cliente(
+                      adicionar_empresa(
                           context,
-                          ct_nome_cliente.text,
-                          ct_email_cliente.text,
-                          ct_telefone_cliente.text,
-                          ct_senha.text);
+                          ct_nome_empresa.text,
+                          ct_cnpj_empresa.text);
 
                       alerta(context);
                     },
@@ -140,20 +107,15 @@ class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
     );
   }
 
-  void adicionar_cliente(BuildContext context, String cliente, String email,
-      String telefone, String senha) async {
-    await Firestore.instance.collection(produto.getUrlClientes).add({
-      'Cliente': cliente.toString(),
-      'E-mail': email.toString(),
-      'Telefone': telefone.toString(),
-      'Senha': senha.toString(),
+  void adicionar_empresa(BuildContext context, String empresa, String cnpj) async {
+    await Firestore.instance.collection(produto.getUrlEmpresas).add({
+      'Empresa': empresa.toString(),
+      'CNPJ': cnpj.toString()
     });
-    var cl_cliente = Firestore.instance.collection(produto.getUrlClientes);
-    cl_cliente.document(cliente).setData({
-      'Cliente': cliente.toString(),
-      'E-mail': email.toString(),
-      'Telefone': telefone.toString(),
-      'Senha': senha.toString(),
+    var cl_empresa = Firestore.instance.collection(produto.getUrlEmpresas);
+    cl_empresa.document(empresa).setData({
+      'Empresa': empresa.toString(),
+      'CNPJ': cnpj.toString()
     });
   }
 
