@@ -6,6 +6,7 @@ import 'package:lps_ufs_tcc/models/select_product.dart';
 import 'agendamento.dart';
 import 'cadastro.dart';
 import 'login.dart';
+import 'models/cadastro_empresa.dart';
 import 'models/notificacoes.dart';
 import 'models/produto.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -105,7 +106,11 @@ class Homescreen extends StatelessWidget{
              
              onTap: (){
                Navigator.pop(context);
+<<<<<<< HEAD
                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
+=======
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Empresa2(),
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
                ));
              },
            ),

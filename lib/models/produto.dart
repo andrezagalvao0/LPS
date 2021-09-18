@@ -36,7 +36,10 @@ String url_funcionarios;
 String url_clientes;
 String url_empresas;
 String url_notificacoes;
+<<<<<<< HEAD
 String url_config_features_cadastro; // possui a url responsavel pelo gerenciamento das features da lps como ativação e desativação 
+=======
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
 static Color popup_color;
 String profissional;
 String servicoSelecionado;
@@ -86,7 +89,10 @@ Produto(){
      this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
+<<<<<<< HEAD
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features"; 
+=======
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   }
 
   if(idProduto == 2){
@@ -113,6 +119,7 @@ Produto(){
      //
      this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Agendamento";
      this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
+<<<<<<< HEAD
      this.url_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
      this.url_empresas = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empresas";
      this.url_notificacoes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Notificacoes";
@@ -124,6 +131,12 @@ Produto(){
 
      this.url_id_agendamento_cliente = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
  
+=======
+     this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Servicos";
+     this.url_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
+     this.url_empresas = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empresas";
+     this.url_notificacoes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Notificacoes";
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
 
 
   }
@@ -157,6 +170,7 @@ Produto(){
      this.url_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
      this.url_empresas = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empresas"; 
      this.url_notificacoes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Notificacoes";
+<<<<<<< HEAD
      this.url_config_features_cadastro = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
      
   }
@@ -189,6 +203,8 @@ Produto(){
      this.url_funcionarios = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios";
      this.url_servicos = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Servicos";
      this.url_config_features_cadastro = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+=======
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   }
 
 
@@ -280,6 +296,7 @@ Produto(){
   String get getUrlEmpresas{
     return this.url_empresas;
   }
+<<<<<<< HEAD
 
   String get getUrlConfigFeatureCadastro{
     return this.url_config_features_cadastro;
@@ -301,6 +318,8 @@ Produto(){
   String get getServicoSelecionado{
     return this.servicoSelecionado;
   }
+=======
+>>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   
   String get getDataSelecionada{
     return this.dataSelecionada;
