@@ -2,6 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lps_ufs_tcc/agendamento.dart';
+import 'package:lps_ufs_tcc/agendamento_sem_cadastro.dart';
 import 'package:lps_ufs_tcc/main.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,7 +64,7 @@ class LPS_Login extends StatelessWidget {
                    produto.getSecondaryCor
                  ]
                ),
-               borderRadius: BorderRadius.only(
+                 borderRadius: BorderRadius.only(
                  bottomLeft: Radius.circular(50),
                  bottomRight: Radius.circular(50),
                ),
@@ -152,11 +154,17 @@ class LPS_Login extends StatelessWidget {
                 onPressed: () async{
 
                   if(flogin.currentState.validate()){
-                
-                  auth.signInWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
-                
+
+                    Future<FirebaseUser> result = signIn(ct_email.text, ct_senha.text);
+
+                    if(result != null){
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen()));
+                    }else{
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento()));
+                    }
+
                   }
+                  
               },
               shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0))),
@@ -187,7 +195,35 @@ class LPS_Login extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(50.0))),
                 ],
             ),
-          ),             
+          ),         
+
+          // recurso de acessibilidade agendar sem cadastro
+          SizedBox(height: 50),
+              new Container(
+                width: 220,
+
+                child:Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                RaisedButton(   // // executa uma rota para a tela principal ao clicar no botão
+                 child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Agendar sem Cadastro", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
+                            ],
+                          )),
+                color: produto.getComponentCor,
+                onPressed: () {
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Sem_Cadastro()));
+              },
+              shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(50.0))),
+                ],
+            ),
+          ),      
+
          ],
        ),
      ),
@@ -253,17 +289,71 @@ void signUpCliente(BuildContext context){
                           FlatButton(
                            //Utilização do Firebase
                             onPressed: () async {
-                           await  auth.createUserWithEmailAndPassword(email: ct_email.text, password: ct_senha.text);
+                                  
+                                  auth.createUserWithEmailAndPassword(email: ct_email.text, password: ct_senha.text).then((value) => {
+                                  Firestore.instance.collection(produto.getUrlClientes).document(value.user.uid).setData({}),
+                                  // cria um documento com a identificacao do cliente no cloud firestore
+
+                              });
+                             
                               Navigator.of(context).pop();
                             },
 
-                            color: produto.getTextCor,
+                            color: produto.getComponentCor,
                             child: Text('Inscrever', style: TextStyle(color: produto.getTextCor)),
             ),
           ],
         );
         });
       }
+
+    Future<FirebaseUser> signIn(String email, String password) async {
+       try{
+
+        FirebaseUser user = await 
+        FirebaseAuth.instance.signInWithEmailAndPassword(
+         email: email, password: password) as FirebaseUser;
+         
+
+          user = await auth.currentUser();                 
+          // criação de um profissional no firestore
+           Firestore.instance.collection(produto.getUrlIdAgendamentoCliente).document(user.uid)
+                                   .setData({});
+
+
+//          var temp = produto.getUrlIdAgendamentoCliente;
+//          Firestore.instance.collection(temp+"/"+user.uid+"/Agendamentos").add({
+//            "id":user.uid,// 
+//          });
+
+
+         return user; // id reconhecido
+       }catch(e){
+         return null; // id nao reconhecido
+       }
+    }
+
+    Future<FirebaseUser> ConfigUserId(FirebaseUser user) async {
+       try{
+
+          FirebaseUser user = await auth.currentUser();
+                             
+          // criação de um profissional no firestore
+          await Firestore.instance.collection(produto.getUrlIdAgendamentoCliente).document(user.uid)
+                                   .setData({});
+
+
+          var temp = produto.getUrlIdAgendamentoCliente;
+          await Firestore.instance.collection(temp+"/"+user.uid).add({
+            "id":user.uid,// 
+          });
+
+         print(user.uid.toString());
+         return user; // id reconhecido
+       }catch(e){
+         return null; // id nao reconhecido
+       }
+    }
 
 
 }

@@ -30,12 +30,9 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
   
   Produto produto = new Produto(); // produto 2 da LPS
  
-
- 
   @override
   Widget build(BuildContext context) {
    
-
     return Scaffold(
         appBar: AppBar(
                     leading: IconButton(
@@ -48,8 +45,7 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
 
         backgroundColor: produto.getFundoCor,
         body:Container(
-          
-          
+
           child:Form(
           key: _formKeyValue,
 
@@ -252,22 +248,38 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
                              String data, 
                              String horario) async{
     
-    await Firestore.instance.collection(produto.getUrlFuncionarios)
-                                   .add({  
-                                  'Profissional': profissional.toString(),
-                                  'Servico': servico.toString(),
-                                  'Data': data.toString(),
-                                  'Horario': horario.toString(),
-                               });
-    var cl_profissional = Firestore.instance.collection(produto.getUrlFuncionarios);
-        cl_profissional.document(profissional).setData(
-          {
-                                  'Profissional': profissional.toString(),
-                                  'Servico': servico.toString(),
-                                  'Data': data.toString(),
-                                  'Horario': horario.toString(),
-          }
-        );
+    // criação de um profissional no firestore
+    await Firestore.instance.collection(produto.getUrlFuncionarios).document(profissional)
+                                   .setData({});
+                                   
+    var temp = produto.getUrlFuncionarios;
+    await Firestore.instance.collection(temp+"/"+profissional+"/Servicos").add({
+      "Servico":servico,
+    });
+
+    await Firestore.instance.collection(temp+"/"+profissional+"/Data").add({
+      "Data":data,
+    });
+
+    await Firestore.instance.collection(temp+"/"+profissional+"/Horario").add({
+      "Horario":horario,
+    });
+
+
+
+                        
+
+
+
+ //   var cl_profissional = Firestore.instance.collection(produto.getUrlFuncionarios);
+ //       cl_profissional.document(profissional).setData(
+//        {
+ //                                 'Profissional': profissional.toString(),
+ //                                 'Servico': servico.toString(),
+ //                                 'Data': data.toString(),
+ //                                 'Horario': horario.toString(),
+ //         }
+ //       );
   }
 
   void alerta(BuildContext contex){
@@ -277,7 +289,7 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
                    return AlertDialog(
                      backgroundColor: produto.getPrimaryCor,
                      
-                     title: Text("Concluido", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
+                     title: Text("Cadastro Realizado com Sucesso!", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
                      actions: <Widget>[
 
                           FlatButton(

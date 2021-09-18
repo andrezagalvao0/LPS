@@ -61,8 +61,7 @@ class LPS_Select_App extends StatelessWidget{
                      child: IconButton(
                         icon: Image.asset("assets/images/header_advocacia.png"),
                         iconSize: 150,
-                        onPressed: () {
-                          
+                        onPressed: () { 
                           Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
                         },
                       ), 

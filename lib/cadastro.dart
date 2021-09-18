@@ -28,7 +28,7 @@ class LPS_Cadastro extends StatelessWidget{
  @override
  Widget build(BuildContext context){  
 
-     Firestore.instance.collection('/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC').getDocuments().then((value){
+     Firestore.instance.collection(produto.getUrlConfigFeatureCadastro).getDocuments().then((value){
        value.documents.forEach((element) {
        print(element.data);
     //  habilitar_cliente = element.data['start'];
@@ -48,7 +48,7 @@ class LPS_Cadastro extends StatelessWidget{
      ),
 
      body: StreamBuilder(
-       stream: Firestore.instance.collection('/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC').snapshots(),
+       stream: Firestore.instance.collection(produto.getUrlConfigFeatureCadastro).snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -77,7 +77,7 @@ class LPS_Cadastro extends StatelessWidget{
                   // retorna um objeto do tipo feature com os seus atributos em forma de botão
                   // status, nome
                   
-                 child: new Feature(item['nome'], item['enabled']),
+                 child: new Feature( item['enabled'], item['nome']),
                   
                  );
                 },

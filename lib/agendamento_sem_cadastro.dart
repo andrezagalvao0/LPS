@@ -10,12 +10,12 @@ import 'models/produto.dart';
 
 
 
-class LPS_Agendamento extends StatefulWidget {
+class LPS_Agendamento_Sem_Cadastro extends StatefulWidget {
   @override
-  _LPS_Agendamento createState() => _LPS_Agendamento();
+  _LPS_Agendamento_Sem_Cadastro createState() => _LPS_Agendamento_Sem_Cadastro();
 }
 
-class _LPS_Agendamento extends State<LPS_Agendamento> {
+class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> {
   var selectedCurrency, selectedType;
   
   String horario_selecionado;
@@ -33,7 +33,6 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
   
   Produto produto = new Produto(); // produto 2 da LPS
  
-
  
   @override
   Widget build(BuildContext context) {
@@ -320,9 +319,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                              String data, 
                              String horario) async{
     
-
-       String temp = produto.getUrlIdAgendamentoCliente;
-       Firestore.instance.collection(temp+"/Agendamentos").add({
+    await   Firestore.instance.collection(produto.getUrlAgendamento).add({
       
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
@@ -363,5 +360,6 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
          });
         }
       }
+
   
 }

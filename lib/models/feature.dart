@@ -2,8 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/empresa.dart';
 import 'package:lps_ufs_tcc/funcionario.dart';
+import 'package:lps_ufs_tcc/models/cadastro_empresa.dart';
+import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
 
 import '../cliente.dart';
+import 'cadastro_cliente.dart';
 import 'produto.dart';
 
 // ignore: must_be_immutable
@@ -13,8 +16,9 @@ class Feature extends Container{
   bool status;
   String name;
   IconData icn;
+  Produto produto = new Produto(); // produto 2 da LPS
 
-  Feature(String name, bool enabled){
+  Feature(bool enabled, String name){
     this.name = name;
     this.status = enabled;
 
@@ -22,16 +26,16 @@ class Feature extends Container{
       this.icn = Icons.calendar_today;
     }
 
-    if(this.name == "Cliente"){
+    if(this.name == "Clientes"){
       this.icn = Icons.person;
     }
 
     if(this.name == "Empresa"){
-      this.icn = Icons.work;
+      this.icn = Icons.store;
     }
 
-    if(this.name == "Funcionario"){
-      this.icn = Icons.support;
+    if(this.name == "Funcionarios"){
+      this.icn = Icons.work;
     }
 
     if(this.name == "Notificacoes"){
@@ -64,26 +68,26 @@ class Feature extends Container{
               
                 child: Column(
                     children: <Widget>[
-                      Icon(this.icn, size: 100, color: Colors.black,),
-                      Text(this.name, style: TextStyle(fontSize: 20, color: Colors.black), ),
+                      Icon(this.icn, size: 100, color: produto.getIconCor),
+                      Text(this.name, style: TextStyle(fontSize: 20, color: produto.getTextCor), ),
                     ]
                   ),
-                color: Colors.amberAccent,
+                color: produto.getComponentCor,
                onPressed:(){
                  
                  //Se o nome da feature for "" va para a tela correspondente
-                 if(this.name == "Cliente"){
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Cliente(),
+                 if(this.name == "Clientes"){
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente(),
                    ));
                   }
 
                  if(this.name == "Empresa"){
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Empresa(),
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa(),
                    ));
                   }
 
-                 if(this.name == "Funcionario"){
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Funcionario(),
+                 if(this.name == "Funcionarios"){
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(),
                    ));
                   }
               },

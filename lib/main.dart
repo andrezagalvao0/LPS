@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/select_product.dart';
@@ -9,8 +10,10 @@ import 'models/notificacoes.dart';
 import 'models/produto.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
-void main(){
+main(){
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  
   
 Produto produto = new Produto(); // produto 2 da LPS
 
@@ -38,9 +41,12 @@ Produto produto = new Produto(); // produto 2 da LPS
 class Homescreen extends StatelessWidget{
   
   Produto produto = new Produto(); // produto 2 da LPS
+  
 
  @override
  Widget build(BuildContext context){
+
+  String temp = produto.getUrlIdAgendamentoCliente;
 
    return Scaffold(
 
@@ -52,13 +58,13 @@ class Homescreen extends StatelessWidget{
      ),
       
      drawer: Drawer(
-
+       
        child: Container(
 
          decoration: BoxDecoration(
            gradient: LinearGradient(colors: <Color>[
-                 produto.getPrimaryCor,
-                 produto.getSecondaryCor,
+                 produto.getDrawerDecorationPrimaryColor,
+                 produto.getDrawerDecorationSecondaryColor,
                  
              ])
          ),
@@ -69,8 +75,8 @@ class Homescreen extends StatelessWidget{
               decoration: BoxDecoration(
                  image: DecorationImage( image: produto.getAppImage),
                  gradient: LinearGradient(colors: <Color>[
-                 produto.getPrimaryCor,
-                 produto.getSecondaryCor,
+                 produto.getDrawerHeaderPrimaryColor,
+                 produto.getDrawerHeaderSecondaryColor,
              ])
             ),
            ),
@@ -99,12 +105,11 @@ class Homescreen extends StatelessWidget{
              
              onTap: (){
                Navigator.pop(context);
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(),
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
                ));
              },
            ),
           
-
              ListTile(
              key: ValueKey('chave_agendamento'),
              title: Text('Agendamento', style: TextStyle(color: produto.getTextCor)),
@@ -117,28 +122,28 @@ class Homescreen extends StatelessWidget{
              },
            ),
 
-             ListTile(
-             key: ValueKey('chave_notificacoes'),
-             title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.notifications,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
-               ));
-             },
-           ),
+   //          ListTile(
+   //          key: ValueKey('chave_notificacoes'),
+   //          title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
+   //          leading: Icon(Icons.notifications,  color: produto.getIconCor),
+   //          trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+   //          onTap: (){
+   //            Navigator.pop(context);
+   //            Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
+   //            ));
+   //          },
+   //        ),
 
-             ListTile(
-             key: ValueKey('chave_empreendedor'),
-             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.settings,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-          //     Navigator.push(context,MaterialPageRoute(builder: (context) => MyApp(),
-          //     ));
-             },
-           ),
+   //          ListTile(
+   //          key: ValueKey('chave_empreendedor'),
+   //          title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
+   //          leading: Icon(Icons.store,  color: produto.getIconCor),
+   //          trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+   //          onTap: (){
+      //         Navigator.push(context,MaterialPageRoute(builder: (context) => MyApp(),
+        //       ));
+  //           },
+  //         ),
           
              ListTile(
              key: ValueKey('chave_sobre'),
@@ -168,7 +173,9 @@ class Homescreen extends StatelessWidget{
      
      // implementação dos serviços da linha de produto utilizando cards
 body:  StreamBuilder(
-       stream: Firestore.instance.collection(produto.getUrlAgendamento).snapshots(),
+       
+       
+       stream: Firestore.instance.collection(temp+"/Agendamentos").snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
