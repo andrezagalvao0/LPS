@@ -29,6 +29,9 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   String dataAgendamentoProfissional;
   String horaarioProfissional;
 
+  @required
+  var ct_nome_cliente = TextEditingController();
+
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
   Produto produto = new Produto(); // produto 2 da LPS
@@ -60,8 +63,38 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
             children: <Widget>[
               SizedBox(height: 10.0),            
               SizedBox(height: 10.0),
+
+            // cadastro de clientes dos produtos da LPS
+            new TextFormField(
               
-              StreamBuilder<QuerySnapshot>(
+              decoration: InputDecoration(
+                icon: Icon(
+                  Icons.person,
+                  color: produto.getIconCor,
+                  size: 40.0,
+                ),
+                
+                hintText: 'Nome do Cliente',
+                labelText: 'Nome do Cliente',
+              ),
+              
+              controller: ct_nome_cliente,
+            ),
+            
+            
+             
+              SizedBox(height:50.0),
+              new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child:StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlFuncionarios).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -83,7 +116,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.person,
+                          Icon(Icons.school,
                               size: 40.0, color: produto.getIconCor),
                           SizedBox(width: 50.0),
                           DropdownButton(
@@ -111,10 +144,20 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                    return Container();
                   }
                 ),
+              ),
 
                   SizedBox(height: 20.0),
+                  new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
 
-                  new StreamBuilder<QuerySnapshot>(    
+              child:StreamBuilder<QuerySnapshot>(    
             
                  // exibir os serviços                    
                   stream: Firestore.instance.collection(produto.getUrlServicos).snapshots(),
@@ -162,11 +205,21 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                     }
                   return Container();
 
-                  }),
+                  })),
                   
                   // Data Disponivel de Agendamento
                   SizedBox(height: 20.0),
-                  StreamBuilder<QuerySnapshot>(
+                  new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child: StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlDataAgendamento).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -213,11 +266,21 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                     }
                   return Container();
 
-                  }),
+                  })),
 
                    // Horario disponivel de Agendamento
                   SizedBox(height: 20.0),
-                  StreamBuilder<QuerySnapshot>(
+                  new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child:StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlHorarioAgendamento).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -263,14 +326,14 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                     }
                   return Container();
 
-                  }),
+                  })),
                      
                 new Container(
                    /// colocar a logica do agendamento aqui do rascunho
                 ),  
 
               SizedBox(
-                height: 250.0,
+                height: 150.0,
               ),
                     
               Column(
@@ -291,6 +354,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                       onPressed: (){
 
                        adicionar_agendamento(context,
+                                            ct_nome_cliente,
                                             profissional_selecionado,
                                             servico_selecionado,
                                             data_selecionada,
@@ -313,18 +377,21 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   }
 
  // metodo utilizado para adicionar um agendamento do cliente ao firebase
-  void adicionar_agendamento(BuildContext context, 
+  void adicionar_agendamento(BuildContext context,
+                             TextEditingController nomeCliente,
                              String profissional, 
                              String servico, 
                              String data, 
                              String horario) async{
     
     await   Firestore.instance.collection(produto.getUrlAgendamento).add({
-      
+
+                                  'Nome':nomeCliente.text,
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
+
                                });
   }
 

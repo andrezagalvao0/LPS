@@ -4,20 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
-<<<<<<< HEAD
 class LPS_Cad_Cliente extends StatefulWidget {
-=======
-class LPS_Cadastro_Cliente2 extends StatefulWidget {
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   @override
   LPS_Cadastro_C createState() => LPS_Cadastro_C();
 }
 
-<<<<<<< HEAD
 class LPS_Cadastro_C extends State<LPS_Cad_Cliente> {
-=======
-class LPS_Cadastro_C extends State<LPS_Cadastro_Cliente2> {
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   var selectedCurrency, selectedType;
 
   String cliente_informado;

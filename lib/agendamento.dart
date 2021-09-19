@@ -61,8 +61,17 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
             children: <Widget>[
               SizedBox(height: 10.0),            
               SizedBox(height: 10.0),
-              
-              StreamBuilder<QuerySnapshot>(
+
+              new Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child:StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlFuncionarios).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -111,12 +120,20 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     }
                    return Container();
                   }
-                ),
+                )),
 
                   SizedBox(height: 20.0),
+                      new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
 
-                  new StreamBuilder<QuerySnapshot>(    
-            
+              child:StreamBuilder<QuerySnapshot>(    
                  // exibir os serviços                    
                   stream: Firestore.instance.collection(produto.getUrlServicos).snapshots(),
                   builder: (context, snapshot){
@@ -163,11 +180,21 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     }
                   return Container();
 
-                  }),
+                  })),
                   
                   // Data Disponivel de Agendamento
                   SizedBox(height: 20.0),
-                  StreamBuilder<QuerySnapshot>(
+                  new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child:StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlDataAgendamento).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -214,11 +241,21 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     }
                   return Container();
 
-                  }),
+                  })),
 
                    // Horario disponivel de Agendamento
                   SizedBox(height: 20.0),
-                  StreamBuilder<QuerySnapshot>(
+                      new Container(
+             
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: <Color>[
+                     produto.getPrimaryCor,
+                     produto.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+              child:StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance.collection(produto.getUrlHorarioAgendamento).snapshots(),
                   builder: (context, snapshot){
                     if (!snapshot.hasData)
@@ -264,7 +301,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                     }
                   return Container();
 
-                  }),
+                  })),
                      
                 new Container(
                    /// colocar a logica do agendamento aqui do rascunho
@@ -322,7 +359,9 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
     
 
        String temp = produto.getUrlIdAgendamentoCliente;
-       Firestore.instance.collection(temp+"/Agendamentos").add({
+       String t = "XAKLCxtkAAcYyd4Qy5XEO0Z0Oq33";
+       produto.setAgendamentoCliente(t);
+       Firestore.instance.collection(temp+t+"/Agendamento").add({
       
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),

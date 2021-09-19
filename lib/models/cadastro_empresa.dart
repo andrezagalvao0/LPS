@@ -4,20 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
-<<<<<<< HEAD
 class LPS_Cad_Empresa extends StatefulWidget {
-=======
-class LPS_Cadastro_Empresa2 extends StatefulWidget {
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   @override
   LPS_Cadastro_E createState() => LPS_Cadastro_E();
 }
 
-<<<<<<< HEAD
 class LPS_Cadastro_E extends State<LPS_Cad_Empresa> {
-=======
-class LPS_Cadastro_E extends State<LPS_Cadastro_Empresa2> {
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
   var selectedCurrency, selectedType;
 
   String empresa_informada;
@@ -69,14 +61,10 @@ class LPS_Cadastro_E extends State<LPS_Cadastro_Empresa2> {
 
             new TextFormField(
               decoration: InputDecoration(
-<<<<<<< HEAD
                 icon: Icon(
                   Icons.vpn_key,
                   color: produto.getIconCor,
                 ),
-=======
-                
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
                 hintText: 'Informe o cnpj',
                 labelText: 'CNPJ',
               ),

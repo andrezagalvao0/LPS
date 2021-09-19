@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lps_ufs_tcc/agendamento_sem_cadastro.dart';
+import 'package:lps_ufs_tcc/models/agendamento_sem_cadastro_lista.dart';
 import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/select_product.dart';
 import 'agendamento.dart';
@@ -106,11 +108,9 @@ class Homescreen extends StatelessWidget{
              
              onTap: (){
                Navigator.pop(context);
-<<<<<<< HEAD
+
                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
-=======
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Empresa2(),
->>>>>>> d0f760530c1f251543a4dec94ff923c7ee85bdc8
+
                ));
              },
            ),
@@ -139,16 +139,16 @@ class Homescreen extends StatelessWidget{
    //          },
    //        ),
 
-   //          ListTile(
-   //          key: ValueKey('chave_empreendedor'),
-   //          title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
-   //          leading: Icon(Icons.store,  color: produto.getIconCor),
-   //          trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-   //          onTap: (){
-      //         Navigator.push(context,MaterialPageRoute(builder: (context) => MyApp(),
-        //       ));
-  //           },
-  //         ),
+             ListTile(
+             key: ValueKey('chave_empreendedor'),
+             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.store,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+             onTap: (){
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_sem_Cadastro_Lista(),
+               ));
+             },
+           ),
           
              ListTile(
              key: ValueKey('chave_sobre'),
@@ -180,7 +180,7 @@ class Homescreen extends StatelessWidget{
 body:  StreamBuilder(
        
        
-       stream: Firestore.instance.collection(temp+"/Agendamentos").snapshots(),
+       stream: Firestore.instance.collection(temp).snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
