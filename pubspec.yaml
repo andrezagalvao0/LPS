@@ -37,6 +37,8 @@ dependencies:
   firebase_auth:
   flutter_rounded_date_picker: ^2.0.2
   intl: ^0.17.0
+  shared_preferences: ^0.4.3
+  
 
   
   

@@ -1,10 +1,9 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lps_ufs_tcc/empresa.dart';
-import 'package:lps_ufs_tcc/login.dart';
 import 'package:lps_ufs_tcc/models/feature.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
+import 'package:lps_ufs_tcc/views/login.dart';
 
 
 
@@ -92,9 +91,8 @@ class LPS_Select_App extends StatelessWidget{
                         },
                       ),
                      ),
-                  ),
-                  
-                  ],
+                  ), 
+                ],
  
                  ),
                ),

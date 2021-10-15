@@ -54,6 +54,8 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
 
            var item = snapshot.data.documents[i].data;
 
+           produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
+
            return Container(
              
                   decoration: BoxDecoration(
@@ -68,6 +70,14 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
 
                    child: Container(
                      height: 150,
+                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: produto.getAppThumbnailService(item["Servico"]),
+                               fit: BoxFit.fitHeight,
+                               alignment: AlignmentDirectional.centerEnd,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                     ),
                      child: Column(  
                      
                       children: [
@@ -99,6 +109,12 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                            children: [
                            Icon(Icons.home_repair_service, color: produto.getIconCor),
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
+                      ),
+                        Row(
+                           children: [
+                           Icon(Icons.verified, color: produto.getIconCor),
+                           Text(produto.getStatusAgendamento,style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
                          Expanded(

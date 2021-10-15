@@ -1,12 +1,8 @@
 // classe responsavel pela criação da feature no app
 import 'package:flutter/material.dart';
-import 'package:lps_ufs_tcc/empresa.dart';
-import 'package:lps_ufs_tcc/funcionario.dart';
-import 'package:lps_ufs_tcc/models/cadastro_empresa.dart';
-import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
-
-import '../cliente.dart';
-import 'cadastro_cliente.dart';
+import 'package:lps_ufs_tcc/views/cadastro_cliente.dart';
+import 'package:lps_ufs_tcc/views/cadastro_empresa.dart';
+import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'produto.dart';
 
 // ignore: must_be_immutable

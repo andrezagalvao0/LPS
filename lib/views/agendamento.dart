@@ -191,6 +191,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         ],
                       );
                     }
+
                   return Container();
 
                   })),
@@ -251,6 +252,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                         ],
                       );
                     }
+
                   return Container();
 
                   })),
@@ -340,7 +342,15 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                           )),
                       onPressed: (){
 
+                       // adiciona o agendamento ao respectivo cliente
                        adicionar_agendamento(context,
+                                            profissional_selecionado,
+                                            servico_selecionado,
+                                            data_selecionada,
+                                            horario_selecionado);
+
+                       // adiciona o agendamento ao respectivo Empreendedor Administrador
+                       adicionar_agendamento_empreendedor(context,
                                             profissional_selecionado,
                                             servico_selecionado,
                                             data_selecionada,
@@ -359,6 +369,29 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
       ),
       
     );  
+  }
+
+// metodo responsavel pelo armazenamento do agendamento junto ao empreendedor
+ // ignore: non_constant_identifier_names
+ void adicionar_agendamento_empreendedor(BuildContext context, 
+                             String profissional, 
+                             String servico, 
+                             String data, 
+                             String horario) async{
+    
+        // captura dos dados do utilizador pelo sharedpreferences
+        SharedPreferences dadosUtilizador = await SharedPreferences.getInstance();
+        this.uid = dadosUtilizador.getString("uid");
+
+        // gravação dos dados no diretorio agendamento
+        
+        await Firestore.instance.collection(produto.getUrlEmpreendedor).add({
+                                  'ID':this.uid,
+                                  'Profissional': profissional.toString(),
+                                  'Servico': servico.toString(),
+                                  'Data': data.toString(),
+                                  'Horario': horario.toString(),
+                               });
   }
 
  // metodo utilizado para adicionar um agendamento do cliente ao firebase

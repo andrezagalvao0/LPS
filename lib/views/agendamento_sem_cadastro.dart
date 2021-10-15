@@ -359,7 +359,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                             servico_selecionado,
                                             data_selecionada,
                                             horario_selecionado);
-
+                       // o status de agendamento vai ate o firebase de forma implicita
                         alerta_agendamento(context);
 
 
@@ -391,6 +391,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
+                                  'Status_Agendamento':false,
 
                                });
   }

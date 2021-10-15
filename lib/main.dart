@@ -1,24 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:lps_ufs_tcc/agendamento_sem_cadastro.dart';
-import 'package:lps_ufs_tcc/models/agendamento_sem_cadastro_lista.dart';
-import 'package:lps_ufs_tcc/models/cadastro_profissional.dart';
+import 'package:lps_ufs_tcc/views/agendamento.dart';
+import 'package:lps_ufs_tcc/views/agendamento_sem_cadastro.dart';
+import 'package:lps_ufs_tcc/views/agendamento_sem_cadastro_lista.dart';
+import 'package:lps_ufs_tcc/views/cadastro.dart';
+import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/select_product.dart';
-import 'agendamento.dart';
-import 'cadastro.dart';
-import 'login.dart';
-import 'models/cadastro_empresa.dart';
+import 'package:lps_ufs_tcc/views/empreendedor.dart';
+import 'package:lps_ufs_tcc/views/empreendedor_menu.dart';
+import 'package:lps_ufs_tcc/views/login.dart';
 import 'models/notificacoes.dart';
 import 'models/produto.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // biblioteca utilizada para capturar os dados do utilizador logado
 
-main(){
-  
+
+
+
+void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
   
-  
-Produto produto = new Produto(); // produto 2 da LPS
+  Produto produto = new Produto(); // produto 2 da LPS
+
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -41,16 +46,20 @@ Produto produto = new Produto(); // produto 2 da LPS
 )); // Executa a Tela Principal do Aplicativo
 }
 
+// ignore: must_be_immutable
 class Homescreen extends StatelessWidget{
   
   Produto produto = new Produto(); // produto 2 da LPS
-  
+  String uid;
+
+  Homescreen({Key key, this.uid}) : super(key: key); // recebe o uid do utilizador 
 
  @override
  Widget build(BuildContext context){
-
-  String temp = produto.getUrlIdAgendamentoCliente;
-
+     
+     var item = null;
+  
+   
    return Scaffold(
 
      appBar: AppBar(
@@ -60,7 +69,7 @@ class Homescreen extends StatelessWidget{
        backgroundColor: produto.getSecondaryCor,
      ),
       
-     drawer: Drawer(
+     drawer: Drawer( //
        
        child: Container(
 
@@ -84,21 +93,20 @@ class Homescreen extends StatelessWidget{
             ),
            ),
             
-           // lista de features principais da linha de produto de software
-            
-
-             ListTile(
-             key: ValueKey('chave_inicio'),
-             title: Text('Inicio', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.home,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+           // lista de features principais da linha de produto de software 
+                     
+  //           ListTile(
+  //           key: ValueKey('chave_inicio'),
+  //           title: Text("Inicio", style: TextStyle(color: produto.getTextCor)),
+  //           leading: Icon(Icons.home,  color: produto.getIconCor),
+  //           trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              
-             onTap: (){
-               Navigator.pop(context);
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(),
-               ));
-             },
-           ),
+  //           onTap: (){
+  //               Navigator.pop(context);
+  //               Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(uid: shp.getString("uid"),),
+  //             ));
+  //           },
+  //         ),
 
              ListTile(
              key: ValueKey('chave_cadastro'),
@@ -107,8 +115,7 @@ class Homescreen extends StatelessWidget{
              trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              
              onTap: (){
-               Navigator.pop(context);
-
+                 Navigator.pop(context);
                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
 
                ));
@@ -127,25 +134,25 @@ class Homescreen extends StatelessWidget{
              },
            ),
 
-   //          ListTile(
-   //          key: ValueKey('chave_notificacoes'),
-   //          title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
-   //          leading: Icon(Icons.notifications,  color: produto.getIconCor),
-   //          trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-   //          onTap: (){
-   //            Navigator.pop(context);
-   //            Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
-   //            ));
-   //          },
-   //        ),
-
              ListTile(
+             key: ValueKey('chave_notificacoes'),
+             title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.notifications,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
+               ));
+             },
+           ),
+
+            ListTile(
              key: ValueKey('chave_empreendedor'),
              title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.store,  color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
              onTap: (){
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_sem_Cadastro_Lista(),
+                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu(),
                ));
              },
            ),
@@ -174,13 +181,12 @@ class Homescreen extends StatelessWidget{
         ],
        )
      ),
-     ),
+    ),
      
      // implementação dos serviços da linha de produto utilizando cards
 body:  StreamBuilder(
        
-       
-       stream: Firestore.instance.collection(temp).snapshots(),
+       stream: Firestore.instance.collection(produto.getUrlIdAgendamentoCliente+'/'+this.uid+'/Agendamento').orderBy("Data").snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -197,13 +203,13 @@ body:  StreamBuilder(
          if(snapshot.data.documents.length == 0){
              return Center(child: Text('Nenhum Agendamento Existente'));
          }
-         
+
          return ListView.builder(
            itemCount: snapshot.data.documents.length,
            itemBuilder: (BuildContext context, int i) {
 
-           var item = snapshot.data.documents[i].data;
-
+             var item = snapshot.data.documents[i].data;
+          
            return Container(
              
                   decoration: BoxDecoration(
@@ -218,12 +224,20 @@ body:  StreamBuilder(
 
                    child: Container(
                      height: 150,
+                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: produto.getAppThumbnailService(item["Servico"]),
+                               fit: BoxFit.fitHeight,
+                               alignment: AlignmentDirectional.centerEnd,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                     ),
                      child: Column(  
-                     
+                      crossAxisAlignment: CrossAxisAlignment.start, // responsavel por alinhar a esquerda o icone do estabelecimento
                       children: [
                         Row(
                            children: [
-                           Icon(Icons.person, color: produto.getIconCor),
+                           Icon(Icons.school, color: produto.getIconCor),
                            Text(item["Profissional"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
@@ -249,7 +263,10 @@ body:  StreamBuilder(
                           flex: 3,
                           child: Image(
                             image: produto.getAppImageService,
+                           // alignment: AlignmentDirectional.topStart,
+                           
                           ),
+                          
                        ),
                       ],
                      ),
@@ -257,7 +274,6 @@ body:  StreamBuilder(
                    //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
                  );
                 },
-
               );
              },
            ),
@@ -265,6 +281,7 @@ body:  StreamBuilder(
     );
     
   }
+
 }
 
 
