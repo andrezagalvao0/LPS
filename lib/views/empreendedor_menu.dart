@@ -37,7 +37,7 @@ class LPS_Empreendedor_Menu extends StatelessWidget{
                 icon: Icon(Icons.home, color: produto.getIconCor),
               onPressed: () => Navigator.of(context).pop(),
          ), 
-       title: Text('Clientes Agendados', style: TextStyle(color: produto.getTextCor)),
+       title: Text('Área dos Agendamentos', style: TextStyle(color: produto.getTextCor)),
        backgroundColor: produto.getSecondaryCor,  
      ),
 
@@ -49,7 +49,8 @@ class LPS_Empreendedor_Menu extends StatelessWidget{
 
            // botoes de agendamentos de clientes cadastrado e clientes sem cadastro
             new Container(
-                width: 300,
+                width: 350,
+                height: 100,
 
                 child:Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +61,7 @@ class LPS_Empreendedor_Menu extends StatelessWidget{
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text("Clientes com Cadastrado", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
+                              Text("Agendamentos dos Clientes Cadastrados", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
                             ],
                           )),
                 color: produto.getComponentCor,
@@ -74,7 +75,7 @@ class LPS_Empreendedor_Menu extends StatelessWidget{
           ),         
 
              new Container(
-                width: 300,
+                width: 350,
 
                 child:Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,7 +86,7 @@ class LPS_Empreendedor_Menu extends StatelessWidget{
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Text("Clientes sem Cadastro", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
+                              Text("Agendamentos dos Clientes sem Cadastro", style: TextStyle(fontSize: 14.0, color: produto.getTextCor)),
                             ],
                           )),
                 color: produto.getComponentCor,

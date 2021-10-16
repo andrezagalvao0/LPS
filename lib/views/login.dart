@@ -254,6 +254,17 @@ void signUpCliente(BuildContext context){
                    children: <Widget>[
 
                     SizedBox(height: 5),
+                     Text('Nome'),
+                     TextFormField(
+                       decoration: InputDecoration(
+                         hintText: ('Ex. João, José'),
+                           border: OutlineInputBorder(
+                           borderRadius: BorderRadius.circular(10),
+                         ),
+                       ),
+                       controller: ct_nome,
+                     ),
+
                      Text('Email'),
                      TextFormField(
                        decoration: InputDecoration(
@@ -293,10 +304,16 @@ void signUpCliente(BuildContext context){
                                   
                                   SharedPreferences dadosUtilizador = await SharedPreferences.getInstance();
                                   auth.createUserWithEmailAndPassword(email: ct_email.text, password: ct_senha.text).then((value) => {
-                                  Firestore.instance.collection(produto.getUrlClientes).document(value.user.uid).setData({}),
+                                  Firestore.instance.collection(produto.getUrlClientes).document(value.user.uid).setData({
+                                    'nome':ct_nome.text,
+                                    'uid':value.user.uid,
+                                  }),
                                   // cria um documento com a identificacao do cliente no cloud firestore
                                   // cria um diretorio unico para o agendamento daquele utilizador
                                   dadosUtilizador.setString('uid', value.user.uid),
+                                  dadosUtilizador.setString('Nome', ct_nome.text),
+                                  alerta_Inscricao(context),
+
 
                               });
                              
@@ -338,6 +355,27 @@ void signUpCliente(BuildContext context){
       Future<void> criarDiretorios(BuildContext context, String url) async{
         await Firestore.instance.collection(url).document("Agendamento").setData({
           'Ativo':true,
+        });
+      }
+
+  void alerta_Inscricao(BuildContext context){
+
+      showDialog(context: context, 
+                 builder: (BuildContext context){
+                   return AlertDialog(
+                     backgroundColor: produto.getPrimaryCor,
+                     
+                     title: Text("Cadastro Realizado com Sucesso!", style: TextStyle(fontSize: 18, color: produto.getTextCor)),
+                     actions: <Widget>[
+
+                          FlatButton(
+                            onPressed: ()=> Navigator.of(context).pop(),
+                           
+                            child: Text('Concluido', style: TextStyle(color: produto.getTextCor)),
+                          ),
+                            
+          ],
+         );
         });
       }
 

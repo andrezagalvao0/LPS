@@ -391,7 +391,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
-                                  'Status_Agendamento':false,
+                               //   'Status_Agendamento':true,
 
                                });
   }

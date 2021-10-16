@@ -112,7 +112,7 @@ Produto(){
      this.appImage = AssetImage('assets/images/header_estetica.png');
      this.appImageService = AssetImage('assets/images/service_header.png');
      //
-     this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Agendamento_Sem_Cadastro";
+     this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendamento_sem_Cadastro";
      this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
      this.url_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
      this.url_empresas = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empresas";
@@ -123,7 +123,7 @@ Produto(){
      this.url_data_agendamento = "/Produtos/Estetica";
      this.url_horario_agendamento = "/Produtos/Estetica";
      this.url_id_agendamento_cliente = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
-     this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features/Empreendedor";
+     this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
      
   }
@@ -419,6 +419,11 @@ Produto(){
 // recebe o nome do servico e retorna uma miniatura da imagem associada ao servico
    AssetImage getAppThumbnailService(String servico) {
 
+    if(servico == "Avaliação"){
+       this.thumbnail_servico = AssetImage("assets/images/avaliacao__estetica_servico.jpg");
+       return this.thumbnail_servico;
+     }
+
     if(servico == "Sobrancelhas"){
        this.thumbnail_servico = AssetImage("assets/images/sobrancelhas_servico.jpeg");
        return this.thumbnail_servico;
@@ -462,10 +467,49 @@ Produto(){
     
   }
 
+  // funcoes de carregamento das features direto do firebase
+  ListTile CarregarFeaturesMenu(String item){ // recebe um item lido do firestore Firebase
+
+  if(item == 'Cadastro'){
   
+  return ListTile(
+             title: Text('Cadastro', style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.add,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){},
+           );
+         }
 
+  if(item == 'Agendamento'){
+  
+  return ListTile(
+             title: Text('Agendamento', style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.calendar_today,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){},
+           );
+         }  
 
+  if(item == 'Notificações'){
+  
+  return ListTile(
+             title: Text('Notificações', style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.notifications,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){},
+           );
+         }
 
+  if(item == 'Empreendedor'){
+  
+  return ListTile(
+             title: Text('Empreendedor', style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.store,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){},
+           );
+         }    
+  }
 }
 
 // classe responsavel por apresentar as features disponiveis de acordo com o firebase

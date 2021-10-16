@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +60,7 @@ class Homescreen extends StatelessWidget{
  Widget build(BuildContext context){
      
      var item = null;
-  
+    
    
    return Scaffold(
 
@@ -92,22 +94,29 @@ class Homescreen extends StatelessWidget{
              ])
             ),
            ),
-            
-           // lista de features principais da linha de produto de software 
-                     
-  //           ListTile(
-  //           key: ValueKey('chave_inicio'),
-  //           title: Text("Inicio", style: TextStyle(color: produto.getTextCor)),
-  //           leading: Icon(Icons.home,  color: produto.getIconCor),
-  //           trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             
-  //           onTap: (){
-  //               Navigator.pop(context);
-  //               Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(uid: shp.getString("uid"),),
-  //             ));
-  //           },
-  //         ),
+        
+        new StreamBuilder(  
+        stream: Firestore.instance.collection(produto.getUrlConfigFeatures).snapshots(),
+        builder: (
+         BuildContext context,
+         AsyncSnapshot<QuerySnapshot> snapshot,
+       ) {
+          if(snapshot.hasError){
+             return Center(child: Text('Error: ${snapshot.error}'));
+         }
 
+         if(snapshot.connectionState == ConnectionState.waiting){
+             return Center(child: CircularProgressIndicator());
+         }
+
+         if(snapshot.data.documents.length == 0){
+             return Center(child: Text('Nenhuma Feature Encontrada'));
+         }
+
+         return Container();
+
+       }),
+  
              ListTile(
              key: ValueKey('chave_cadastro'),
              title: Text('Cadastro', style: TextStyle(color: produto.getTextCor)),
@@ -173,11 +182,10 @@ class Homescreen extends StatelessWidget{
              title: Text('Sair', style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.exit_to_app, color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right, color: produto.getIconCor),
-             onTap: (){
-             //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
-             //  ));
-             },
+             onTap: () => exit(0),
            ),
+          
+
         ],
        )
      ),
@@ -281,6 +289,7 @@ body:  StreamBuilder(
     );
     
   }
+
 
 }
 

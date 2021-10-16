@@ -382,11 +382,13 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
         // captura dos dados do utilizador pelo sharedpreferences
         SharedPreferences dadosUtilizador = await SharedPreferences.getInstance();
         this.uid = dadosUtilizador.getString("uid");
+        String nome = dadosUtilizador.getString("nome");
 
         // gravação dos dados no diretorio agendamento
         
         await Firestore.instance.collection(produto.getUrlEmpreendedor).add({
                                   'ID':this.uid,
+                                  'Nome':nome,
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
@@ -420,6 +422,8 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
                                });
+                               
+                               
   }
 
   void alerta_agendamento(BuildContext contex){

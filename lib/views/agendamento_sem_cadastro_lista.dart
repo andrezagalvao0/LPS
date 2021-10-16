@@ -19,7 +19,7 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
 
      appBar: AppBar(
        leading: IconButton(
-                    icon: Icon(Icons.home, color: produto.getIconCor),
+                    icon: Icon(Icons.arrow_back, color: produto.getIconCor),
                     onPressed: () => Navigator.of(context).pop(),
        ),
        iconTheme: IconThemeData(
@@ -57,7 +57,7 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
            produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
 
            return Container(
-             
+                  height: 150,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: <Color>[
                      produto.getPrimaryCor,
@@ -79,7 +79,7 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                               borderRadius: BorderRadius.circular(10),
                      ),
                      child: Column(  
-                     
+                      crossAxisAlignment: CrossAxisAlignment.start, // responsavel por alinhar a esquerda o icone do estabelecimento
                       children: [
                         Row(
                            children: [
@@ -111,12 +111,12 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
-                        Row(
-                           children: [
-                           Icon(Icons.verified, color: produto.getIconCor),
-                           Text(produto.getStatusAgendamento,style: TextStyle(color: produto.getTextCor, fontSize: 18)),
-                        ],
-                      ),
+           //             Row(
+           //                children: [
+           //                Icon(Icons.verified, color: produto.getIconCor),
+           //                Text(produto.getStatusAgendamento,style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+           //             ],
+           //           ),
                          Expanded(
                           flex: 3,
                           child: Image(
