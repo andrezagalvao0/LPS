@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -35,10 +36,21 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
   Produto produto = new Produto(); // produto 2 da LPS
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  String mensagem = '';
+
  
+    @override
+     void initState() {
+      getObterTokenFirebase;
+      super.initState();
+     }
+
  
   @override
   Widget build(BuildContext context) {
+
+ 
    
 
     return Scaffold(
@@ -352,7 +364,8 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                             ],
                           )),
                       onPressed: (){
-
+                      
+                       getObterTokenFirebase; // utilizado para as notificações
                        adicionar_agendamento(context,
                                             ct_nome_cliente,
                                             profissional_selecionado,
@@ -384,14 +397,18 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                              String data, 
                              String horario) async{
     
+    
     await   Firestore.instance.collection(produto.getUrlAgendamento).add({
 
+                             
                                   'Nome':nomeCliente.text,
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
+                                  'ID_Dispositivo':  produto.getIdDispositivo, //salva no firebase o id do dispsitivo que sera usado para as notificações
                                   'Horario': horario.toString(),
-                               //   'Status_Agendamento':true,
+                                  'Status_Agendamento':produto.getStatusAgendamento.toString(), // salva no firebase o status de agendamento
+                                 
 
                                });
   }
@@ -428,6 +445,11 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
          });
         }
       }
+
+    String get getObterTokenFirebase {
+    firebaseMessaging.subscribeToTopic('all');
+    firebaseMessaging.getToken().then((token) => produto.setIdDispositivo(token));
+  }
 
   
 }

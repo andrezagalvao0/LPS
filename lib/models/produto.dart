@@ -2,11 +2,18 @@
 
 import 'dart:core';
 import 'dart:core';
+import 'dart:io';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lps_ufs_tcc/views/agendamento.dart';
+import 'package:lps_ufs_tcc/views/cadastro.dart';
+import 'package:lps_ufs_tcc/views/empreendedor_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'notificacoes.dart';
 
 class Produto{
 
@@ -48,6 +55,7 @@ String url_data_agendamento;
 String url_horario_agendamento;
 
 String status_agendamento;
+String id_dispositivo;
 
 //
 String url_id_cliente;
@@ -68,6 +76,7 @@ Produto(){
     if(idProduto == 1){
      
      popup_color = Colors.blue;
+     this.status_agendamento = "Aguardando";
      this.componentCor =  Colors.blue[50];
      this.iconCor = Colors.blue[800]; 
      this.textCor = Colors.blue[800];
@@ -90,11 +99,13 @@ Produto(){
      this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
-     this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features"; 
+     this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
   }
 
   if(idProduto == 2){
      popup_color = Colors.amber;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
      this.componentCor =  Colors.amberAccent;
      this.iconCor = Colors.black; 
      this.textCor = Colors.black;
@@ -158,7 +169,7 @@ Produto(){
      this.url_data_agendamento = "/Produtos/Fisioterapia";
      this.url_horario_agendamento = "/Produtos/Fisioterapia";
      this.url_id_agendamento_cliente = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
-     this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features/Empreendedor";
+     this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
      
   }
@@ -202,8 +213,16 @@ Produto(){
     return this.url_config_features;
   }
 
+  String get getIdDispositivo{
+    return this.id_dispositivo;
+  }
+
   String get getStatusAgendamento{
     return this.status_agendamento;
+  }
+
+  void setIdDispositivo(String id){
+    this.id_dispositivo = id;
   }
 
   Future<void> setProduto(int id ) async {
@@ -335,9 +354,9 @@ Produto(){
     return this.url_empreendedor_agendamentos_clientes;
   }
 
-  Future<void> StatusAgendamento(bool b) async {
+  Future<void> StatusAgendamento(String b) async {
     
-    if(b == false){
+    if(b == "Aguardando"){
       this.status_agendamento = "Aguardando";
     }else{
       this.status_agendamento = "Confirmado";
@@ -419,8 +438,8 @@ Produto(){
 // recebe o nome do servico e retorna uma miniatura da imagem associada ao servico
    AssetImage getAppThumbnailService(String servico) {
 
-    if(servico == "Avaliação"){
-       this.thumbnail_servico = AssetImage("assets/images/avaliacao__estetica_servico.jpg");
+    if(servico == "Endermoterapia"){
+       this.thumbnail_servico = AssetImage("assets/images/endermoterapia_servico.jpg");
        return this.thumbnail_servico;
      }
 
@@ -434,7 +453,7 @@ Produto(){
        return this.thumbnail_servico;
      }
 
-    if(servico == "Depilacao"){
+    if(servico == "Depilação"){
        this.thumbnail_servico = AssetImage("assets/images/depilacao_servico.jpg");
        return this.thumbnail_servico;
      }
@@ -468,51 +487,176 @@ Produto(){
   }
 
   // funcoes de carregamento das features direto do firebase
-  ListTile CarregarFeaturesMenu(String item){ // recebe um item lido do firestore Firebase
+  ListTile CarregarFeaturesMenu(BuildContext context,String item, bool enabled) { // recebe um item lido do firestore Firebase
 
-  if(item == 'Cadastro'){
+  if(item == "Cadastro" && enabled == true){
   
-  return ListTile(
-             title: Text('Cadastro', style: TextStyle(color: this.getTextCor)),
+  return new ListTile(
+             title: Text("Cadastro", style: TextStyle(color: this.getTextCor)),
              leading: Icon(Icons.add,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){},
+             onTap: (){
+                Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro()));
+             },
            );
          }
+         else
 
-  if(item == 'Agendamento'){
+  if(item == "Agendamento" && enabled == true){
   
-  return ListTile(
-             title: Text('Agendamento', style: TextStyle(color: this.getTextCor)),
+  return new ListTile(
+             title: Text("Agendamento", style: TextStyle(color: this.getTextCor)),
              leading: Icon(Icons.calendar_today,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){},
-           );
-         }  
-
-  if(item == 'Notificações'){
-  
-  return ListTile(
-             title: Text('Notificações', style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.notifications,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){},
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento()));
+             },
            );
          }
+         else 
 
-  if(item == 'Empreendedor'){
+  if(item == "Notificações" && enabled == true){
   
-  return ListTile(
+  return new ListTile(
+             title: Text("Notificações", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.notifications,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify()));
+             },
+           );
+         }else
+
+  if(item == "Empreendedor" && enabled == true){
+  
+  return new ListTile(
              title: Text('Empreendedor', style: TextStyle(color: this.getTextCor)),
              leading: Icon(Icons.store,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu()));
+             },
+           );
+         }else
+
+  if(item == "Sobre" && enabled == true){
+  
+  return new ListTile(
+             title: Text("Sobre", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.info,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){},
            );
-         }    
-  }
+         }else 
+
+  if(item == "Sair" && enabled == true){
+  
+  return new ListTile(
+             title: Text("Sair", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.exit_to_app,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: () => exit(0),
+           );
+         }       
+      }  
+
+      // metodos responsaveis pelo gerenciamento das confirmações dos agendamentos
+// action dialog
+  void ConfirmarAgendamento(BuildContext context, var item) {
+  // configura os botões
+
+  Widget btn_cancelar = FlatButton(
+    child: Text("Cancelar"),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget btn_confirmar = FlatButton(
+    child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+    onPressed:  () {},
+  );
+  Widget btn_excluir = FlatButton(
+    child: Text("Excluir", style: TextStyle(color: Colors.red)),
+    onPressed:  () {},
+  );
+  // configura o  AlertDialog
+  AlertDialog alert = AlertDialog(
+    
+    backgroundColor: this.getPrimaryCor,
+    title: Text("Detalhes"),
+
+    content: Text("Profissional: "+item["Profissional"]+"\n"+
+                  "Serviço: "+item["Servico"]+"\n"+
+                  "Data: "+item["Data"]+"\n"+
+                  "Horario: "+item["Horario"]),
+    actions: [
+      btn_cancelar,
+      btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
+      btn_excluir, 
+    ],
+  );
+  // exibe o dialogo
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+ void ConfirmarNotificacaoAgendamento(BuildContext context, var item) {
+  // configura os botões
+
+  Widget btn_cancelar = FlatButton(
+    child: Text("Cancelar"),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget btn_confirmar = FlatButton(
+    child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+    onPressed:  () {},
+  );
+  Widget btn_excluir = FlatButton(
+    child: Text("Excluir", style: TextStyle(color: Colors.red)),
+    onPressed:  () {},
+  );
+  // configura o  AlertDialog
+  AlertDialog alert = AlertDialog(
+    
+    backgroundColor: this.getPrimaryCor,
+    title: Text("Detalhes"),
+
+    content: Text("Cliente: "+item["nome"]+"\n"+
+                  "Profissional: "+item["Profissional"]+"\n"+
+                  "Serviço: "+item["Servico"]+"\n"+
+                  "Data: "+item["Data"]+"\n"+
+                  "Horario: "+item["Horario"]+"\n"+
+                  "Situação: "+item["Status_Agendamento"]),
+    actions: [
+      btn_cancelar,
+      btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
+      btn_excluir, 
+    ],
+  );
+  // exibe o dialogo
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+    
+
 }
 
 // classe responsavel por apresentar as features disponiveis de acordo com o firebase
+
 
 
   

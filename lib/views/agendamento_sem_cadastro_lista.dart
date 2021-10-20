@@ -56,7 +56,15 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
 
            produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
 
-           return Container(
+           return InkWell(
+                  onLongPress:(){
+                  // print("Parabens Você Descobriu uma Feature!");
+                  produto.ConfirmarAgendamento(context, item);
+                  
+                  },
+                  child: new Ink(
+                     color: produto.getFundoCor,
+                     child:Container(
                   height: 150,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: <Color>[
@@ -111,32 +119,74 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
-           //             Row(
-           //                children: [
-           //                Icon(Icons.verified, color: produto.getIconCor),
-           //                Text(produto.getStatusAgendamento,style: TextStyle(color: produto.getTextCor, fontSize: 18)),
-           //             ],
-           //           ),
-                         Expanded(
-                          flex: 3,
-                          child: Image(
-                            image: produto.getAppImageService,
-                          ),
-                       ),
+                        Row(
+                           children: [
+                           Icon(Icons.notifications, color: produto.getIconCor),
+                           Text(item["Status_Agendamento"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                        ],
+                      ),
+         //                Expanded(
+         //                 flex: 3,
+         //                 child: Image(
+         //                   image: produto.getAppImageService,
+         //                 ),
+         //              ),
                       ],
                      ),
                    ),
                    //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
-                 );
-                },
+                  ),
+                 ),
+                );
+              },
 
               );
              },
            ),
         backgroundColor: produto.getFundoCor,
     );
-    
   }
+   void ConfirmarNotificacaoAgendamento(BuildContext context, var item) {
+  // configura os botões
+  
+  Widget btn_cancelar = FlatButton(
+    child: Text("Cancelar"),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget btn_confirmar = FlatButton(
+    child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+    onPressed:  () {},
+  );
+  Widget btn_excluir = FlatButton(
+    child: Text("Excluir", style: TextStyle(color: Colors.red)),
+    onPressed:  () {},
+  );
+  // configura o  AlertDialog
+  AlertDialog alert = AlertDialog(
+    
+    backgroundColor: produto.getPrimaryCor,
+    title: Text("Detalhes"),
+
+    content: Text("Profisional: "+item["Profissional"]+"\n"+
+                  "Serviço: "+item["Servico"]+"\n"+
+                  "Data: "+item["Data"]+"\n"+
+                  "Horario: "+item["Horario"]),
+    actions: [
+      btn_cancelar,
+      btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
+      btn_excluir, 
+    ],
+  );
+  // exibe o dialogo
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 }
 
 

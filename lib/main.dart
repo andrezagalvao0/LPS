@@ -113,36 +113,30 @@ class Homescreen extends StatelessWidget{
              return Center(child: Text('Nenhuma Feature Encontrada'));
          }
 
-         return Container();
+         return ListView.builder(
+              itemCount:snapshot.data.documents.length,
+              shrinkWrap: true,
+              itemBuilder: (context,i){
+               
+              return produto.CarregarFeaturesMenu(context,
+                                                    snapshot.data.documents[i]['nome'], 
+                                                    snapshot.data.documents[i]['enabled']);
+ 
+              },
+            );
+          }),
 
-       }),
-  
              ListTile(
-             key: ValueKey('chave_cadastro'),
-             title: Text('Cadastro', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.add,  color: produto.getIconCor),
+             key: ValueKey('chave_empreendedor'),
+             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.store,  color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             
              onTap: (){
-                 Navigator.pop(context);
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(),
-
+                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu(),
                ));
              },
            ),
-          
-             ListTile(
-             key: ValueKey('chave_agendamento'),
-             title: Text('Agendamento', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.calendar_today,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento(),
-               ));
-             },
-           ),
-
+            
              ListTile(
              key: ValueKey('chave_notificacoes'),
              title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
@@ -151,17 +145,6 @@ class Homescreen extends StatelessWidget{
              onTap: (){
                Navigator.pop(context);
                Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
-               ));
-             },
-           ),
-
-            ListTile(
-             key: ValueKey('chave_empreendedor'),
-             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.store,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu(),
                ));
              },
            ),
@@ -180,12 +163,11 @@ class Homescreen extends StatelessWidget{
              ListTile(
              key: ValueKey('chave_sair'),
              title: Text('Sair', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.exit_to_app, color: produto.getIconCor),
+             leading: Icon(Icons.exit_to_app_rounded, color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right, color: produto.getIconCor),
              onTap: () => exit(0),
            ),
-          
-
+  
         ],
        )
      ),
@@ -218,10 +200,17 @@ body:  StreamBuilder(
 
              var item = snapshot.data.documents[i].data;
           
-           return Container(
-             
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: <Color>[
+           return InkWell(
+                  onLongPress:(){
+                  // print("Parabens Você Descobriu uma Feature!");
+                  produto.ConfirmarAgendamento(context, item);
+                  
+                  },
+                  child: new Ink(
+                     color: produto.getFundoCor,
+                     child:Container(
+                     decoration: BoxDecoration(
+                     gradient: LinearGradient(colors: <Color>[
                      produto.getPrimaryCor,
                      produto.getSecondaryCor,
                     ]),
@@ -273,14 +262,15 @@ body:  StreamBuilder(
                             image: produto.getAppImageService,
                            // alignment: AlignmentDirectional.topStart,
                            
-                          ),
-                          
+                          ),   
                        ),
                       ],
                      ),
                    ),
                    //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
-                 );
+                 ),
+                ),
+                ); 
                 },
               );
              },
@@ -289,6 +279,8 @@ body:  StreamBuilder(
     );
     
   }
+
+  
 
 
 }

@@ -36,7 +36,7 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
     return Scaffold(
         appBar: AppBar(
                     leading: IconButton(
-                    icon: Icon(Icons.home, color: produto.getIconCor),
+                    icon: Icon(Icons.arrow_back, color: produto.getIconCor),
                     onPressed: () => Navigator.of(context).pop(),
                   ), 
              title: Text('Cadastro de Profissional', style: TextStyle(color: produto.getTextCor)),
