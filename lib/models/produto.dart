@@ -141,6 +141,8 @@ Produto(){
 
     if(idProduto == 3){
      popup_color = Colors.green;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
      this.componentCor =  Colors.white;
      this.iconCor = Colors.green[800]; 
      this.textCor = Colors.green[800];
@@ -176,6 +178,8 @@ Produto(){
 
     if(idProduto == 4){
      popup_color = Colors.white;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
      this.componentCor =  Colors.white;
      this.iconCor = Color.fromRGBO(225,132,124,5);//Colors.pink;
      this.textCor = Color.fromRGBO(225,132,124,5);//Colors.pink;
@@ -431,7 +435,7 @@ Produto(){
 
   Future<void> GravarDadosUtilizador(String id) async {
      this.dadosUtilizador = await SharedPreferences.getInstance();
-    this.dadosUtilizador.setString('uid', id); // armazena o valor do uid para recuperar na tela principal
+     this.dadosUtilizador.setString('uid', id); // armazena o valor do uid para recuperar na tela principal
     
   }
 
@@ -486,102 +490,53 @@ Produto(){
     
   }
 
-  // funcoes de carregamento das features direto do firebase
-  ListTile CarregarFeaturesMenu(BuildContext context,String item, bool enabled) { // recebe um item lido do firestore Firebase
-
-  if(item == "Cadastro" && enabled == true){
-  
-  return new ListTile(
-             title: Text("Cadastro", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.add,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){
-                Navigator.pop(context);
-                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro()));
-             },
-           );
-         }
-         else
-
-  if(item == "Agendamento" && enabled == true){
-  
-  return new ListTile(
-             title: Text("Agendamento", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.calendar_today,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento()));
-             },
-           );
-         }
-         else 
-
-  if(item == "Notificações" && enabled == true){
-  
-  return new ListTile(
-             title: Text("Notificações", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.notifications,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify()));
-             },
-           );
-         }else
-
-  if(item == "Empreendedor" && enabled == true){
-  
-  return new ListTile(
-             title: Text('Empreendedor', style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.store,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu()));
-             },
-           );
-         }else
-
-  if(item == "Sobre" && enabled == true){
-  
-  return new ListTile(
-             title: Text("Sobre", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.info,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: (){},
-           );
-         }else 
-
-  if(item == "Sair" && enabled == true){
-  
-  return new ListTile(
-             title: Text("Sair", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.exit_to_app,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: () => exit(0),
-           );
-         }       
-      }  
-
-      // metodos responsaveis pelo gerenciamento das confirmações dos agendamentos
+// metodos responsaveis pelo gerenciamento das confirmações dos agendamentos
 // action dialog
   void ConfirmarAgendamento(BuildContext context, var item) {
   // configura os botões
+  
+  Widget btn_cancelar = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.arrow_back, color:this.getIconCor),
+         onPressed: (){
+           Navigator.pop(context);
+         },
+       ),
+       Text("Voltar", style: TextStyle(color:this.getTextCor)),
+      ],
 
-  Widget btn_cancelar = FlatButton(
-    child: Text("Cancelar"),
-    onPressed:  () {
-      Navigator.pop(context);
-    },
+    ),
   );
-  Widget btn_confirmar = FlatButton(
-    child: Text("Confirmar", style: TextStyle(color: Colors.green)),
-    onPressed:  () {},
+
+  Widget btn_confirmar = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.check, color: this.getIconCor),
+         onPressed: (){
+           Navigator.pop(context);
+         },
+       ),
+       Text("Confirmar", style: TextStyle(color: this.getTextCor)),
+      ],
+
+    ),
   );
-  Widget btn_excluir = FlatButton(
-    child: Text("Excluir", style: TextStyle(color: Colors.red)),
-    onPressed:  () {},
+  Widget btnExcluir = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.delete, color: this.getIconCor),
+         onPressed: (){
+           Navigator.pop(context);
+         },
+       ),
+       Text("Excluir", style: TextStyle(color: this.getTextCor)),
+      ],
+
+    ),
   );
   // configura o  AlertDialog
   AlertDialog alert = AlertDialog(
@@ -589,14 +544,14 @@ Produto(){
     backgroundColor: this.getPrimaryCor,
     title: Text("Detalhes"),
 
-    content: Text("Profissional: "+item["Profissional"]+"\n"+
+    content: Text("Profisional: "+item["Profissional"]+"\n"+
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
-                  "Horario: "+item["Horario"]),
+                  "Horario: "+item["Horario"]+"h"),
     actions: [
       btn_cancelar,
       btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
-      btn_excluir, 
+      btnExcluir, 
     ],
   );
   // exibe o dialogo
@@ -635,7 +590,7 @@ Produto(){
                   "Profissional: "+item["Profissional"]+"\n"+
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
-                  "Horario: "+item["Horario"]+"\n"+
+                  "Horario: "+item["Horario"]+"h\n"+
                   "Situação: "+item["Status_Agendamento"]),
     actions: [
       btn_cancelar,
@@ -651,6 +606,91 @@ Produto(){
     },
   );
 }
+
+// funcoes de carregamento das features direto do firebase
+  // ignore: non_constant_identifier_names
+  ListTile CarregarFeaturesMenu(BuildContext context, String item, bool enabled) { // recebe um item lido do firestore Firebase
+  
+  switch(item){
+    case "Cadastro":
+      if(enabled == true){
+        return ListTile(
+             title: Text("Cadastro", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.add,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+                Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro()));
+             },
+           );
+      }
+    break;
+
+    case "Agendamento":
+    if(enabled == true){
+       return ListTile(
+             title: Text("Agendamento", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.calendar_today,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento()));
+             },
+           );
+    }
+    break;
+
+    case "Notificações":
+    if(enabled == true){
+       return ListTile(
+             title: Text("Notificações", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.notifications,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify()));
+             },
+           );
+    }
+    break;
+
+    case "Empreendedor":
+    if(enabled == true){
+        return ListTile(
+             title: Text('Empreendedor', style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.store,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: (){
+               Navigator.pop(context);
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu()));
+             },
+           );
+    }
+    break;
+
+ //   case "Sobre":
+ //   if(enabled == true){    
+ //     return ListTile(
+ //            title: Text("Sobre", style: TextStyle(color: produto.getTextCor)),
+ //            leading: Icon(Icons.info,  color: produto.getIconCor),
+ //            trailing: Icon(Icons.arrow_right,  color: produto.getIconCor), 
+ //            onTap: (){},
+ //          );
+ //   }
+ //   break;
+
+    case "Sair":
+    if(enabled == true){
+      return ListTile(
+             title: Text("Sair", style: TextStyle(color: this.getTextCor)),
+             leading: Icon(Icons.exit_to_app,  color: this.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+             onTap: () => exit(0),
+           );
+    }
+    break;
+    }
+ }
     
 
 }

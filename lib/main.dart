@@ -26,7 +26,6 @@ void main() async{
   
   Produto produto = new Produto(); // produto 2 da LPS
 
-
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
     theme: ThemeData(
@@ -71,7 +70,7 @@ class Homescreen extends StatelessWidget{
        backgroundColor: produto.getSecondaryCor,
      ),
       
-     drawer: Drawer( //
+     drawer: Drawer(
        
        child: Container(
 
@@ -95,8 +94,8 @@ class Homescreen extends StatelessWidget{
             ),
            ),
         
-        new StreamBuilder(  
-        stream: Firestore.instance.collection(produto.getUrlConfigFeatures).snapshots(),
+        StreamBuilder(  
+      stream: Firestore.instance.collection(produto.getUrlConfigFeatures).orderBy("nome").snapshots(),
         builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,
@@ -116,59 +115,22 @@ class Homescreen extends StatelessWidget{
          return ListView.builder(
               itemCount:snapshot.data.documents.length,
               shrinkWrap: true,
-              itemBuilder: (context,i){
-               
-              return produto.CarregarFeaturesMenu(context,
-                                                    snapshot.data.documents[i]['nome'], 
-                                                    snapshot.data.documents[i]['enabled']);
- 
-              },
-            );
-          }),
+              itemBuilder: (BuildContext context, int i){
 
-             ListTile(
-             key: ValueKey('chave_empreendedor'),
-             title: Text('Empreendedor', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.store,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu(),
-               ));
-             },
-           ),
-            
-             ListTile(
-             key: ValueKey('chave_notificacoes'),
-             title: Text('Notificações', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.notifications,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-               Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(),
-               ));
-             },
-           ),
-          
-             ListTile(
-             key: ValueKey('chave_sobre'),
-             title: Text('Sobre', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.info,  color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             onTap: (){
-              // Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Cliente(),
-             //  ));
-             },
-           ),
-          
-             ListTile(
-             key: ValueKey('chave_sair'),
-             title: Text('Sair', style: TextStyle(color: produto.getTextCor)),
-             leading: Icon(Icons.exit_to_app_rounded, color: produto.getIconCor),
-             trailing: Icon(Icons.arrow_right, color: produto.getIconCor),
-             onTap: () => exit(0),
-           ),
+                var item = snapshot.data.documents[i].data;
+              
+              return  Container(
+                
+                    child:produto.CarregarFeaturesMenu(context,item['nome'], 
+                                                   item['enabled']),
+                  
+                );
+              },
+            );   
+          }),
   
         ],
+        shrinkWrap: true,
        )
      ),
     ),
@@ -247,7 +209,7 @@ body:  StreamBuilder(
                         Row(
                            children: [
                            Icon(Icons.alarm, color: produto.getIconCor),
-                           Text(item["Horario"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                           Text(item["Horario"]+"h",style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
                         Row(
@@ -279,9 +241,6 @@ body:  StreamBuilder(
     );
     
   }
-
-  
-
 
 }
 

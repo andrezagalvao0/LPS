@@ -100,7 +100,7 @@ class LPS_Empreendedor_Suite extends StatelessWidget{
                         Row(
                            children: [
                            Icon(Icons.alarm, color: produto.getIconCor),
-                           Text(item["Horario"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                           Text(item["Horario"]+"h",style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
                         Row(

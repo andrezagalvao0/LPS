@@ -10,6 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
   
   Produto produto = new Produto(); // produto 2 da LPS
+  String id_documento;
   
 
  @override
@@ -53,14 +54,17 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
            itemBuilder: (BuildContext context, int i) {
 
            var item = snapshot.data.documents[i].data;
+           this.id_documento  = snapshot.data.documents[i].documentID;
 
+           
            produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
 
            return InkWell(
                   onLongPress:(){
                   // print("Parabens Você Descobriu uma Feature!");
-                  produto.ConfirmarAgendamento(context, item);
-                  
+                  ConfirmarNotificacaoAgendamento(context, item, this.id_documento);
+                //  print("O ID desse Documento é : "+this.id_documento);
+
                   },
                   child: new Ink(
                      color: produto.getFundoCor,
@@ -110,7 +114,7 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                         Row(
                            children: [
                            Icon(Icons.alarm, color: produto.getIconCor),
-                           Text(item["Horario"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                           Text(item["Horario"]+"h",style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
                         Row(
@@ -146,22 +150,52 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
         backgroundColor: produto.getFundoCor,
     );
   }
-   void ConfirmarNotificacaoAgendamento(BuildContext context, var item) {
+   void ConfirmarNotificacaoAgendamento(BuildContext context, var item, String id) {
   // configura os botões
   
-  Widget btn_cancelar = FlatButton(
-    child: Text("Cancelar"),
-    onPressed:  () {
-      Navigator.pop(context);
-    },
+  Widget btn_cancelar = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.arrow_back, color: produto.getIconCor),
+         onPressed: (){
+           Navigator.pop(context);
+         },
+       ),
+       Text("Voltar", style: TextStyle(color: produto.getTextCor)),
+      ],
+
+    ),
   );
-  Widget btn_confirmar = FlatButton(
-    child: Text("Confirmar", style: TextStyle(color: Colors.green)),
-    onPressed:  () {},
+
+  Widget btn_confirmar = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.check, color: produto.getIconCor),
+         onPressed: (){
+           Navigator.pop(context);
+         },
+       ),
+       Text("Confirmar", style: TextStyle(color: produto.getTextCor)),
+      ],
+
+    ),
   );
-  Widget btn_excluir = FlatButton(
-    child: Text("Excluir", style: TextStyle(color: Colors.red)),
-    onPressed:  () {},
+  Widget btnExcluir = Container(
+    child:Column(
+      children: [
+       IconButton(
+         icon: Icon(Icons.delete, color: produto.getIconCor),
+         onPressed: (){
+           ExcluirAgendamento(produto.getUrlAgendamento, id);
+           Navigator.pop(context);
+         },
+       ),
+       Text("Excluir", style: TextStyle(color: produto.getTextCor)),
+      ],
+
+    ),
   );
   // configura o  AlertDialog
   AlertDialog alert = AlertDialog(
@@ -169,14 +203,16 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
     backgroundColor: produto.getPrimaryCor,
     title: Text("Detalhes"),
 
-    content: Text("Profisional: "+item["Profissional"]+"\n"+
+    content: Text("Cliente: "+item["Nome"]+"\n"+
+                  "Profisional: "+item["Profissional"]+"\n"+
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
-                  "Horario: "+item["Horario"]),
+                  "Horario: "+item["Horario"]+"h\n"+
+                  "Situação: "+item["Status_Agendamento"]),
     actions: [
       btn_cancelar,
       btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
-      btn_excluir, 
+      btnExcluir, 
     ],
   );
   // exibe o dialogo
@@ -187,6 +223,12 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
     },
   );
 }
+
+// metodo de remoção de um agendamento
+   void ExcluirAgendamento(String url, String id_documento){
+     Firestore.instance.collection(url).document(id_documento).delete();
+     //print("O documento : "+id_documento+" foi excluido");
+    }
 }
 
 

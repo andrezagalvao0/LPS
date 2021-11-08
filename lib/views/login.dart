@@ -278,6 +278,7 @@ void signUpCliente(BuildContext context){
 
                      Text('Senha'),
                      TextFormField(
+                       obscureText: true,
                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),

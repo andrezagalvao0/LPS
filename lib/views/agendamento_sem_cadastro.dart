@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 
@@ -30,6 +31,17 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   String dataAgendamentoProfissional;
   String horaarioProfissional;
 
+  // parte referente as notificações de agendamento
+  AssetImage icone_app_notificacao;
+  String titulo_notificacao;
+  String conteudo_notificacao;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  AndroidInitializationSettings androidInitializationSettings;
+  IOSInitializationSettings iosInitializationSettings;
+  InitializationSettings initializationSettings;
+
+
+
   @required
   var ct_nome_cliente = TextEditingController();
 
@@ -39,19 +51,26 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   String mensagem = '';
 
- 
+  get onSelectNotification => null;
+
+  NotificationDetails get notificationDetails => null;
+
     @override
      void initState() {
       getObterTokenFirebase;
       super.initState();
      }
 
+     // ignore: non_constant_identifier_names
  
   @override
   Widget build(BuildContext context) {
-
- 
    
+   
+   inicializar_Notificar();
+
+
+
 
     return Scaffold(
         appBar: AppBar(
@@ -374,6 +393,8 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                             horario_selecionado);
                        // o status de agendamento vai ate o firebase de forma implicita
                         alerta_agendamento(context);
+                        notiticarAgendamentoData(); // usado para disparar uma notificação de ao utilizador
+                       
 
 
                       },
@@ -450,6 +471,36 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
     firebaseMessaging.subscribeToTopic('all');
     firebaseMessaging.getToken().then((token) => produto.setIdDispositivo(token));
   }
+
+  // notificar sobre o agendamento na data estabelecida
+  Future<void> notiticarAgendamentoData() async {
+    var timeDelayed = DateTime.now().add(Duration(seconds: 5));
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            'second channel ID', 'second Channel title', 'second channel body',
+            priority: Priority.High,
+            importance: Importance.Max,
+            ticker: 'test');
+
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(1, 'Hello there',
+        'please subscribe my channel', timeDelayed, notificationDetails);
+ }
+
+     // ignore: non_constant_identifier_names
+     void inicializar_Notificar() async{
+        androidInitializationSettings = AndroidInitializationSettings('app_icon');
+
+        initializationSettings = InitializationSettings(
+        androidInitializationSettings,iosInitializationSettings);
+        await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
+        print("INICIALIZAR NOTIFICAÇÕES ");
+
+     }
 
   
 }
