@@ -17,6 +17,7 @@ import 'notificacoes.dart';
 
 class Produto{
 
+String produto_selecionado;
 int idProduto = 2;
 String tokenUser;
 SharedPreferences dadosUtilizador;
@@ -72,9 +73,8 @@ String url_empreendedor_agendamentos_clientes; // url responsavel por armazenar 
 // 3 - Fisioterapia
 
 Produto(){
-
-    if(idProduto == 1){
-     
+    if(this.idProduto == 1){
+     this.produto_selecionado = "Advocacia";
      popup_color = Colors.blue;
      this.status_agendamento = "Aguardando";
      this.componentCor =  Colors.blue[50];
@@ -102,7 +102,8 @@ Produto(){
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
   }
 
-  if(idProduto == 2){
+  if(this.idProduto == 2){
+     this.produto_selecionado = "Estetica e Design";
      popup_color = Colors.amber;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
@@ -139,7 +140,8 @@ Produto(){
      
   }
 
-    if(idProduto == 3){
+    if(this.idProduto == 3){
+     this.produto_selecionado = "Fisioterapia";
      popup_color = Colors.green;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
@@ -176,7 +178,8 @@ Produto(){
      
   }
 
-    if(idProduto == 4){
+    if(this.idProduto == 4){
+     this.produto_selecionado = "Terapeuta Corporal";
      popup_color = Colors.white;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
@@ -212,9 +215,43 @@ Produto(){
   }
 
 }
+  void CriarProdutoAdvocacia(){
+     this.idProduto = 1;
+     this.produto_selecionado = "Advocacia";
+     popup_color = Colors.blue;
+     this.status_agendamento = "Aguardando";
+     this.componentCor =  Colors.blue[50];
+     this.iconCor = Colors.blue[800]; 
+     this.textCor = Colors.blue[800];
+     this.appBarCor  = Colors.blue[800];
+     this.appCor   = Colors.blue[800];
+     this.fundoCor = Colors.white;
+     this.decorationPrimaryColor   = Colors.blue[50];
+     this.decorationSecondaryColor = Colors.blue[100];
+     this.drawerdecorationSecondaryColor = Colors.blue[100];
+     this.drawerdecorationPrimaryColor = Colors.blue[50];
+     this.drawerheaderdecorationSecondaryColor = Colors.blue[100];
+     this.drawerheaderdecorationPrimaryColor = Colors.blue[50];
+     this.decorationDateColor = Colors.blue;
+     this.appImage = AssetImage("assets/images/header_advocacia.png");
+     this.appImageService = AssetImage("assets/images/header_advocacia.png");
+     //
+     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Agendamento";
+     this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
+     this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
+     this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
+     this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
+     this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+  }
   // recebe o id do produto 
   String get getUrlConfigFeatures{
     return this.url_config_features;
+  }
+
+  // recebe o nome do produto
+  String get getProdutoSelecionado{
+    return this.produto_selecionado;
   }
 
   String get getIdDispositivo{
@@ -229,8 +266,29 @@ Produto(){
     this.id_dispositivo = id;
   }
 
-  Future<void> setProduto(int id ) async {
-    this.idProduto = id;
+  void setProduto(String produto){
+    if(produto == 'Advocacia'){
+      this.url_config_features = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+      this.idProduto = 1;
+      this.produto_selecionado = produto;
+      CriarProdutoAdvocacia();
+    }
+    if(produto == 'Estetica e Design'){
+       this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
+       this.idProduto = 2;
+       this.produto_selecionado = produto;
+    }
+    if(produto == 'Fisioterapia'){
+       this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
+       this.idProduto = 3;
+       this.produto_selecionado = produto;
+    }
+    if(produto == 'Terapeuta Corporal'){
+       this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+       this.idProduto = 4;
+       this.produto_selecionado = produto;
+    }
+
   }
 
   String get getTokenUser{
@@ -369,12 +427,30 @@ Produto(){
 
   }
 
-  void setProfissionalServicoUrl(String p) {
+  void setProdutoSelecionadoURL(String prod){
     if(this.idProduto == 2) { // estetica
-      this.profissional = p;
-      this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Servicos"; 
-      this.url_data_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Data";  
-      this.url_horario_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Horario";
+      this.produto_selecionado = prod;
+   //   this.url_config_features = "/Produtos/$produto_selecionado/"; 
+    }
+
+    if(this.idProduto == 3) { // fisioterapia
+      this.produto_selecionado = prod;
+  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
+    }
+
+    if(this.idProduto == 4) { // estetica Elenilza
+      this.produto_selecionado = prod;
+  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
+    }
+    
+  }
+
+    void setProfissionalServicoUrl(String p) {{
+      if(this.idProduto == 2) { // estetica
+       this.profissional = p;
+       this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Servicos"; 
+       this.url_data_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Data";  
+       this.url_horario_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Horario";
     }
 
     if(this.idProduto == 3) { // fisioterapia
@@ -390,9 +466,9 @@ Produto(){
       this.url_data_agendamento = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios/$profissional/Data";  
       this.url_horario_agendamento = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios/$profissional/Horario";
     }
-
-
   }
+
+}
 
   void setAgendamentoCliente(String token) {
     if(this.idProduto == 2) { // estetica
@@ -630,7 +706,7 @@ Produto(){
     if(enabled == true){
        return ListTile(
              title: Text("Agendamento", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.calendar_today,  color: this.getIconCor),
+             leading: Icon(Icons.date_range,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){
                Navigator.pop(context);
@@ -679,19 +755,104 @@ Produto(){
  //   }
  //   break;
 
-    case "Sair":
-    if(enabled == true){
-      return ListTile(
-             title: Text("Sair", style: TextStyle(color: this.getTextCor)),
-             leading: Icon(Icons.exit_to_app,  color: this.getIconCor),
-             trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
-             onTap: () => exit(0),
-           );
-    }
-    break;
+ //   case "Sair":
+ //   if(enabled == true){
+ //     return ListTile(
+ //            title: Text("Sair", style: TextStyle(color: this.getTextCor)),
+ //            leading: Icon(Icons.exit_to_app,  color: this.getIconCor),
+ //            trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
+ //            onTap: () => exit(0),
+ //          );
+ //   }
+ //   break;
     }
  }
+
+
+  // funcoes de criação de produtos
+  // ignore: non_constant_identifier_names
+  SwitchListTile EscolherFeaturesproduto(BuildContext context, String item, bool enabled) { // recebe um item lido do firestore Firebase
+  
+  switch(item){
+    case "Agendamento":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.date_range, color: Colors.black),
+                title: Text("Agendamento", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
+
+    case "Cadastro":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.add,  color: this.getIconCor),
+                title: Text("Cadastro", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
+
+    case "Clientes":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.person,  color: Colors.black),
+                title: Text("Clientes", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
+
+    case "Empreendedor":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.store,  color: Colors.black),
+                title: Text("Empreendedor", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
     
+    case "Notificações":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.notifications,  color: Colors.black),
+                title: Text("Notificações", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
+
+  //  case "Sair":
+  //      return SwitchListTile(
+  //              secondary: Icon(Icons.exit_to_app_outlined,  color: this.getIconCor),
+  //              title: Text("Sair", style: TextStyle(color: this.getTextCor)),
+  //              value: enabled,
+  //                  onChanged: (bool value) {
+  //                    atualizaStatusProduto(item, enabled);
+  //                  });
+  }
+
+}  
+    Future<void> atualizaStatusProduto(String itemNome, itemEnabled) async{
+    if(itemEnabled == false){
+      Firestore.instance.collection(this.getUrlConfigFeatures).document(itemNome).updateData({
+                                    'enabled':true,
+                                  });
+    }
+
+   if(itemEnabled == true){
+      Firestore.instance.collection(this.getUrlConfigFeatures).document(itemNome).updateData({
+                                    'enabled':false,
+                                  });
+    }
+  }
 
 }
 

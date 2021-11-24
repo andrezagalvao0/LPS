@@ -1,4 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
@@ -14,33 +14,33 @@ class _HomeNotifyState extends State<HomeNotify> {
   Produto produto = new Produto(); // produto 3 da LPS
  
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String _message = '';
 
-  _registerOnFirebase() {
-    _firebaseMessaging.subscribeToTopic('all');
-    _firebaseMessaging.getToken().then((token) => print(token));
-  }
+  //_registerOnFirebase() {
+  //  _firebaseMessaging.subscribeToTopic('all');
+  //  _firebaseMessaging.getToken().then((token) => print(token));
+  //}
 
   @override
   void initState() {
-    _registerOnFirebase();
+  //  _registerOnFirebase();
     getMessage();
     super.initState();
   }
 
   void getMessage() {
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-      print('received message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => _message = message["notification"]["body"]);
-    });
+   // _firebaseMessaging.configure(
+  //      onMessage: (Map<String, dynamic> message) async {
+  //    print('received message');
+  //    setState(() => _message = message["notification"]["body"]);
+  //  }, onResume: (Map<String, dynamic> message) async {
+  //    print('on resume $message');
+  //    setState(() => _message = message["notification"]["body"]);
+  //  }, onLaunch: (Map<String, dynamic> message) async {
+  //    print('on launch $message');
+  //    setState(() => _message = message["notification"]["body"]);
+  //  });
   }
 
   @override

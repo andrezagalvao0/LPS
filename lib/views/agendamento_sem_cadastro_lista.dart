@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
-import 'package:lps_ufs_tcc/models/select_product.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 

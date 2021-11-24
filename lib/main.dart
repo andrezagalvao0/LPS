@@ -8,15 +8,15 @@ import 'package:lps_ufs_tcc/views/agendamento_sem_cadastro.dart';
 import 'package:lps_ufs_tcc/views/agendamento_sem_cadastro_lista.dart';
 import 'package:lps_ufs_tcc/views/cadastro.dart';
 import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
-import 'package:lps_ufs_tcc/models/select_product.dart';
 import 'package:lps_ufs_tcc/views/empreendedor.dart';
 import 'package:lps_ufs_tcc/views/empreendedor_menu.dart';
 import 'package:lps_ufs_tcc/views/login.dart';
 import 'models/notificacoes.dart';
 import 'models/produto.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // biblioteca utilizada para capturar os dados do utilizador logado
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'models/selecionar_produto.dart'; // biblioteca utilizada para capturar os dados do utilizador logado
 
 
 
@@ -28,11 +28,11 @@ void main() async{
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
-    theme: ThemeData(
+     theme: ThemeData(
     
     // Define the default brightness and colors.
-    primaryColor: produto.getPrimaryCor,
-    accentColor: produto.getSecondaryCor),
+      primaryColor: produto.getPrimaryCor,
+      accentColor: produto.getSecondaryCor),
 
        localizationsDelegates: GlobalMaterialLocalizations.delegates,
          supportedLocales: [
@@ -43,7 +43,7 @@ void main() async{
 
     // criar o metodo interruptor da Linha de Produto
     title: 'Login',
-    home: LPS_Login(),
+    home: LPS_Select_App(),
 )); // Executa a Tela Principal do Aplicativo
 }
 
@@ -60,7 +60,7 @@ class Homescreen extends StatelessWidget{
      
      var item = null;
     
-   
+
    return Scaffold(
 
      appBar: AppBar(
@@ -78,7 +78,6 @@ class Homescreen extends StatelessWidget{
            gradient: LinearGradient(colors: <Color>[
                  produto.getDrawerDecorationPrimaryColor,
                  produto.getDrawerDecorationSecondaryColor,
-                 
              ])
          ),
 
@@ -94,7 +93,7 @@ class Homescreen extends StatelessWidget{
             ),
            ),
         
-        StreamBuilder(  
+      StreamBuilder(  
       stream: Firestore.instance.collection(produto.getUrlConfigFeatures).orderBy("nome").snapshots(),
         builder: (
          BuildContext context,
@@ -129,6 +128,28 @@ class Homescreen extends StatelessWidget{
             );   
           }),
   
+         // Features Fixas
+     //       ListTile(
+     //        title: Text('Personalizar', style: TextStyle(color: produto.getTextCor)),
+     //        leading: Icon(Icons.science,  color: produto.getIconCor),
+     //        trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
+             
+     //        onTap: (){
+     //            Navigator.pop(context);
+     //            Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Select_App(),
+
+     //          ));
+     //        },
+     //      ),
+
+            ListTile(
+             title: Text("Sair", style: TextStyle(color: produto.getTextCor)),
+             leading: Icon(Icons.exit_to_app,  color: produto.getIconCor),
+             trailing: Icon(Icons.arrow_right,  color: produto.getIconCor), 
+             onTap: () => exit(0),
+           ),
+ 
+
         ],
         shrinkWrap: true,
        )
