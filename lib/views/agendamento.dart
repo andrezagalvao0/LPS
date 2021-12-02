@@ -13,8 +13,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LPS_Agendamento extends StatefulWidget {
   
-  final String uid;
-  LPS_Agendamento({Key key, this.uid}) : super(key: key);
+  String uid;
+  String idProdutoSelecionado;
+  
+  LPS_Agendamento({this.uid, this.idProdutoSelecionado});
   
 
   @override
@@ -26,7 +28,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
 
   String uid;
-  _LPS_Agendamento({this.uid});
+  String idProdutoSelecionado;
   
   var selectedCurrency, selectedType;
   
@@ -43,14 +45,22 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  Produto produto; // produto 2 da LPS
  
+     @override
+      void initState() {
+      super.initState();
+      produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+      produto.setProduto(widget.idProdutoSelecionado);
+     }
+
 
  
   @override
   Widget build(BuildContext context) {
    
-    
+    //produto.CriarProduto(widget.idProdutoSelecionado);
+   // produto = Produto.CriarProduto(widget.idProdutoSelecionado);
 
     return Scaffold(
         appBar: AppBar(
@@ -115,8 +125,7 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                               setState(() {
                                 selectedCurrency = currencyValue;
                                 profissional_selecionado = selectedCurrency;
-                              
-                               //
+                                //
                                 produto.setProfissionalServicoUrl(profissional_selecionado);
                               });
                             },

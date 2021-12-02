@@ -8,12 +8,19 @@ import 'package:lps_ufs_tcc/models/produto.dart';
 
 
 class LPS_Cadastro_Profissional extends StatefulWidget {
+  String idProdutoSelecionado;
+
+  LPS_Cadastro_Profissional({this.idProdutoSelecionado});
+
   @override
-  LPS_Cadastro_P createState() => LPS_Cadastro_P();
+  _LPS_Cadastro_P createState() => _LPS_Cadastro_P();
+
 }
 
-class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
+class _LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
   var selectedCurrency, selectedType;
+  String uid;
+  String idProdutoSelecionado;
   
   String horario_selecionado;
   String profissional_selecionado;
@@ -28,10 +35,16 @@ class LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
-  Produto produto = new Produto(); // produto 2 da LPS
- 
+  Produto produto; // produto 2 da LPS
+
+  
   @override
   Widget build(BuildContext context) {
+
+      produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+     // produto.setProduto(widget.idProdutoSelecionado);
+    
+ 
    
     return Scaffold(
         appBar: AppBar(

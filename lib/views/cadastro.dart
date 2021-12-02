@@ -9,7 +9,7 @@ import 'funcionario.dart';
 
 
 
-void main() async {
+void main(){
 //
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -18,22 +18,37 @@ void main() async {
 )); // Executa a Tela Principal do Aplicativo
 }
 
-// ignore: camel_case_types
-class LPS_Cadastro extends StatelessWidget{
+// criar estado
+class LPS_Cadastro extends StatefulWidget {
+
+  String idProdutoSelecionado;
+
+  LPS_Cadastro({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  @override
+  _LPS_Cadastro createState() => _LPS_Cadastro();
+  
+}
+
+
+// ignore: camel_case_types
+class _LPS_Cadastro extends State<LPS_Cadastro>{
+  
+  Produto produto;
+
+    @override
+     void initState() {
+      super.initState();
+      produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+      produto.setProduto(widget.idProdutoSelecionado);
+     }
 
  
  @override
  Widget build(BuildContext context){  
 
-     Firestore.instance.collection(produto.getUrlConfigFeatureCadastro).getDocuments().then((value){
-       value.documents.forEach((element) {
-       print(element.data);
-    //  habilitar_cliente = element.data['start'];
-      
-       });
-     });
+  //produto.CriarProduto(widget.idProdutoSelecionado);
+  produto = Produto.CriarProduto(widget.idProdutoSelecionado);
 
    return Scaffold(
 
@@ -76,7 +91,7 @@ class LPS_Cadastro extends StatelessWidget{
                   // retorna um objeto do tipo feature com os seus atributos em forma de botão
                   // status, nome
                   
-                 child: new Feature( item['enabled'], item['nome']),
+                 child: produto.CarregarFeaturesCadastro(context, item['nome'], item['enabled'],widget.idProdutoSelecionado),
                   
                  );
                 },

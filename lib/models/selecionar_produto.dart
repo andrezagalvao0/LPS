@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/models/feature.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 import 'package:lps_ufs_tcc/views/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 
-void main() async {
+void main(){
 //
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -30,6 +31,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
   bool isSwitched = false;
   Produto produto = new Produto();
   String produto_selecionado;
+  String idProdutoSelecionado;
   String estabelecimento_selecionado;
   String id;
   String novoValor;
@@ -39,6 +41,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
     List<String> _TipoProduto = <String>[
     'Advocacia',
+    'Barbearia',
     'Estetica e Design',
     'Fisioterapia',
     'Terapeuta Corporal'
@@ -86,7 +89,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
             Center(
             child:DropdownButton<String>(
             hint: Text("Escolha um Produto", style: TextStyle(color: Colors.black)),
-            items: <String>['Advocacia', 'Estetica e Design', 'Fisioterapia', 'Terapeuta Corporal'].map((value) {
+            items: <String>['Advocacia', 'Barbearia' ,'Estetica e Design', 'Fisioterapia', 'Terapeuta Corporal'].map((value) {
                    return DropdownMenuItem<String>(
                    value: value,
                    child: Text(value),
@@ -95,6 +98,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
                 onChanged: (novoValor) {
                   setState((){
                    produto.setProduto(novoValor);
+                  //produto.criarProduto(novoValor);
                   });  
                 },
             ),
@@ -168,11 +172,14 @@ class _LPS_Select_App extends State<LPS_Select_App>{
                               Text("Criar Produto", style: TextStyle(fontSize: 18.0, color: Colors.black)),
                             ],
                           )),
-                      onPressed: (){
+                      onPressed: () {
+                        
+                         idProdutoSelecionado = produto.getProdutoSelecionado;
                          produto.setProduto(novoValor);
                          Navigator.pop(context);
-                         Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login()));
+                         Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Login(idProdutoSelecionado: idProdutoSelecionado)));
                       },
+                      
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0))),
                 ],

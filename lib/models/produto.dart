@@ -10,6 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/views/agendamento.dart';
 import 'package:lps_ufs_tcc/views/cadastro.dart';
+import 'package:lps_ufs_tcc/views/cadastro_cliente.dart';
+import 'package:lps_ufs_tcc/views/cadastro_empresa.dart';
+import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/views/empreendedor_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -72,8 +75,10 @@ String url_empreendedor_agendamentos_clientes; // url responsavel por armazenar 
 // 2 - Estetica
 // 3 - Fisioterapia
 
-Produto(){
-    if(this.idProduto == 1){
+Produto.CriarProduto(String nomeProduto){ // construtor nomeado
+    
+     if(nomeProduto == "Advocacia"){
+     this.idProduto = 1;
      this.produto_selecionado = "Advocacia";
      popup_color = Colors.blue;
      this.status_agendamento = "Aguardando";
@@ -100,9 +105,10 @@ Produto(){
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
-  }
+     }
 
-  if(this.idProduto == 2){
+     if(nomeProduto == "Estetica e Design"){
+     this.idProduto = 2;
      this.produto_selecionado = "Estetica e Design";
      popup_color = Colors.amber;
      this.status_agendamento = "Aguardando";
@@ -140,7 +146,8 @@ Produto(){
      
   }
 
-    if(this.idProduto == 3){
+    if(nomeProduto == "Fisioterapia"){
+     this.idProduto = 3;
      this.produto_selecionado = "Fisioterapia";
      popup_color = Colors.green;
      this.status_agendamento = "Aguardando";
@@ -175,26 +182,26 @@ Produto(){
      this.url_id_agendamento_cliente = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
      this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
-     
-  }
+    }
 
-    if(this.idProduto == 4){
+     if(nomeProduto == "Terapeuta Corporal"){
+     this.idProduto = 4;
      this.produto_selecionado = "Terapeuta Corporal";
      popup_color = Colors.white;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
-     this.componentCor =  Colors.white;
-     this.iconCor = Color.fromRGBO(225,132,124,5);//Colors.pink;
-     this.textCor = Color.fromRGBO(225,132,124,5);//Colors.pink;
-     this.appBarCor  = Colors.white;
-     this.appCor   = Colors.white;
+     this.componentCor =  Color(0xFFe2827c);
+     this.iconCor = Color(0xFF2c63a0);
+     this.textCor = Color(0xFF2c63a0);
+     this.appBarCor  = Color(0xFFf9bbd0);
+     this.appCor   = Color(0xFFf9bbd0);
      this.fundoCor = Colors.white;
-     this.decorationPrimaryColor   = Color.fromRGBO(225,132,124,5);
-     this.decorationSecondaryColor = Colors.white;
-     this.drawerdecorationSecondaryColor = Colors.white;
-     this.drawerdecorationPrimaryColor = Colors.white;
-     this.drawerheaderdecorationSecondaryColor = Color.fromRGBO(225,132,124,5);//Colors.pink;
-     this.drawerheaderdecorationPrimaryColor =  Color.fromRGBO(225,132,124,5);
+     this.decorationPrimaryColor   = Color(0xFFe2827c);
+     this.decorationSecondaryColor = Color(0xFFe2827c);
+     this.drawerdecorationSecondaryColor = Color(0xFFf9bbd0);
+     this.drawerdecorationPrimaryColor = Color(0xFFe2827c);
+     this.drawerheaderdecorationSecondaryColor = Color(0xFFf9bbd0);//Colors.pink;
+     this.drawerheaderdecorationPrimaryColor =  Color(0xFFe2827c);
      this.decorationDateColor = Colors.white;
      this.appImage = AssetImage('assets/images/header_terapeuta_corp.png');
      this.appImageService = AssetImage('assets/images/header_terapeuta_corp.png');
@@ -210,13 +217,52 @@ Produto(){
      this.url_data_agendamento = "/Produtos/Estetica";
      this.url_horario_agendamento = "/Produtos/Estetica";
      this.url_id_agendamento_cliente = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Clientes";
-     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features/Empreendedor";
+     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
   }
 
+  if(nomeProduto == "Barbearia"){
+     this.produto_selecionado = "Barbearia";
+     popup_color = Colors.black;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
+     this.componentCor =  Colors.black;
+     this.iconCor = Colors.white;
+     this.textCor = Colors.white;
+     this.appBarCor  = Colors.black;
+     this.appCor   = Colors.black;
+     this.fundoCor = Colors.white;
+     this.decorationPrimaryColor   = Colors.black;
+     this.decorationSecondaryColor = Colors.black;
+     this.drawerdecorationSecondaryColor = Colors.black;
+     this.drawerdecorationPrimaryColor = Colors.black;
+     this.drawerheaderdecorationSecondaryColor = Colors.black;//Colors.pink;
+     this.drawerheaderdecorationPrimaryColor =  Colors.black;
+     this.decorationDateColor = Colors.black;
+     this.appImage = AssetImage('assets/images/header_barbearia.png');
+     this.appImageService = AssetImage('assets/images/header_barbearia.png');
+     //
+     this.url_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
+     this.url_funcionarios = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios";
+     this.url_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
+     this.url_empresas = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empresas";
+     this.url_notificacoes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Barbearia";
+     this.url_data_agendamento = "/Produtos/Barbearia";
+     this.url_horario_agendamento = "/Produtos/Barbearia";
+     this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
+     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
+  }
+
 }
-  void CriarProdutoAdvocacia(){
-     this.idProduto = 1;
+
+Produto(){
+
+  
+     if(this.idProduto == 1){
      this.produto_selecionado = "Advocacia";
      popup_color = Colors.blue;
      this.status_agendamento = "Aguardando";
@@ -243,7 +289,163 @@ Produto(){
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+     }
+  
+
+     if(this.idProduto == 2){
+     this.produto_selecionado = "Estetica e Design";
+     popup_color = Colors.amber;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
+     this.componentCor =  Colors.amberAccent;
+     this.iconCor = Colors.black; 
+     this.textCor = Colors.black;
+     this.appBarCor  = Colors.amberAccent;
+     this.appCor   = Colors.amberAccent;
+     this.fundoCor = Colors.white;
+     this.decorationPrimaryColor   = Colors.amber[100];
+     this.decorationSecondaryColor = Colors.amber[400];
+     this.drawerdecorationSecondaryColor = Colors.amber[400];
+     this.drawerdecorationPrimaryColor = Colors.amber[100];
+     this.drawerheaderdecorationSecondaryColor = Colors.amber[400];
+     this.drawerheaderdecorationPrimaryColor = Colors.amber[100];
+
+     this.decorationDateColor = Colors.amber;
+     this.appImage = AssetImage('assets/images/header_estetica.png');
+     this.appImageService = AssetImage('assets/images/service_header.png');
+     //
+     this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendamento_sem_Cadastro";
+     this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
+     this.url_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
+     this.url_empresas = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empresas";
+     this.url_notificacoes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Estetica";
+     this.url_data_agendamento = "/Produtos/Estetica";
+     this.url_horario_agendamento = "/Produtos/Estetica";
+     this.url_id_agendamento_cliente = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
+     this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes"; 
+     }
+
+         
+     if(this.idProduto == 3){
+     this.produto_selecionado = "Fisioterapia";
+     popup_color = Colors.green;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
+     this.componentCor =  Colors.white;
+     this.iconCor = Colors.green[800]; 
+     this.textCor = Colors.green[800];
+     this.appBarCor  = Colors.green[800];
+     this.appCor   = Colors.green;
+     this.fundoCor = Colors.white;
+     this.decorationPrimaryColor   = Colors.white;
+     this.decorationSecondaryColor = Colors.green[100];
+     this.drawerdecorationSecondaryColor = Colors.green[100];
+     this.drawerdecorationPrimaryColor = Colors.white;
+     this.drawerheaderdecorationSecondaryColor = Colors.green[100];
+     this.drawerheaderdecorationPrimaryColor = Colors.white;
+     this.decorationDateColor = Colors.green;
+     this.appImage = AssetImage('assets/images/header_fisioterapia.png');
+     this.appImageService = AssetImage('assets/images/header_fisioterapia.png');
+     //
+     this.url_agendamento = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
+     this.url_funcionarios = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Funcionarios";
+     this.url_servicos = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Servicos";
+     this.url_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
+     this.url_empresas = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empresas"; 
+     this.url_notificacoes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Fisioterapia";
+     this.url_data_agendamento = "/Produtos/Fisioterapia";
+     this.url_horario_agendamento = "/Produtos/Fisioterapia";
+     this.url_id_agendamento_cliente = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
+     this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
+    }
+
+     
+     if(this.idProduto == 4){  
+     this.produto_selecionado = "Terapeuta Corporal";
+     popup_color = Colors.white;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
+     this.componentCor =  Color.fromRGBO(225,132,124,5);
+     this.iconCor = Colors.white;
+     this.textCor = Colors.white;
+     this.appBarCor  = Color.fromRGBO(225,132,124,5);
+     this.appCor   = Colors.white;
+     this.fundoCor = Color.fromRGBO(225,132,124,5);
+     this.decorationPrimaryColor   = Color.fromRGBO(225,132,124,5);
+     this.decorationSecondaryColor = Color.fromRGBO(225,132,124,5);
+     this.drawerdecorationSecondaryColor = Color.fromRGBO(225,132,124,5);
+     this.drawerdecorationPrimaryColor = Color.fromRGBO(225,132,124,5);
+     this.drawerheaderdecorationSecondaryColor = Color.fromRGBO(225,132,124,5);//Colors.pink;
+     this.drawerheaderdecorationPrimaryColor =  Color.fromRGBO(225,132,124,5);
+     this.decorationDateColor = Colors.white;
+     this.appImage = AssetImage('assets/images/header_terapeuta_corp.png');
+     this.appImageService = AssetImage('assets/images/header_terapeuta_corp.png');
+     //
+     this.url_agendamento = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
+     this.url_funcionarios = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios";
+     this.url_clientes = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Clientes";
+     this.url_empresas = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Empresas";
+     this.url_notificacoes = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Estetica";
+     this.url_data_agendamento = "/Produtos/Estetica";
+     this.url_horario_agendamento = "/Produtos/Estetica";
+     this.url_id_agendamento_cliente = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Clientes";
+     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
   }
+
+   
+     if(this.idProduto == 5){
+     this.produto_selecionado = "Barbearia";
+     popup_color = Colors.black;
+     this.status_agendamento = "Aguardando";
+     this.id_dispositivo = "";
+     this.componentCor =  Colors.black;
+     this.iconCor = Colors.white;
+     this.textCor = Colors.white;
+     this.appBarCor  = Colors.black;
+     this.appCor   = Colors.black;
+     this.fundoCor = Colors.white;
+     this.decorationPrimaryColor   = Colors.black;
+     this.decorationSecondaryColor = Colors.black;
+     this.drawerdecorationSecondaryColor = Colors.black;
+     this.drawerdecorationPrimaryColor = Colors.black;
+     this.drawerheaderdecorationSecondaryColor = Colors.black;//Colors.pink;
+     this.drawerheaderdecorationPrimaryColor =  Colors.black;
+     this.decorationDateColor = Colors.black;
+     this.appImage = AssetImage('assets/images/header_barbearia.png');
+     this.appImageService = AssetImage('assets/images/header_barbearia.png');
+     //
+     this.url_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
+     this.url_funcionarios = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios";
+     this.url_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
+     this.url_empresas = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empresas";
+     this.url_notificacoes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Notificacoes";
+     this.url_config_features_cadastro = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Barbearia";
+     this.url_data_agendamento = "/Produtos/Barbearia";
+     this.url_horario_agendamento = "/Produtos/Barbearia";
+     this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
+     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
+  }
+
+
+}
+
+
+ 
   // recebe o id do produto 
   String get getUrlConfigFeatures{
     return this.url_config_features;
@@ -271,7 +473,6 @@ Produto(){
       this.url_config_features = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
       this.idProduto = 1;
       this.produto_selecionado = produto;
-      CriarProdutoAdvocacia();
     }
     if(produto == 'Estetica e Design'){
        this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
@@ -286,6 +487,11 @@ Produto(){
     if(produto == 'Terapeuta Corporal'){
        this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
        this.idProduto = 4;
+       this.produto_selecionado = produto;
+    }
+    if(produto == 'Barbearia'){
+       this.url_config_features = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
+       this.idProduto = 5;
        this.produto_selecionado = produto;
     }
 
@@ -442,6 +648,11 @@ Produto(){
       this.produto_selecionado = prod;
   //    this.url_config_features = "/Produtos/$produto_selecionado/";  
     }
+
+    if(this.idProduto == 5) { // estetica Elenilza
+      this.produto_selecionado = prod;
+  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
+    }
     
   }
 
@@ -466,6 +677,14 @@ Produto(){
       this.url_data_agendamento = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios/$profissional/Data";  
       this.url_horario_agendamento = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Funcionarios/$profissional/Horario";
     }
+
+    if(this.idProduto == 5) { // estetica Elenilza
+      this.profissional = p;
+      this.url_servicos = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios/$profissional/Servicos"; 
+      this.url_data_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios/$profissional/Data";  
+      this.url_horario_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios/$profissional/Horario";
+    }
+
   }
 
 }
@@ -479,6 +698,9 @@ Produto(){
     }
     if(this.idProduto == 4) { // estetica
       this.url_id_agendamento_cliente = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Clientes/$tokenUser"; 
+    }
+    if(this.idProduto == 5) { // estetica
+      this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes/$tokenUser"; 
     }
   }
 
@@ -563,6 +785,18 @@ Produto(){
        this.thumbnail_servico = AssetImage("assets/images/ventosa_servico.jpg");
        return this.thumbnail_servico;
      }
+
+    // Terapeuta Corporal
+    if(servico == "Cone Chines"){
+       this.thumbnail_servico = AssetImage("assets/images/cone_chines_servico.png");
+       return this.thumbnail_servico;
+      }
+
+    // Barbearia
+    if(servico == "Corte de Cabelo"){
+       this.thumbnail_servico = AssetImage("assets/images/corte_cabelo_servico.jpg");
+       return this.thumbnail_servico;
+      }
     
   }
 
@@ -685,7 +919,7 @@ Produto(){
 
 // funcoes de carregamento das features direto do firebase
   // ignore: non_constant_identifier_names
-  ListTile CarregarFeaturesMenu(BuildContext context, String item, bool enabled) { // recebe um item lido do firestore Firebase
+  ListTile CarregarFeaturesMenu(BuildContext context, String item, bool enabled, String idProdutoSelecionado) { // recebe um item lido do firestore Firebase
   
   switch(item){
     case "Cadastro":
@@ -695,8 +929,9 @@ Produto(){
              leading: Icon(Icons.add,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){
+               
                 Navigator.pop(context);
-                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro(idProdutoSelecionado: idProdutoSelecionado)));
              },
            );
       }
@@ -709,8 +944,9 @@ Produto(){
              leading: Icon(Icons.date_range,  color: this.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){
+               
                Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento()));
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento(idProdutoSelecionado: idProdutoSelecionado)));
              },
            );
     }
@@ -767,6 +1003,40 @@ Produto(){
  //   break;
     }
  }
+   
+   IconButton CarregarFeaturesCadastro(BuildContext context, String item, bool enabled, String idProdutoSelecionado){
+
+     switch(item){
+       case "Clientes":
+       return IconButton(
+         icon: Icon(Icons.person_add),
+         iconSize: 56,
+         onPressed:(){
+       //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente()));
+         },
+       );
+
+       case "Empresa":
+       
+       return IconButton(
+         icon: Icon(Icons.store),
+         iconSize: 56,
+         onPressed:(){
+          //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa()));
+         },
+       );
+
+       case "Funcionarios":
+       return IconButton(
+         icon: Icon(Icons.home_repair_service),
+         iconSize: 56,
+         onPressed:(){
+            Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(idProdutoSelecionado: idProdutoSelecionado)));
+         },
+       );
+       //
+     }
+   }
 
 
   // funcoes de criação de produtos
@@ -789,7 +1059,7 @@ Produto(){
         return SwitchListTile(
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
-                secondary: Icon(Icons.add,  color: this.getIconCor),
+                secondary: Icon(Icons.add,  color: Colors.black),
                 title: Text("Cadastro", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {

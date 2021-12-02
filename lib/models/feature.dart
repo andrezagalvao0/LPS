@@ -14,7 +14,7 @@ class Feature extends Container{
   IconData icn;
   Produto produto = new Produto(); // produto 2 da LPS
 
-  Feature(bool enabled, String name){
+  Feature(bool enabled, String name, String produtoSelecionado){
     this.name = name;
     this.status = enabled;
 
@@ -22,21 +22,10 @@ class Feature extends Container{
       this.icn = Icons.calendar_today;
     }
 
-    if(this.name == "Clientes"){
-      this.icn = Icons.person;
-    }
-
-    if(this.name == "Empresa"){
-      this.icn = Icons.store;
-    }
-
     if(this.name == "Funcionarios"){
       this.icn = Icons.work;
     }
 
-    if(this.name == "Notificacoes"){
-      this.icn = Icons.calendar_today;
-    }
 
   }
 
@@ -47,7 +36,7 @@ class Feature extends Container{
    return Container(
 
      decoration: BoxDecoration(
-                    color: Colors.amberAccent[50],
+                    color: produto.getFundoCor,
                     //borderRadius: BorderRadius.circular(100),
                   ),
 

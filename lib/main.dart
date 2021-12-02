@@ -24,15 +24,15 @@ void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  //Produto produto = new Produto(); // produto 2 da LPS
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
-     theme: ThemeData(
+   //  theme: ThemeData(
     
     // Define the default brightness and colors.
-      primaryColor: produto.getPrimaryCor,
-      accentColor: produto.getSecondaryCor),
+   //   primaryColor: produto.getPrimaryCor,
+   //   accentColor: produto.getSecondaryCor),
 
        localizationsDelegates: GlobalMaterialLocalizations.delegates,
          supportedLocales: [
@@ -47,20 +47,34 @@ void main() async{
 )); // Executa a Tela Principal do Aplicativo
 }
 
-// ignore: must_be_immutable
-class Homescreen extends StatelessWidget{
-  
-  Produto produto = new Produto(); // produto 2 da LPS
+// criação do estado
+class Homescreen extends StatefulWidget {
+
+  String idProdutoSelecionado;
   String uid;
 
-  Homescreen({Key key, this.uid}) : super(key: key); // recebe o uid do utilizador 
+  Homescreen({this.uid,this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
+  
+  
+  @override
+  _Homescreen createState() => _Homescreen();
+  
+}
+
+class _Homescreen extends State<Homescreen>{
+  String idProdutoSelecionado;
+  String uid;
+
+  Produto produto = new Produto(); // produto 2 da LPS
+
 
  @override
  Widget build(BuildContext context){
      
-     var item = null;
+    var item = null;
+    //produto.CriarProduto(widget.idProdutoSelecionado);
+    produto = Produto.CriarProduto(widget.idProdutoSelecionado);
     
-
    return Scaffold(
 
      appBar: AppBar(
@@ -116,31 +130,18 @@ class Homescreen extends StatelessWidget{
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int i){
 
-                var item = snapshot.data.documents[i].data;
+              var item = snapshot.data.documents[i].data;
               
               return  Container(
                 
                     child:produto.CarregarFeaturesMenu(context,item['nome'], 
-                                                   item['enabled']),
+                                                   item['enabled'], widget.idProdutoSelecionado),
                   
                 );
               },
             );   
           }),
-  
-         // Features Fixas
-     //       ListTile(
-     //        title: Text('Personalizar', style: TextStyle(color: produto.getTextCor)),
-     //        leading: Icon(Icons.science,  color: produto.getIconCor),
-     //        trailing: Icon(Icons.arrow_right,  color: produto.getIconCor),
-             
-     //        onTap: (){
-     //            Navigator.pop(context);
-     //            Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Select_App(),
-
-     //          ));
-     //        },
-     //      ),
+ 
 
             ListTile(
              title: Text("Sair", style: TextStyle(color: produto.getTextCor)),
@@ -149,7 +150,6 @@ class Homescreen extends StatelessWidget{
              onTap: () => exit(0),
            ),
  
-
         ],
         shrinkWrap: true,
        )
@@ -159,7 +159,7 @@ class Homescreen extends StatelessWidget{
      // implementação dos serviços da linha de produto utilizando cards
 body:  StreamBuilder(
        
-       stream: Firestore.instance.collection(produto.getUrlIdAgendamentoCliente+'/'+this.uid+'/Agendamento').orderBy("Data").snapshots(),
+       stream: Firestore.instance.collection(produto.getUrlIdAgendamentoCliente+'/'+widget.uid+'/Agendamento').orderBy("Data").snapshots(),
        builder: (
          BuildContext context,
          AsyncSnapshot<QuerySnapshot> snapshot,

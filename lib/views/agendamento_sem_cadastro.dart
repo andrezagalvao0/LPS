@@ -15,6 +15,11 @@ import 'package:timezone/data/latest.dart' as tz;
 
 
 class LPS_Agendamento_Sem_Cadastro extends StatefulWidget {
+  final String idProdutoSelecionado;
+
+  LPS_Agendamento_Sem_Cadastro({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
+  
+  
   @override
   _LPS_Agendamento_Sem_Cadastro createState() => _LPS_Agendamento_Sem_Cadastro();
 }
@@ -49,7 +54,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  Produto produto; // produto 2 da LPS
   //final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   String mensagem = '';
 
@@ -59,10 +64,12 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
 
     @override
      void initState() {
-     // inicializar_Notificar();
+    //  inicializar_Notificar();
       tz.initializeTimeZones();
       getObterTokenFirebase;
       super.initState();
+      produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+      produto.setProduto(widget.idProdutoSelecionado);
      }
 
      // ignore: non_constant_identifier_names
@@ -70,7 +77,8 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
   @override
   Widget build(BuildContext context) {
    
-
+    
+   // produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
 
     return Scaffold(
         appBar: AppBar(
@@ -158,6 +166,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                 profissional_selecionado = selectedCurrency;
                               
                                //
+                      
                                 produto.setProfissionalServicoUrl(profissional_selecionado);
                               });
                             },

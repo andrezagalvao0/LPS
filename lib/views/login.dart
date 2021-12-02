@@ -13,39 +13,63 @@ import 'package:shared_preferences/shared_preferences.dart'; // biblioteca utili
 void main(){
   // inicializa cores
 
-   Produto produto = new Produto(); // produto 2 da LPS
+  // Produto produto = new Produto(); // produto 2 da LPS
    
   
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
-    theme: ThemeData(
-      accentColor: produto.getAppCor,
-      primaryColor: produto.getAppCor,
-      ),
+  //  theme: ThemeData(
+  //    accentColor: produto.getAppCor,
+  //    primaryColor: produto.getAppCor,
+  //    ),
     title: 'Login',
     home: LPS_Login(),
 )); // Executa a Tela de Cadastro de Cliente
 }
 
+class LPS_Login extends StatefulWidget {
 
-class LPS_Login extends StatelessWidget {
+  String idProdutoSelecionado;
+
+  LPS_Login({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
+  
+  
+  @override
+  _LPS_Login createState() => _LPS_Login();
+  
+}
+
+class _LPS_Login extends State<LPS_Login> {
 
    @required var ct_email = TextEditingController();
    @required var ct_senha = TextEditingController();
-    String idUtilizador = null;
+   String nmProduto = null;
+   String idProdutoSelecionado;
 
 
    final flogin = GlobalKey<FormState>();
    final auth = FirebaseAuth.instance;
     
-   Produto produto = new Produto(); // produto 2 da LPS
- 
+   //Produto produto = new Produto(); // produto padrão
+   // criar aqui um objeto produto do tipo nomeado Produto.CriarProduto();
+  
+  //  @override
+  // void initState(){
+     
+  // } 
+  
+  Produto produto = new Produto(); 
 
-  @override
+ @override
  Widget build(BuildContext context){
 
-   
+   //produto.CriarProduto(widget.idProdutoSelecionado);
+   // adicionar construtor nomeado
+   produto = Produto.CriarProduto(widget.idProdutoSelecionado);
+
+
+
    return Scaffold(
      body: SingleChildScrollView( // responsavel por oocultar o overflowed
       child: Form(
@@ -154,15 +178,15 @@ class LPS_Login extends StatelessWidget {
                 color: produto.getComponentCor,
                 onPressed: () async{
                   SharedPreferences shp = await SharedPreferences.getInstance();
+                  
                
                   if(flogin.currentState.validate()){
 
                     Future<String> result = signIn(ct_email.text, ct_senha.text);
-
                     if(result != null){
                       // capturar o token do usuario e tranfere para a proxima tela
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(uid: shp.getString("uid"),)));
-
+                      idProdutoSelecionado = produto.getProdutoSelecionado;
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => Homescreen(uid: shp.getString("uid"),idProdutoSelecionado: idProdutoSelecionado)));
                     }
 
                   }
@@ -217,7 +241,8 @@ class LPS_Login extends StatelessWidget {
                           )),
                 color: produto.getComponentCor,
                 onPressed: () {
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Sem_Cadastro()));
+                   String idProdutoSelecionado = produto.getProdutoSelecionado;
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_Sem_Cadastro(idProdutoSelecionado: idProdutoSelecionado)));
               },
               shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0))),
@@ -316,8 +341,7 @@ void signUpCliente(BuildContext context){
                                   alerta_Inscricao(context),
 
 
-                              });
-                             
+                              }); 
                               Navigator.of(context).pop();
                             },
 
@@ -358,6 +382,19 @@ void signUpCliente(BuildContext context){
           'Ativo':true,
         });
       }
+
+      Future<Produto> ConstruirTela() async {
+           SharedPreferences shp = await SharedPreferences.getInstance();
+           this.nmProduto = shp.getString("nomeProduto");
+         }
+
+         String get getNomeProduto{
+           return this.nmProduto;
+
+         }
+
+
+
 
   void alerta_Inscricao(BuildContext context){
 
