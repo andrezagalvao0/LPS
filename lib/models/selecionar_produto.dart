@@ -58,6 +58,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
   // @override
   //LPS_Select_App createState() => LPS_Select_App();
 
+
    return Scaffold(
 
      appBar: AppBar(
@@ -98,7 +99,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
                 onChanged: (novoValor) {
                   setState((){
                    produto.setProduto(novoValor);
-                  //produto.criarProduto(novoValor);
+                   produto = Produto.CriarProduto(novoValor);
                   });  
                 },
             ),

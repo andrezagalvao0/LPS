@@ -211,7 +211,7 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
                   "Situação: "+item["Status_Agendamento"]),
     actions: [
       btn_cancelar,
-      btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
+      btn_confirmar, 
       btnExcluir, 
     ],
   );
@@ -225,8 +225,8 @@ class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
 }
 
 // metodo de remoção de um agendamento
-   void ExcluirAgendamento(String url, String id_documento){
-     Firestore.instance.collection(url).document(id_documento).delete();
+   Future<void> ExcluirAgendamento(String url, String id_documento) async{
+     await Firestore.instance.collection(url).document(id_documento).delete();
      //print("O documento : "+id_documento+" foi excluido");
     }
 }

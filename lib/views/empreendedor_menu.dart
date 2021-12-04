@@ -20,15 +20,28 @@ void main() async {
 )); // Executa a Tela Principal do Aplicativo
 }
 
-// ignore: camel_case_types
-class LPS_Empreendedor_Menu extends StatelessWidget{
+class LPS_Empreendedor_Menu extends StatefulWidget {
+  final String idProdutoSelecionado;
+
+  LPS_Empreendedor_Menu({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  
+  @override
+  _LPS_Empreendedor_Menu createState() => _LPS_Empreendedor_Menu();
+}
+
+
+
+// ignore: camel_case_types
+class _LPS_Empreendedor_Menu extends State<LPS_Empreendedor_Menu>{
+  
+  Produto produto;
 
  
  @override
  Widget build(BuildContext context){  
 
+    produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
 
    return Scaffold(
 

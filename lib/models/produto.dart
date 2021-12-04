@@ -98,13 +98,21 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.appImage = AssetImage("assets/images/header_advocacia.png");
      this.appImageService = AssetImage("assets/images/header_advocacia.png");
      //
-     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Agendamento";
+     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
      this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
      this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
      this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+     //
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Advocacia";
+     this.url_data_agendamento = "/Produtos/Advocacia";
+     this.url_horario_agendamento = "/Produtos/Advocacia";
+     this.url_id_agendamento_cliente = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
+     this.url_config_features = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
      }
 
      if(nomeProduto == "Estetica e Design"){
@@ -187,7 +195,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      if(nomeProduto == "Terapeuta Corporal"){
      this.idProduto = 4;
      this.produto_selecionado = "Terapeuta Corporal";
-     popup_color = Colors.white;
+     popup_color = Colors.pink;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Color(0xFFe2827c);
@@ -223,12 +231,12 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
 
   if(nomeProduto == "Barbearia"){
      this.produto_selecionado = "Barbearia";
-     popup_color = Colors.black;
+     popup_color = Colors.white;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Colors.black;
-     this.iconCor = Colors.white;
-     this.textCor = Colors.white;
+     this.iconCor = Color(0xFFc4aa79);
+     this.textCor = Color(0xFFc4aa79);
      this.appBarCor  = Colors.black;
      this.appCor   = Colors.black;
      this.fundoCor = Colors.white;
@@ -238,7 +246,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.drawerdecorationPrimaryColor = Colors.black;
      this.drawerheaderdecorationSecondaryColor = Colors.black;//Colors.pink;
      this.drawerheaderdecorationPrimaryColor =  Colors.black;
-     this.decorationDateColor = Colors.black;
+     this.decorationDateColor = Colors.white;
      this.appImage = AssetImage('assets/images/header_barbearia.png');
      this.appImageService = AssetImage('assets/images/header_barbearia.png');
      //
@@ -407,7 +415,7 @@ Produto(){
    
      if(this.idProduto == 5){
      this.produto_selecionado = "Barbearia";
-     popup_color = Colors.black;
+     popup_color = Colors.white;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Colors.black;
@@ -422,7 +430,7 @@ Produto(){
      this.drawerdecorationPrimaryColor = Colors.black;
      this.drawerheaderdecorationSecondaryColor = Colors.black;//Colors.pink;
      this.drawerheaderdecorationPrimaryColor =  Colors.black;
-     this.decorationDateColor = Colors.black;
+     this.decorationDateColor = Colors.white;
      this.appImage = AssetImage('assets/images/header_barbearia.png');
      this.appImageService = AssetImage('assets/images/header_barbearia.png');
      //
@@ -974,7 +982,7 @@ Produto(){
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){
                Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu()));
+               Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Menu(idProdutoSelecionado: idProdutoSelecionado)));
              },
            );
     }
@@ -1008,32 +1016,42 @@ Produto(){
 
      switch(item){
        case "Clientes":
-       return IconButton(
+       if(enabled == true){
+         return IconButton(
          icon: Icon(Icons.person_add),
-         iconSize: 56,
+         iconSize: 70,
          onPressed:(){
        //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente()));
          },
        );
+      }
+      break;
+     
 
        case "Empresa":
-       
-       return IconButton(
+       if(enabled == true){
+         return IconButton(
          icon: Icon(Icons.store),
-         iconSize: 56,
+         iconSize: 70,
          onPressed:(){
           //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa()));
          },
        );
+      }
+      break;
+       
 
        case "Funcionarios":
-       return IconButton(
+       if(enabled == true){
+         return IconButton(
          icon: Icon(Icons.home_repair_service),
-         iconSize: 56,
+         iconSize: 70,
          onPressed:(){
             Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(idProdutoSelecionado: idProdutoSelecionado)));
          },
        );
+      }
+      break;
        //
      }
    }
@@ -1046,47 +1064,70 @@ Produto(){
   switch(item){
     case "Agendamento":
         return SwitchListTile(
+                
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
                 secondary: Icon(Icons.date_range, color: Colors.black),
                 title: Text("Agendamento", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {
-                      atualizaStatusProduto(item, enabled);
+                  //    atualizaStatusProduto(item, enabled);
                     });
 
-    case "Cadastro":
-        return SwitchListTile(
-                activeTrackColor: Colors.lightGreenAccent,
-                activeColor: Colors.green,
-                secondary: Icon(Icons.add,  color: Colors.black),
-                title: Text("Cadastro", style: TextStyle(color: Colors.black)),
-                value: enabled,
-                    onChanged: (bool value) {
-                      atualizaStatusProduto(item, enabled);
-                    });
+  //  case "Cadastro":
+  //      return SwitchListTile(
+  //              activeTrackColor: Colors.lightGreenAccent,
+  //              activeColor: Colors.green,
+  //              secondary: Icon(Icons.add,  color: Colors.black),
+  //              title: Text("Cadastro", style: TextStyle(color: Colors.black)),
+  //              value: enabled,
+  //                  onChanged: (bool value) {
+  //                    atualizaStatusProduto(item, enabled);
+  //                  });
 
     case "Clientes":
         return SwitchListTile(
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
                 secondary: Icon(Icons.person,  color: Colors.black),
-                title: Text("Clientes", style: TextStyle(color: Colors.black)),
+                title: Text("Cadastro de      Clientes", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {
                       atualizaStatusProduto(item, enabled);
                     });
 
-    case "Empreendedor":
+    case "Empresa":
         return SwitchListTile(
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
                 secondary: Icon(Icons.store,  color: Colors.black),
-                title: Text("Empreendedor", style: TextStyle(color: Colors.black)),
+                title: Text("Cadastro de Empresas", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {
                       atualizaStatusProduto(item, enabled);
                     });
+
+    case "Funcionarios":
+        return SwitchListTile(
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: Colors.green,
+                secondary: Icon(Icons.home_repair_service,  color: Colors.black),
+                title: Text("Cadastro de Profissionais", style: TextStyle(color: Colors.black)),
+                value: enabled,
+                    onChanged: (bool value) {
+                      atualizaStatusProduto(item, enabled);
+                    });
+
+  //  case "Empreendedor":
+  //      return SwitchListTile(
+  //              activeTrackColor: Colors.lightGreenAccent,
+  //              activeColor: Colors.green,
+  //              secondary: Icon(Icons.store,  color: Colors.black),
+  //              title: Text("Empreendedor", style: TextStyle(color: Colors.black)),
+  //              value: enabled,
+  //                  onChanged: (bool value) {
+  //                    atualizaStatusProduto(item, enabled);
+  //                  });
     
     case "Notificações":
         return SwitchListTile(
