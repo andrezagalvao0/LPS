@@ -129,14 +129,14 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.fundoCor = Colors.white;
      this.decorationPrimaryColor   = Colors.amber[100];
      this.decorationSecondaryColor = Colors.amber[400];
-     this.drawerdecorationSecondaryColor = Colors.amber[400];
+     this.drawerdecorationSecondaryColor = Color(0xFFf48f0e);
      this.drawerdecorationPrimaryColor = Colors.amber[100];
-     this.drawerheaderdecorationSecondaryColor = Colors.amber[400];
+     this.drawerheaderdecorationSecondaryColor = Color(0xFFf48f0e); //fd5304
      this.drawerheaderdecorationPrimaryColor = Colors.amber[100];
 
      this.decorationDateColor = Colors.amber;
      this.appImage = AssetImage('assets/images/header_estetica.png');
-     this.appImageService = AssetImage('assets/images/service_header.png');
+     this.appImageService = AssetImage('assets/images/header_estetica.png');
      //
      this.url_agendamento = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendamento_sem_Cadastro";
      this.url_funcionarios = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios";
@@ -161,13 +161,13 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Colors.white;
-     this.iconCor = Colors.green[800]; 
-     this.textCor = Colors.green[800];
+     this.iconCor = Color(0xFF575b48);
+     this.textCor = Color(0xFF575b48);
      this.appBarCor  = Colors.green[800];
      this.appCor   = Colors.green;
      this.fundoCor = Colors.white;
      this.decorationPrimaryColor   = Colors.white;
-     this.decorationSecondaryColor = Colors.green[100];
+     this.decorationSecondaryColor = Color(0xFFcdf266);
      this.drawerdecorationSecondaryColor = Colors.green[100];
      this.drawerdecorationPrimaryColor = Colors.white;
      this.drawerheaderdecorationSecondaryColor = Colors.green[100];
@@ -235,8 +235,8 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Colors.black;
-     this.iconCor = Color(0xFFc4aa79);
-     this.textCor = Color(0xFFc4aa79);
+     this.iconCor = Color(0xFFf5c139);
+     this.textCor = Color(0xFFf5c139);
      this.appBarCor  = Colors.black;
      this.appCor   = Colors.black;
      this.fundoCor = Colors.white;
@@ -290,13 +290,21 @@ Produto(){
      this.appImage = AssetImage("assets/images/header_advocacia.png");
      this.appImageService = AssetImage("assets/images/header_advocacia.png");
      //
-     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Agendamento";
+     this.url_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empreendedor/Todos_os_Agendamentos/Agendados_sem_Cadastro";
      this.url_funcionarios = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios";
      this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Servicos";
      this.url_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
      this.url_empresas = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empresas";
      this.url_notificacoes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Notificacoes";
      this.url_config_features_cadastro = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+     //
+     this.profissional = null;
+     this.url_servicos = "/Produtos/Advocacia";
+     this.url_data_agendamento = "/Produtos/Advocacia";
+     this.url_horario_agendamento = "/Produtos/Advocacia";
+     this.url_id_agendamento_cliente = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Clientes";
+     this.url_config_features = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/Config/Features";
+     this.url_empreendedor_agendamentos_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
      }
   
 
@@ -642,29 +650,36 @@ Produto(){
   }
 
   void setProdutoSelecionadoURL(String prod){
+    if(this.idProduto == 1) { // advocacia
+      this.produto_selecionado = prod;
+    }
+
     if(this.idProduto == 2) { // estetica
       this.produto_selecionado = prod;
-   //   this.url_config_features = "/Produtos/$produto_selecionado/"; 
     }
 
     if(this.idProduto == 3) { // fisioterapia
       this.produto_selecionado = prod;
-  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
     }
 
     if(this.idProduto == 4) { // estetica Elenilza
-      this.produto_selecionado = prod;
-  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
+      this.produto_selecionado = prod; 
     }
 
     if(this.idProduto == 5) { // estetica Elenilza
-      this.produto_selecionado = prod;
-  //    this.url_config_features = "/Produtos/$produto_selecionado/";  
+      this.produto_selecionado = prod;  
     }
     
   }
 
-    void setProfissionalServicoUrl(String p) {{
+    void setProfissionalServicoUrl(String p) {
+    if(this.idProduto == 1) { // advocacia
+       this.profissional = p;
+       this.url_servicos = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios/$profissional/Servicos"; 
+       this.url_data_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios/$profissional/Data";  
+       this.url_horario_agendamento = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Funcionarios/$profissional/Horario";
+    }
+
       if(this.idProduto == 2) { // estetica
        this.profissional = p;
        this.url_servicos = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Funcionarios/$profissional/Servicos"; 
@@ -692,8 +707,6 @@ Produto(){
       this.url_data_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios/$profissional/Data";  
       this.url_horario_agendamento = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Funcionarios/$profissional/Horario";
     }
-
-  }
 
 }
 
@@ -747,7 +760,29 @@ Produto(){
 
 // recebe o nome do servico e retorna uma miniatura da imagem associada ao servico
    AssetImage getAppThumbnailService(String servico) {
+    
+    // Advocacia
+    if(servico == "Orçamento"){
+       this.thumbnail_servico = AssetImage("assets/images/orcamento_advocacia_servico.jpg");
+       return this.thumbnail_servico;
+     }
 
+    if(servico == "Criminal"){
+       this.thumbnail_servico = AssetImage("assets/images/criminal_advocacia_servico.jpg");
+       return this.thumbnail_servico;
+     }
+
+    if(servico == "Previdenciario"){
+       this.thumbnail_servico = AssetImage("assets/images/previdenciario_advocacia_servico.jpg");
+       return this.thumbnail_servico;
+     }
+    
+    if(servico == "Trabalhista"){
+       this.thumbnail_servico = AssetImage("assets/images/trabalhista_advocacia_servico.jpg");
+       return this.thumbnail_servico;
+     }
+
+    // Estetica e Design
     if(servico == "Endermoterapia"){
        this.thumbnail_servico = AssetImage("assets/images/endermoterapia_servico.jpg");
        return this.thumbnail_servico;
@@ -1012,44 +1047,42 @@ Produto(){
     }
  }
    
-   IconButton CarregarFeaturesCadastro(BuildContext context, String item, bool enabled, String idProdutoSelecionado){
+   TextButton CarregarFeaturesCadastro(BuildContext context, String item, bool enabled, String idProdutoSelecionado){
 
      switch(item){
        case "Clientes":
        if(enabled == true){
-         return IconButton(
-         icon: Icon(Icons.person_add),
-         iconSize: 70,
-         onPressed:(){
-       //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente()));
-         },
-       );
+         return TextButton.icon(
+                label: Text('Clientes', style: TextStyle(color: this.getTextCor)),
+                icon: Icon(Icons.person_add, size: 70, color: this.getIconCor),
+              onPressed: () {
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente()));
+              }
+           );
       }
       break;
      
-
        case "Empresa":
-       if(enabled == true){
-         return IconButton(
-         icon: Icon(Icons.store),
-         iconSize: 70,
-         onPressed:(){
-          //  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa()));
-         },
-       );
+         if(enabled == true){
+         return TextButton.icon(
+                label: Text('Empresa', style: TextStyle(color: this.getTextCor)),
+                icon: Icon(Icons.store, size: 70, color: this.getIconCor),
+              onPressed: () {
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa()));
+              }
+           );
       }
       break;
        
-
        case "Funcionarios":
-       if(enabled == true){
-         return IconButton(
-         icon: Icon(Icons.home_repair_service),
-         iconSize: 70,
-         onPressed:(){
-            Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(idProdutoSelecionado: idProdutoSelecionado)));
-         },
-       );
+             if(enabled == true){
+         return TextButton.icon(
+                label: Text('Funcionarios', style: TextStyle(color: this.getTextCor)),
+                icon: Icon(Icons.school, size: 70, color: this.getIconCor),
+              onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(idProdutoSelecionado: idProdutoSelecionado)));
+              }
+           );
       }
       break;
        //

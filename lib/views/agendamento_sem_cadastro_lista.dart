@@ -6,15 +6,29 @@ import 'package:lps_ufs_tcc/models/produto.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+class LPS_Agendamento_sem_Cadastro_Lista extends StatefulWidget {
 
-class LPS_Agendamento_sem_Cadastro_Lista extends StatelessWidget{
+  String idProdutoSelecionado;
+
+  LPS_Agendamento_sem_Cadastro_Lista({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
   
-  Produto produto = new Produto(); // produto 2 da LPS
+  
+  @override
+  _LPS_Agendamento_sem_Cadastro_Lista createState() => _LPS_Agendamento_sem_Cadastro_Lista();
+  
+}
+
+
+class _LPS_Agendamento_sem_Cadastro_Lista extends State<LPS_Agendamento_sem_Cadastro_Lista>{
+  
+  Produto produto;
   String id_documento;
   
 
  @override
  Widget build(BuildContext context){
+
+   produto = Produto.CriarProduto(widget.idProdutoSelecionado);
 
    return Scaffold(
 

@@ -84,14 +84,14 @@ class LPS_Cadastro_Cliente extends StatelessWidget {
            
 
            // aciona o dialog para entrada de dados de um novo cliente
-     floatingActionButton: FloatingActionButton(
-       child: Icon(Icons.person_add, color: Colors.black),
-       backgroundColor: Colors.amberAccent,
+  //   floatingActionButton: FloatingActionButton(
+  //     child: Icon(Icons.person_add, color: Colors.black),
+  //     backgroundColor: Colors.amberAccent,
        
-       onPressed: () => model_add_cliente(context),
+  //     onPressed: () => model_add_cliente(context),
 
-       tooltip: 'Adicionar novo Cliente',
-     ),
+   //    tooltip: 'Adicionar novo Cliente',
+  //   ),
      backgroundColor: Colors.white,
     );
   }

@@ -79,7 +79,7 @@ class _LPS_Empreendedor_Menu extends State<LPS_Empreendedor_Menu>{
                           )),
                 color: produto.getComponentCor,
                 onPressed: (){
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Suite()));
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Empreendedor_Suite(idProdutoSelecionado: produto.getProdutoSelecionado)));
               },
               shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0))),
@@ -104,7 +104,7 @@ class _LPS_Empreendedor_Menu extends State<LPS_Empreendedor_Menu>{
                           )),
                 color: produto.getComponentCor,
                 onPressed: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_sem_Cadastro_Lista()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Agendamento_sem_Cadastro_Lista(idProdutoSelecionado: produto.getProdutoSelecionado)));
               },
               shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0))),

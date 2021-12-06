@@ -66,6 +66,7 @@ class _Homescreen extends State<Homescreen>{
   String uid;
 
   Produto produto = new Produto(); // produto 2 da LPS
+  
 
 
  @override

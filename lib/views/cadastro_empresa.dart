@@ -30,7 +30,7 @@ class LPS_Cadastro_E extends State<LPS_Cad_Empresa> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.home, color: produto.getIconCor),
+          icon: Icon(Icons.arrow_back, color: produto.getIconCor),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('Cadastro de Empresa',

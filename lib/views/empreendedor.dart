@@ -5,14 +5,28 @@ import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+class LPS_Empreendedor_Suite extends StatefulWidget {
 
-class LPS_Empreendedor_Suite extends StatelessWidget{
+  String idProdutoSelecionado;
+
+  LPS_Empreendedor_Suite({this.idProdutoSelecionado}); // recebe o id do produto selecionado vindo do estado anterior
+  
+  
+  @override
+  _LPS_Empreendedor_Suite createState() => _LPS_Empreendedor_Suite();
+  
+}
+
+
+class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
   
   Produto produto = new Produto(); // produto 2 da LPS
   
 
  @override
  Widget build(BuildContext context){
+
+   produto = Produto.CriarProduto(widget.idProdutoSelecionado);
 
    return Scaffold(
 
