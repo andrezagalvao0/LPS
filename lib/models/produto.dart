@@ -231,7 +231,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
 
   if(nomeProduto == "Barbearia"){
      this.produto_selecionado = "Barbearia";
-     popup_color = Colors.white;
+     popup_color = Colors.amber;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
      this.componentCor =  Colors.black;
@@ -246,7 +246,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.drawerdecorationPrimaryColor = Colors.black;
      this.drawerheaderdecorationSecondaryColor = Colors.black;//Colors.pink;
      this.drawerheaderdecorationPrimaryColor =  Colors.black;
-     this.decorationDateColor = Colors.white;
+     this.decorationDateColor = Colors.black;
      this.appImage = AssetImage('assets/images/header_barbearia.png');
      this.appImageService = AssetImage('assets/images/header_barbearia.png');
      //
@@ -1003,7 +1003,7 @@ Produto(){
              trailing: Icon(Icons.arrow_right,  color: this.getIconCor), 
              onTap: (){
                Navigator.pop(context);
-               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify()));
+               Navigator.push(context,MaterialPageRoute(builder: (context) => HomeNotify(idProdutoSelecionado: idProdutoSelecionado)));
              },
            );
     }
@@ -1056,7 +1056,7 @@ Produto(){
                 label: Text('Clientes', style: TextStyle(color: this.getTextCor)),
                 icon: Icon(Icons.person_add, size: 70, color: this.getIconCor),
               onPressed: () {
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente()));
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente(idProdutoSelecionado: idProdutoSelecionado)));
               }
            );
       }
@@ -1068,7 +1068,7 @@ Produto(){
                 label: Text('Empresa', style: TextStyle(color: this.getTextCor)),
                 icon: Icon(Icons.store, size: 70, color: this.getIconCor),
               onPressed: () {
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa()));
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa(idProdutoSelecionado: idProdutoSelecionado)));
               }
            );
       }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
 class HomeNotify extends StatefulWidget {
-  HomeNotify({Key key}) : super(key: key);
+  String idProdutoSelecionado;
+  
+  HomeNotify({this.idProdutoSelecionado});
 
   @override
   _HomeNotifyState createState() => _HomeNotifyState();
@@ -11,7 +13,7 @@ class HomeNotify extends StatefulWidget {
 
 class _HomeNotifyState extends State<HomeNotify> {
 
-  Produto produto = new Produto(); // produto 3 da LPS
+  Produto produto; // produto 3 da LPS
  
 
   //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -45,6 +47,9 @@ class _HomeNotifyState extends State<HomeNotify> {
 
   @override
   Widget build(BuildContext context) {
+
+    produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

@@ -6,12 +6,18 @@ import 'package:lps_ufs_tcc/views/cliente.dart';
 import 'package:lps_ufs_tcc/models/produto.dart';
 
 class LPS_Cad_Cliente extends StatefulWidget {
+
+  String idProdutoSelecionado;
+  LPS_Cad_Cliente({this.idProdutoSelecionado});
+
   @override
-  LPS_Cadastro_C createState() => LPS_Cadastro_C();
+  _LPS_Cadastro_C createState() => _LPS_Cadastro_C();
 }
 
-class LPS_Cadastro_C extends State<LPS_Cad_Cliente> {
+class _LPS_Cadastro_C extends State<LPS_Cad_Cliente> {
   var selectedCurrency, selectedType;
+  String uid;
+  String idProdutoSelecionado;
 
   String cliente_informado;
   String email_informado;
@@ -29,10 +35,12 @@ class LPS_Cadastro_C extends State<LPS_Cad_Cliente> {
 
   final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
 
-  Produto produto = new Produto(); // produto 2 da LPS
+  Produto produto; // produto 2 da LPS
 
   @override
   Widget build(BuildContext context) {
+    produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -42,18 +50,19 @@ class LPS_Cadastro_C extends State<LPS_Cad_Cliente> {
         title: Text('Cadastro de Cliente',
             style: TextStyle(color: produto.getTextCor)),
         backgroundColor: produto.getSecondaryCor,
-        actions: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                      Icons.view_list,
-                      color: produto.getIconCor,
-                    ),
-      onPressed: () {
-        Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Cliente()));
-      },
-    )
-  ],
       ),
+  //       actions: <Widget>[
+  //                   IconButton(
+  //                     icon: Icon(
+  //                     Icons.view_list,
+  //                     color: produto.getIconCor,
+  //                   ),
+  //     onPressed: () {
+  //       Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Cliente()));
+  //     },
+  //   )
+  // ],
+      //),
       backgroundColor: produto.getFundoCor,
       body: Container(
           child: Form(
