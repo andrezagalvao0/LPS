@@ -231,6 +231,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
 
   if(nomeProduto == "Barbearia"){
      this.produto_selecionado = "Barbearia";
+     this.idProduto = 5;
      popup_color = Colors.amber;
      this.status_agendamento = "Aguardando";
      this.id_dispositivo = "";
@@ -261,7 +262,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_data_agendamento = "/Produtos/Barbearia";
      this.url_horario_agendamento = "/Produtos/Barbearia";
      this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
-     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.url_config_features = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
   }
 
@@ -453,7 +454,7 @@ Produto(){
      this.url_data_agendamento = "/Produtos/Barbearia";
      this.url_horario_agendamento = "/Produtos/Barbearia";
      this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
-     this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
+     this.url_config_features = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
   }
 
@@ -479,6 +480,8 @@ Produto(){
   String get getStatusAgendamento{
     return this.status_agendamento;
   }
+
+  get i => null;
 
   void setIdDispositivo(String id){
     this.id_dispositivo = id;
@@ -1123,7 +1126,7 @@ Produto(){
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
                 secondary: Icon(Icons.person,  color: Colors.black),
-                title: Text("Cadastro de      Clientes", style: TextStyle(color: Colors.black)),
+                title: Text("Cadastro de Clientes", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {
                       atualizaStatusProduto(item, enabled);
@@ -1145,7 +1148,7 @@ Produto(){
                 activeTrackColor: Colors.lightGreenAccent,
                 activeColor: Colors.green,
                 secondary: Icon(Icons.home_repair_service,  color: Colors.black),
-                title: Text("Cadastro de Profissionais", style: TextStyle(color: Colors.black)),
+                title: Text("Cadastro de Funcionarios", style: TextStyle(color: Colors.black)),
                 value: enabled,
                     onChanged: (bool value) {
                       atualizaStatusProduto(item, enabled);
@@ -1198,6 +1201,21 @@ Produto(){
     }
   }
 
+  Future<void> reiniciarConfigurador() async {
+        List<String> ListaFeature = <String>[
+         'Clientes',
+         'Empresa',
+         'Funcionarios',
+         'Notificações'];
+
+
+        for (int i = 0; i < ListaFeature.length; i++){
+        Firestore.instance.collection(this.getUrlConfigFeatures).document(ListaFeature[i].toString()).updateData({
+                                    'enabled':false,
+                                  });
+        }
+        exit(0);
+  }
 }
 
 // classe responsavel por apresentar as features disponiveis de acordo com o firebase

@@ -57,7 +57,7 @@ class _LPS_Select_App extends State<LPS_Select_App>{
 
   // @override
   //LPS_Select_App createState() => LPS_Select_App();
-
+    InicializarConfigurador();
 
    return Scaffold(
 
@@ -73,10 +73,11 @@ class _LPS_Select_App extends State<LPS_Select_App>{
      backgroundColor: Colors.white,
      // exibir o nome dos produtos
      body: Container(
+       
        child: Form(
            
            child: new ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(top: 10),
             children: <Widget>[
              
               SizedBox(height: 10.0),            
@@ -210,6 +211,20 @@ class _LPS_Select_App extends State<LPS_Select_App>{
     });
    }
     }
+  }
+
+    Future<void> InicializarConfigurador() async {
+        List<String> ListaFeature = <String>[
+         'Clientes',
+         'Empresa',
+         'Funcionarios',
+         'Notificações'];
+
+        for (int i = 0; i < ListaFeature.length; i++){
+        Firestore.instance.collection(produto.getUrlConfigFeatures).document(ListaFeature[i].toString()).updateData({
+                                    'enabled':false,
+                                  });
+        }
   }  
 }
 

@@ -148,7 +148,7 @@ class _Homescreen extends State<Homescreen>{
              title: Text("Sair", style: TextStyle(color: produto.getTextCor)),
              leading: Icon(Icons.exit_to_app,  color: produto.getIconCor),
              trailing: Icon(Icons.arrow_right,  color: produto.getIconCor), 
-             onTap: () => exit(0),
+             onTap: () => produto.reiniciarConfigurador(),
            ),
  
         ],
