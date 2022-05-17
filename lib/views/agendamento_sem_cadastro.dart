@@ -441,7 +441,7 @@ class _LPS_Agendamento_Sem_Cadastro extends State<LPS_Agendamento_Sem_Cadastro> 
                                   'Data': data.toString(),
                                   'ID_Dispositivo':  produto.getIdDispositivo, //salva no firebase o id do dispsitivo que sera usado para as notificações
                                   'Horario': horario.toString(),
-                                  'Status_Agendamento':produto.getStatusAgendamento.toString(), // salva no firebase o status de agendamento
+                                  'Status':produto.getStatusAgendamento.toString(), // salva no firebase o status de agendamento
                                  
 
                                });

@@ -71,7 +71,7 @@ class _LPS_Agendamento_sem_Cadastro_Lista extends State<LPS_Agendamento_sem_Cada
            this.id_documento  = snapshot.data.documents[i].documentID;
 
            
-           produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
+       //    produto.StatusAgendamento(item["Status_Agendamento"]); // verifica o status do agendamento sem cadastro no firebase
 
            return InkWell(
                   onLongPress:(){
@@ -137,12 +137,8 @@ class _LPS_Agendamento_sem_Cadastro_Lista extends State<LPS_Agendamento_sem_Cada
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
-                        Row(
-                           children: [
-                           Icon(Icons.notifications, color: produto.getIconCor),
-                           Text(item["Status_Agendamento"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
-                        ],
-                      ),
+                       // altera a cor da linha de acordo com o status do agendamento
+                       produto.alterarCorStatus(context, item),
          //                Expanded(
          //                 flex: 3,
          //                 child: Image(
@@ -215,14 +211,14 @@ class _LPS_Agendamento_sem_Cadastro_Lista extends State<LPS_Agendamento_sem_Cada
   AlertDialog alert = AlertDialog(
     
     backgroundColor: produto.getPrimaryCor,
-    title: Text("Detalhes"),
+    title: Text("Detalhes", style: TextStyle(color: produto.getTextCor)),
 
     content: Text("Cliente: "+item["Nome"]+"\n"+
                   "Profisional: "+item["Profissional"]+"\n"+
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
                   "Horario: "+item["Horario"]+"h\n"+
-                  "Situação: "+item["Status_Agendamento"]),
+                  "Status: "+item["Status"], style: TextStyle(color: produto.getTextCor)),
     actions: [
       btn_cancelar,
       btn_confirmar, 

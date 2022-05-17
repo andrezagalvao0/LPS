@@ -91,7 +91,7 @@ class _LPS_Cadastro extends State<LPS_Cadastro>{
                   // retorna um objeto do tipo feature com os seus atributos em forma de botão
                   // status, nome
                   
-                 child: produto.CarregarFeaturesCadastro(context, item['nome'], item['enabled'],widget.idProdutoSelecionado),
+                 child: produto.CarregarFeaturesCadastroCards(context, item['nome'], item['enabled'],widget.idProdutoSelecionado),
                   
                  );
                 },

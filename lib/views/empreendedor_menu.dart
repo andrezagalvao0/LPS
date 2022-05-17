@@ -50,7 +50,7 @@ class _LPS_Empreendedor_Menu extends State<LPS_Empreendedor_Menu>{
                 icon: Icon(Icons.home, color: produto.getIconCor),
               onPressed: () => Navigator.of(context).pop(),
          ), 
-       title: Text('Área dos Agendamentos', style: TextStyle(color: produto.getTextCor)),
+       title: Text('Solicitações', style: TextStyle(color: produto.getTextCor)),
        backgroundColor: produto.getSecondaryCor,  
      ),
 

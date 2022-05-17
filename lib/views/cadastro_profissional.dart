@@ -42,7 +42,7 @@ class _LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
   Widget build(BuildContext context) {
 
       produto = new Produto.CriarProduto(widget.idProdutoSelecionado);
-     // produto.setProduto(widget.idProdutoSelecionado);
+    //  produto.setProduto(widget.idProdutoSelecionado);
     
  
    
@@ -139,7 +139,7 @@ class _LPS_Cadastro_P extends State<LPS_Cadastro_Profissional> {
                        context: context,
                        initialDate: DateTime.now(),
                        firstDate: DateTime(2021),
-                       lastDate: DateTime(2022),
+                       lastDate: DateTime(2025),
                        borderRadius: 10,
                        theme: ThemeData(primarySwatch:produto.getPopUpCor),
                        );

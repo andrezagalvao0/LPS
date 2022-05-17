@@ -23,8 +23,7 @@ import 'models/selecionar_produto.dart'; // biblioteca utilizada para capturar o
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  
-  //Produto produto = new Produto(); // produto 2 da LPS
+
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false, // Remover o Banner de Debug
@@ -133,6 +132,7 @@ class _Homescreen extends State<Homescreen>{
 
               var item = snapshot.data.documents[i].data;
               
+              
               return  Container(
                 
                     child:produto.CarregarFeaturesMenu(context,item['nome'], 
@@ -183,13 +183,11 @@ body:  StreamBuilder(
            itemBuilder: (BuildContext context, int i) {
 
              var item = snapshot.data.documents[i].data;
+
+             // se o status for confirmado entao produto.setTextColor(Color green)
+             
           
            return InkWell(
-                  onLongPress:(){
-                  // print("Parabens Você Descobriu uma Feature!");
-                  produto.ConfirmarAgendamento(context, item);
-                  
-                  },
                   child: new Ink(
                      color: produto.getFundoCor,
                      child:Container(
@@ -240,6 +238,9 @@ body:  StreamBuilder(
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
+                       // altera a cor da linha de acordo com o status do agendamento
+                       produto.alterarCorStatus(context, item),
+
                          Expanded(
                           flex: 3,
                           child: Image(

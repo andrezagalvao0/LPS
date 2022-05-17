@@ -19,7 +19,8 @@ class LPS_Empreendedor_Suite extends StatefulWidget {
 
 
 class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
-  
+
+  String id_documento;
   Produto produto = new Produto(); // produto 2 da LPS
   
 
@@ -66,11 +67,20 @@ class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
            itemBuilder: (BuildContext context, int i) {
 
            var item = snapshot.data.documents[i].data;
+           this.id_documento  = snapshot.data.documents[i].documentID;
 
-           return Container(
-             
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: <Color>[
+
+           return InkWell(
+                  onLongPress:(){
+                  // print("Parabens Você Descobriu uma Feature!");
+                  produto.ConfirmarAgendamento(context, item, id_documento);
+                  
+                  },
+                  child: new Ink(
+                     color: produto.getFundoCor,
+                     child:Container(
+                     decoration: BoxDecoration(
+                     gradient: LinearGradient(colors: <Color>[
                      produto.getPrimaryCor,
                      produto.getSecondaryCor,
                     ]),
@@ -95,7 +105,7 @@ class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
                         Row(
                            children: [
                            Icon(Icons.person, color: produto.getIconCor),
-            //               Text(item["ID"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
+                           Text(item["Nome"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
                         Row(
@@ -122,6 +132,10 @@ class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
                            Text(item["Servico"],style: TextStyle(color: produto.getTextCor, fontSize: 18)),
                         ],
                       ),
+
+                       // altera a cor da linha de acordo com o status do agendamento
+                       produto.alterarCorStatus(context, item),
+
                          Expanded(
                           flex: 3,
                           child: Image(
@@ -131,8 +145,11 @@ class _LPS_Empreendedor_Suite extends State<LPS_Empreendedor_Suite>{
                       ],
                      ),
                    ),
-                   //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
+                     //  onLongPress: () => model_options_cliente(context,Text(item['Nome']), item),
+                    ),
+                   ),
                  );
+
                 },
 
               );

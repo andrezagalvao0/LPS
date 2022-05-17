@@ -358,12 +358,21 @@ void signUpCliente(BuildContext context){
       
        try{
         var id;
+        
         FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => {
                                    // adiciona o valor de value na captura do token
                                   // cria um documento com a identificacao do cliente no cloud firestore
         
+
+        
+        
         id = value.user.uid,
         dadosUtilizador.setString("uid", id),
+        
+       // readUserName(id),
+                
+
+        
          // devemos utilizar esse uid em todo o app
         // dadosUtilizador.setString('uid', id), // armazena o valor do uid para recuperar na tela principal
         //produto.GravarDadosUtilizador(id),

@@ -8,12 +8,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:lps_ufs_tcc/controller/notifiConfig.dart';
 import 'package:lps_ufs_tcc/views/agendamento.dart';
 import 'package:lps_ufs_tcc/views/cadastro.dart';
 import 'package:lps_ufs_tcc/views/cadastro_cliente.dart';
 import 'package:lps_ufs_tcc/views/cadastro_empresa.dart';
 import 'package:lps_ufs_tcc/views/cadastro_profissional.dart';
 import 'package:lps_ufs_tcc/views/empreendedor_menu.dart';
+import 'package:lps_ufs_tcc/views/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'notificacoes.dart';
@@ -75,9 +79,26 @@ String url_empreendedor_agendamentos_clientes; // url responsavel por armazenar 
 // 2 - Estetica
 // 3 - Fisioterapia
 
+
+NotificationService nsm;
+ConfigNotification cfgNotifi;
+
+   //  nsm.showNotifications(ConfigNotification(
+   //    id: item["ID"],
+   //    titulo: "Confirmação de Agendamento",
+   //    body: "Ola! "+item["Nome"]+" Seu agendamento foi confirmado com Sucesso, compareça ao local agendado",
+   //    payload: null,
+   //  ));
+
+
+
+// ignore: non_constant_identifier_names
 Produto.CriarProduto(String nomeProduto){ // construtor nomeado
+    this.nsm = new NotificationService();
     
-     if(nomeProduto == "Advocacia"){
+
+     // identificação do produto com suas caracteristicas individuais de UX     
+    if(nomeProduto == "Advocacia"){
      this.idProduto = 1;
      this.produto_selecionado = "Advocacia";
      popup_color = Colors.blue;
@@ -115,7 +136,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Advocacia/Lorem_IPSUM_Advocacia/cMj5CPKqvXibRbELeHwc/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
      }
 
-     if(nomeProduto == "Estetica e Design"){
+    if(nomeProduto == "Estetica e Design"){
      this.idProduto = 2;
      this.produto_selecionado = "Estetica e Design";
      popup_color = Colors.amber;
@@ -151,8 +172,7 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_id_agendamento_cliente = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Clientes";
      this.url_config_features = "/Produtos/Estetica/Francielly_Estetica_Design/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Francielly_Estetica_Design/f4qVyClZ6etPxvpFwfmC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
-     
-  }
+     }
 
     if(nomeProduto == "Fisioterapia"){
      this.idProduto = 3;
@@ -190,9 +210,9 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_id_agendamento_cliente = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Clientes";
      this.url_config_features = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Fisioterapia/Brisa_Melo_Fisioterapia/blMuzcfY4LfAO42j0OPD/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
-    }
+     }
 
-     if(nomeProduto == "Terapeuta Corporal"){
+    if(nomeProduto == "Terapeuta Corporal"){
      this.idProduto = 4;
      this.produto_selecionado = "Terapeuta Corporal";
      popup_color = Colors.pink;
@@ -227,9 +247,9 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_id_agendamento_cliente = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Clientes";
      this.url_config_features = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Estetica/Elenilza_Correia_Terapeuta_Corporal/Bmr1jVxZI5sMzcHdZRT3/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
-  }
+    }
 
-  if(nomeProduto == "Barbearia"){
+    if(nomeProduto == "Barbearia"){
      this.produto_selecionado = "Barbearia";
      this.idProduto = 5;
      popup_color = Colors.amber;
@@ -264,11 +284,13 @@ Produto.CriarProduto(String nomeProduto){ // construtor nomeado
      this.url_id_agendamento_cliente = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Clientes";
      this.url_config_features = "/Produtos/Barbearia/Legiao_Barber/Config/Features";
      this.url_empreendedor_agendamentos_clientes = "/Produtos/Barbearia/Legiao_Barber/oRWbtoONmi1XjUVgHiJC/Empreendedor/Todos_os_Agendamentos/Agendados_por_Clientes";
-  }
+    }
 
 }
 
 Produto(){
+     
+     this.nsm = new NotificationService();
 
   
      if(this.idProduto == 1){
@@ -848,7 +870,7 @@ Produto(){
 
 // metodos responsaveis pelo gerenciamento das confirmações dos agendamentos
 // action dialog
-  void ConfirmarAgendamento(BuildContext context, var item) {
+  void ConfirmarAgendamento(BuildContext context, var item, String idDocumento) {
   // configura os botões
   
   Widget btn_cancelar = Container(
@@ -872,7 +894,12 @@ Produto(){
        IconButton(
          icon: Icon(Icons.check, color: this.getIconCor),
          onPressed: (){
-           Navigator.pop(context);
+           
+           atualizaStatusAgendamentoCliente(context, item, idDocumento);
+           //
+          // enviarNotificacaoCliente(context, item);
+           
+           Navigator.pop(context); // ao clicar no botao o status devera ser alterado para confirmado para no card do empreendedor e cliente
          },
        ),
        Text("Confirmar", style: TextStyle(color: this.getTextCor)),
@@ -898,12 +925,14 @@ Produto(){
   AlertDialog alert = AlertDialog(
     
     backgroundColor: this.getPrimaryCor,
-    title: Text("Detalhes"),
+    title: Text("Detalhes", style: TextStyle(color: this.getTextCor)),
 
     content: Text("Profisional: "+item["Profissional"]+"\n"+
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
-                  "Horario: "+item["Horario"]+"h"),
+                  "Horario: "+item["Horario"]+"h\n"+
+                  "Status: "+item["Status"], style: TextStyle(color: this.getTextCor)),
+                  
     actions: [
       btn_cancelar,
       btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
@@ -947,7 +976,7 @@ Produto(){
                   "Serviço: "+item["Servico"]+"\n"+
                   "Data: "+item["Data"]+"\n"+
                   "Horario: "+item["Horario"]+"h\n"+
-                  "Situação: "+item["Status_Agendamento"]),
+                  "Status: "+item["Status"]),
     actions: [
       btn_cancelar,
       btn_confirmar, // MUITO IMPORTANTE ao confirmar o agendamento será enviada ao dispositivo do cliente ma notificação confirmando o agendamento
@@ -1092,6 +1121,163 @@ Produto(){
      }
    }
 
+   //
+
+   InkWell CarregarFeaturesCadastroCards(BuildContext context, String item, bool enabled, String idProdutoSelecionado){
+
+     switch(item){
+       case "Clientes":
+       if(enabled == true){
+         return InkWell(
+          
+          onTap:(){
+              Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Cliente(idProdutoSelecionado: idProdutoSelecionado)));     
+          },
+
+           child: new Ink(
+                  color: this.getFundoCor,
+                     child:Container(
+                     decoration: BoxDecoration(
+                     gradient: LinearGradient(colors: <Color>[
+                     this.getPrimaryCor,
+                     this.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+                  margin: const EdgeInsets.all(5),
+                  
+                  child: Container(
+                     height: 120,
+                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage('assets/images/Clientes.png'),
+                               fit: BoxFit.fitHeight,
+                               alignment: AlignmentDirectional.centerEnd,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                     ),
+                    
+                    child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start, // responsavel por alinhar a esquerda o icone do estabelecimento
+                    children: [
+                        Row(
+                           children: [
+                           Icon(Icons.person_add, size: 50, color: this.getIconCor),
+                           Text("Clientes",style: TextStyle(color: this.getTextCor, fontSize: 21)),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+           ),
+         );
+        }
+        break;
+
+       case "Empresa":
+      
+       if(enabled == true){
+         return InkWell(
+          
+          onTap:(){
+             Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cad_Empresa(idProdutoSelecionado: idProdutoSelecionado)));     
+          },
+
+           child: new Ink(
+                  color: this.getFundoCor,
+                     child:Container(
+                     decoration: BoxDecoration(
+                     gradient: LinearGradient(colors: <Color>[
+                     this.getPrimaryCor,
+                     this.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+                  margin: const EdgeInsets.all(5),
+                  
+                  child: Container(
+                     height: 120,
+                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage('assets/images/Empresa.png'),
+                               fit: BoxFit.fitHeight,
+                               alignment: AlignmentDirectional.centerEnd,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                     ),
+                    
+                    child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start, // responsavel por alinhar a esquerda o icone do estabelecimento
+                    children: [
+                        Row(
+                           children: [
+                           Icon(Icons.store, size: 50, color: this.getIconCor),
+                           Text("Empresa",style: TextStyle(color: this.getTextCor, fontSize: 21)),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+           ),
+         );
+        }
+        break;
+        case "Funcionarios":
+        if(enabled == true){
+         return InkWell(
+          
+          onTap:(){
+              Navigator.push(context,MaterialPageRoute(builder: (context) => LPS_Cadastro_Profissional(idProdutoSelecionado: idProdutoSelecionado)));     
+          },
+
+           child: new Ink(
+                  color: this.getFundoCor,
+                     child:Container(
+                     decoration: BoxDecoration(
+                     gradient: LinearGradient(colors: <Color>[
+                     this.getPrimaryCor,
+                     this.getSecondaryCor,
+                    ]),
+                    borderRadius: BorderRadius.circular(10),  
+                  ),
+
+                  margin: const EdgeInsets.all(5),
+                  
+                  child: Container(
+                     height: 120,
+                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                        image: AssetImage('assets/images/Funcionario.jpg'),
+                               fit: BoxFit.fitHeight,
+                               alignment: AlignmentDirectional.centerEnd,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                     ),
+                    
+                    child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start, // responsavel por alinhar a esquerda o icone do estabelecimento
+                    children: [
+                        
+                        Row(
+                           children: [
+                           Icon(Icons.school, size: 50, color: this.getIconCor),
+                           Text("Funcionarios",style: TextStyle(color: this.getTextCor, fontSize: 21)),
+                        ],
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+           ),
+         );
+        }
+      }
+    }
+
 
   // funcoes de criação de produtos
   // ignore: non_constant_identifier_names
@@ -1110,16 +1296,16 @@ Produto(){
                   //    atualizaStatusProduto(item, enabled);
                     });
 
-  //  case "Cadastro":
-  //      return SwitchListTile(
-  //              activeTrackColor: Colors.lightGreenAccent,
-  //              activeColor: Colors.green,
-  //              secondary: Icon(Icons.add,  color: Colors.black),
-  //              title: Text("Cadastro", style: TextStyle(color: Colors.black)),
-  //              value: enabled,
-  //                  onChanged: (bool value) {
-  //                    atualizaStatusProduto(item, enabled);
-  //                  });
+ //   case "Cadastro":
+ //       return SwitchListTile(
+ //               activeTrackColor: Colors.lightGreenAccent,
+ //               activeColor: Colors.green,
+ //               secondary: Icon(Icons.add,  color: Colors.black),
+ //               title: Text("Cadastro", style: TextStyle(color: Colors.black)),
+ //               value: enabled,
+ //                   onChanged: (bool value) {
+ //                     atualizaStatusProduto(item, enabled);
+ //                   });
 
     case "Clientes":
         return SwitchListTile(
@@ -1154,16 +1340,16 @@ Produto(){
                       atualizaStatusProduto(item, enabled);
                     });
 
-  //  case "Empreendedor":
-  //      return SwitchListTile(
-  //              activeTrackColor: Colors.lightGreenAccent,
-  //              activeColor: Colors.green,
-  //              secondary: Icon(Icons.store,  color: Colors.black),
-  //              title: Text("Empreendedor", style: TextStyle(color: Colors.black)),
-  //              value: enabled,
-  //                  onChanged: (bool value) {
-  //                    atualizaStatusProduto(item, enabled);
-  //                  });
+ //   case "Empreendedor":
+ //       return SwitchListTile(
+ //               activeTrackColor: Colors.lightGreenAccent,
+ //               activeColor: Colors.green,
+ //               secondary: Icon(Icons.store,  color: Colors.black),
+ //               title: Text("Empreendedor", style: TextStyle(color: Colors.black)),
+ //               value: enabled,
+ //                   onChanged: (bool value) {
+ //                     atualizaStatusProduto(item, enabled);
+ //                   });
     
     case "Notificações":
         return SwitchListTile(
@@ -1216,8 +1402,59 @@ Produto(){
         }
         exit(0);
   }
-}
 
+   void atualizaStatusAgendamentoCliente(BuildContext context, var item, String idDocumento) async{
+
+     
+      Firestore.instance.collection(this.getUrlIdAgendamentoCliente+'/'+item["ID"]+'/Agendamento').document(item["IDAgendamento"]).updateData({
+     "Status":"Confirmado",
+     });
+
+      Firestore.instance.collection(this.url_empreendedor_agendamentos_clientes).document(idDocumento).updateData({
+     "Status":"Confirmado",
+     });
+
+   }
+
+   Row alterarCorStatus(BuildContext context, var item){
+     if(item["Status"] == "Aguardando"){
+     return Row(
+         children: [
+          Icon(Icons.notifications, color: Colors.red),
+          Text(item["Status"],style: TextStyle(color: Colors.red, fontSize: 18)),
+         ],
+     );
+
+     }else{
+    
+   //  enviarNotificacaoCliente(item);
+
+     return Row(
+           children: [
+           Icon(Icons.notifications, color: Colors.green),
+           Text(item["Status"],style: TextStyle(color: Colors.green, fontSize: 18)),
+         ],
+       );
+
+     }
+
+   }
+   
+   void enviarNotificacaoCliente(var item) async {   
+       NotificationService nsm;
+       if(item["Status"] == "Confirmado"){
+       this.nsm.showNotifications(ConfigNotification(
+       id: 1,
+       titulo: "Confirmação de Agendamento",
+       body: "Ola! "+item["Nome"]+" Seu agendamento foi confirmado com Sucesso, compareça ao local agendado",
+       payload: " ",
+       ));
+
+       }
+   
+   }
+   //
+}
 // classe responsavel por apresentar as features disponiveis de acordo com o firebase
 
 

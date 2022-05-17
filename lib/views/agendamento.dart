@@ -28,6 +28,8 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
 
 
   String uid;
+  String nome;
+  String idAgendamento;
   String idProdutoSelecionado;
   
   var selectedCurrency, selectedType;
@@ -359,11 +361,6 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                                             horario_selecionado);
 
                        // adiciona o agendamento ao respectivo Empreendedor Administrador
-                       adicionar_agendamento_empreendedor(context,
-                                            profissional_selecionado,
-                                            servico_selecionado,
-                                            data_selecionada,
-                                            horario_selecionado);
 
                         alerta_agendamento(context);
 
@@ -380,28 +377,35 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
     );  
   }
 
+// criar um campo token para identificar
 // metodo responsavel pelo armazenamento do agendamento junto ao empreendedor
  // ignore: non_constant_identifier_names
  void adicionar_agendamento_empreendedor(BuildContext context, 
                              String profissional, 
                              String servico, 
                              String data, 
-                             String horario) async{
+                             String horario,
+                             String idAgendamento) async{
     
         // captura dos dados do utilizador pelo sharedpreferences
         SharedPreferences dadosUtilizador = await SharedPreferences.getInstance();
         this.uid = dadosUtilizador.getString("uid");
-        String nome = dadosUtilizador.getString("nome");
+        DocumentSnapshot dataUser = await Firestore.instance.collection(produto.getUrlClientes).document(this.uid).get();
+        this.nome = dataUser['nome'];
+       
+        
 
         // gravação dos dados no diretorio agendamento
         
         await Firestore.instance.collection(produto.getUrlEmpreendedor).add({
                                   'ID':this.uid,
-                                  'Nome':nome,
+                                  'IDAgendamento':idAgendamento,
+                                  'Nome':this.nome,
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
+                                  'Status': "Aguardando",
                                });
   }
 
@@ -412,10 +416,13 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
                              String data, 
                              String horario) async{
     
+        
         // captura dos dados do utilizador pelo sharedpreferences
+        
         SharedPreferences dadosUtilizador = await SharedPreferences.getInstance();
         this.uid = dadosUtilizador.getString("uid");
-
+        DocumentSnapshot dataUser = await Firestore.instance.collection(produto.getUrlClientes).document(this.uid).get();
+        this.nome = dataUser['nome'];
 
         // criação do diretorio dos agendamentos
         String urlTemp =  produto.getUrlIdAgendamentoCliente+"/"+this.uid;
@@ -425,11 +432,25 @@ class _LPS_Agendamento extends State<LPS_Agendamento> {
         // gravação dos dados no diretorio agendamento
         String urlCompleta = urlTemp+"/Agendamento";
         await Firestore.instance.collection(urlCompleta).add({
-      
+                                  'ID':this.uid,
+                                  'Nome':this.nome,
                                   'Profissional': profissional.toString(),
                                   'Servico': servico.toString(),
                                   'Data': data.toString(),
                                   'Horario': horario.toString(),
+                                  'Status': "Aguardando",
+                               }).then((value) => {
+
+                               this.idAgendamento = value.documentID,
+                               adicionar_agendamento_empreendedor(context,
+                                            profissional_selecionado,
+                                            servico_selecionado,
+                                            data_selecionada,
+                                            horario_selecionado,
+                                            this.idAgendamento),
+
+
+
                                });
                                
                                
